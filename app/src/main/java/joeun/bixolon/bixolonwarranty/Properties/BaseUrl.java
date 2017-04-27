@@ -6,11 +6,15 @@ package joeun.bixolon.bixolonwarranty.Properties;
 
 public class BaseUrl {
 
-    //protected static final String Url = "http://192.168.2.30:3000/employees";
-    protected static final String Url = "http://192.168.2.30:3000/employees";
+    protected static final String BaseUrl = "http://192.168.2.30:3000/";
+    protected static final String LoginUrl = BaseUrl + "employees";
+    protected static final String BarcodeUrl = BaseUrl + "product";
 
-    public String getUrl(){
-        return this.Url;
+    public String getLoginUrl(){
+        return this.LoginUrl;
+    }
+    public String getBarcodeUrl(){
+        return this.BarcodeUrl;
     }
 
 }

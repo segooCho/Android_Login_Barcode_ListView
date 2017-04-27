@@ -329,7 +329,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 // Simulate network access.
                 // TODO: 로그인 처리 : State Code = 200 로 처리 하고 싶지만 못하고 있음
                 BaseUrl baseUrl = new BaseUrl();
-                AndroidNetworking.post(baseUrl.getUrl())
+                AndroidNetworking.post(baseUrl.getLoginUrl())
                         .addBodyParameter("id",mEmail)
                         .addBodyParameter("password",mPassword)
                         .setPriority(Priority.LOW)

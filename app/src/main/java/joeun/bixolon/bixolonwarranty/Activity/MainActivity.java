@@ -3,6 +3,7 @@ package joeun.bixolon.bixolonwarranty.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,10 +16,17 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.json.JSONArray;
+
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeCaptureActivity;
+import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 import joeun.bixolon.bixolonwarranty.R;
 
 public class MainActivity extends AppCompatActivity
@@ -149,7 +157,41 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+
+        try {
+            BaseUrl baseUrl = new BaseUrl();
+            AndroidNetworking.post(baseUrl.getBarcodeUrl())
+                    .addBodyParameter("barcode",result.getContents())
+                    .setPriority(Priority.LOW)
+                    .build()
+                    .getAsJSONArray(new JSONArrayRequestListener() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            // do anything with responseUserLoginTask
+                            Log.v("Login", "======================================");
+                            Log.v("Login", "onResponse");
+
+                        }
+                        @Override
+                        public void onError(ANError error) {
+                            // handle error
+                            Log.v("Login", "======================================");
+                            Log.v("Login", "onError");
+                            Log.v("Login", String.valueOf(error));
+                        }
+                    });
+
+            //TODO: 응답 시간을 강제적으로 기다린다... 추후 문제 발생 할수 있다.
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            Log.v("Login", "======================================");
+            Log.v("Login", "InterruptedException");
+            Log.v("Login", String.valueOf(e));
+        }
+
         textViewBarcode.setText("Barocde : " + result.getContents());
+
+
     }
 
 }
