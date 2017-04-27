@@ -1,8 +1,8 @@
 package joeun.bixolon.bixolonwarranty.Activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,10 +10,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import joeun.bixolon.bixolonwarranty.Barcode.BarcodeCaptureActivity;
 import joeun.bixolon.bixolonwarranty.R;
 
 public class MainActivity extends AppCompatActivity
@@ -21,18 +26,34 @@ public class MainActivity extends AppCompatActivity
 
     LinearLayout dynamicContent;
     View wizard;
+    final Activity activity = this;
+    Button buttonBarcode;
+    TextView textViewBarcode;
+    int navigationItemSelectedId;
+
+    //TODO :: Barcode Event 정의
+    private void onBarcodeEvent() {
+        buttonBarcode = (Button) findViewById(R.id.buttonBarcode);
+        buttonBarcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentIntegrator integrator = new IntentIntegrator(activity);
+                integrator.setCaptureActivity(BarcodeCaptureActivity.class);
+                integrator.setOrientationLocked(false);
+                integrator.initiateScan();
+            }
+        });
+
+        textViewBarcode = (TextView) findViewById(R.id.textViewBarcode);
+        textViewBarcode.setText("Barocde");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dynamicContent = (LinearLayout) findViewById(R.id.dynamicContent);
-        wizard = getLayoutInflater().inflate(R.layout.content_main_barcode, null);
-        setTitle(R.string.title_activity_main_barcode);
-        dynamicContent.removeAllViews();
-        dynamicContent.addView(wizard);
-
+        //TODO :: 기본 구성 화면
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -44,6 +65,15 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //TODO :: content_main_barcode를 기본 화면으로 처리
+        dynamicContent = (LinearLayout) findViewById(R.id.dynamicContent);
+        wizard = getLayoutInflater().inflate(R.layout.content_main_barcode, null);
+        setTitle(R.string.title_activity_main_barcode);
+        dynamicContent.removeAllViews();
+        dynamicContent.addView(wizard);
+        onBarcodeEvent();
+        navigationItemSelectedId = R.id.nav_barcode;
     }
 
     @Override
@@ -81,27 +111,45 @@ public class MainActivity extends AppCompatActivity
     }
     */
 
+    //TODO :: 메뉴 클릭
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        //이전과 같은 navigationItemSelectedId 선택시 처리하지 않음
+        if (id == navigationItemSelectedId) return false;
+
         if (id == R.id.nav_barcode) {
+            //Intent intent = new Intent(MainActivity.this, BarcodeActivity.class);
+            //startActivity(intent);
+            //finish();
+
             wizard = getLayoutInflater().inflate(R.layout.content_main_barcode, null);
             setTitle(R.string.title_activity_main_barcode);
+            dynamicContent.removeAllViews();
+            dynamicContent.addView(wizard);
+            onBarcodeEvent();
+            navigationItemSelectedId = R.id.nav_barcode;
         } else if (id == R.id.nav_list) {
             wizard = getLayoutInflater().inflate(R.layout.content_main_listview, null);
             setTitle(R.string.title_activity_main_list);
+            dynamicContent.removeAllViews();
+            dynamicContent.addView(wizard);
+            navigationItemSelectedId = R.id.nav_list;
         }
-
-        dynamicContent.removeAllViews();
-        dynamicContent.addView(wizard);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
         return true;
+    }
+
+    //TODO :: Barcode Event Scan 처리
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        textViewBarcode.setText("Barocde : " + result.getContents());
     }
 
 }

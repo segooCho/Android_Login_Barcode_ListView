@@ -29,6 +29,12 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    //TODO :: Networking
     compile 'com.amitshekhar.android:android-networking:1.0.0'
+    //TODO :: Barcode
+    compile 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
+    compile 'com.google.zxing:core:3.2.1'
+
+
     testCompile 'junit:junit:4.12'
 }
