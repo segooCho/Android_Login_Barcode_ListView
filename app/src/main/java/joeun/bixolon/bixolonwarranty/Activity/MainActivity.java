@@ -1,6 +1,5 @@
 package joeun.bixolon.bixolonwarranty.Activity;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,28 +31,30 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Calendar;
-
-import joeun.bixolon.bixolonwarranty.Barcode.BarcodeCaptureActivity;
+import joeun.bixolon.bixolonwarranty.AlertMessage.AlertMessage;
+import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventButtonBarcode;
+import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventButtonSave;
+import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventOnActivityResult;
+import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventViewInit;
 import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 import joeun.bixolon.bixolonwarranty.R;
-
-import static joeun.bixolon.bixolonwarranty.R.id.datepicker;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     LinearLayout dynamicContent;
     View wizard;
-    int navigationItemSelectedId;
-    String ScanBarcode;
 
+    //MainActivity 설정
+    int navigationItemSelectedId;
+    public String scanBarcode;
+    public AlertMessage alertMessage;
     //Barcode UI
-    final Activity activity = this;
+    //public final Activity activity = this;
     Button buttonBarcode, buttonSave;
-    TextView textViewBarcode,textViewProductName, textViewEmail;
-    Spinner spinnerWarrantyType;
-    DatePicker datePicker;
+    public TextView textViewBarcode,textViewProductName, textViewEmail;
+    public Spinner spinnerWarrantyType;
+    public DatePicker datePicker;
 
     //ListView UI
 
@@ -76,14 +77,19 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //TODO :: content_main_barcode를 기본 화면으로 처리
-        ScanBarcode = null;
+        scanBarcode = null;
         navigationItemSelectedId = R.id.nav_barcode;
         dynamicContent = (LinearLayout) findViewById(R.id.dynamicContent);
         wizard = getLayoutInflater().inflate(R.layout.content_main_barcode, null);
         setTitle(R.string.title_activity_main_barcode);
         dynamicContent.removeAllViews();
         dynamicContent.addView(wizard);
-        onBarcodeEvent();
+
+        alertMessage = new AlertMessage(this);
+
+        //TODO :: Barcode Event 기본 설정
+        findViewByIdBarcodeView();
+        onBarcodeEventInit();
     }
 
     @Override
@@ -96,31 +102,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    //TODO :: 우측상단 Setting
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-    */
-
     //TODO :: 메뉴 클릭
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -131,16 +112,13 @@ public class MainActivity extends AppCompatActivity
         if (id == navigationItemSelectedId) return false;
 
         if (id == R.id.nav_barcode) {
-            //Intent intent = new Intent(MainActivity.this, BarcodeActivity.class);
-            //startActivity(intent);
-            //finish();
-
             navigationItemSelectedId = R.id.nav_barcode;
             wizard = getLayoutInflater().inflate(R.layout.content_main_barcode, null);
             setTitle(R.string.title_activity_main_barcode);
             dynamicContent.removeAllViews();
             dynamicContent.addView(wizard);
-            onBarcodeEvent();
+            findViewByIdBarcodeView();
+            onBarcodeEventInit();
         } else if (id == R.id.nav_list) {
             wizard = getLayoutInflater().inflate(R.layout.content_main_listview, null);
             setTitle(R.string.title_activity_main_list);
@@ -155,205 +133,88 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    //TODO :: Barcode Event View ID 찾기
+    private void findViewByIdBarcodeView() {
+        textViewBarcode = (TextView) findViewById(R.id.textViewBarcode);
+        buttonBarcode = (Button) findViewById(R.id.buttonBarcode);
+        textViewBarcode = (TextView) findViewById(R.id.textViewBarcode);
+        textViewProductName = (TextView) findViewById(R.id.textViewProductName);
+        textViewEmail = (TextView) findViewById(R.id.textViewEmail);
+        spinnerWarrantyType = (Spinner)findViewById(R.id.spinnerWarrantyType);
+        datePicker = (DatePicker) findViewById(R.id.datePicker);
+        buttonSave = (Button) findViewById(R.id.buttonSave);
+    }
 
     //TODO :: Barcode Event 정의
-    private void onBarcodeEvent() {
-        buttonBarcode = (Button) findViewById(R.id.buttonBarcode);
-        buttonBarcode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ScanBarcode = null;
-                textViewBarcode.setText("Barocde");
-                textViewProductName.setText("ProductName");
-                textViewEmail.setText("E-Mail");
-                spinnerWarrantyType.setSelection(0);
-                Calendar calendar = Calendar.getInstance(); // date 초기화
-                datePicker.init(calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH)
-                        , null);
-
-                IntentIntegrator integrator = new IntentIntegrator(activity);
-                integrator.setCaptureActivity(BarcodeCaptureActivity.class);
-                integrator.setOrientationLocked(false);
-                integrator.initiateScan();
-            }
-        });
-
-        textViewBarcode = (TextView) findViewById(R.id.textViewBarcode);
-        textViewBarcode.setText("Barocde");
-        textViewProductName = (TextView) findViewById(R.id.textViewProductName);
-        textViewProductName.setText("ProductName");
-        textViewEmail = (TextView) findViewById(R.id.textViewEmail);
-        textViewEmail.setText("E-Mail");
-        spinnerWarrantyType = (Spinner)findViewById(R.id.spinnerWarrantyType);
-        datePicker = (DatePicker) findViewById(R.id.datepicker);
-
-        /*
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                tv.setText("position : " + position +
-                        parent.getItemAtPosition(position));
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        */
-
-        /*
-        datePicker.init(datePicker.getYear(),
-                datePicker.getMonth(),
-                datePicker.getDayOfMonth(),
-                new DatePicker.OnDateChangedListener() {
-                    @Override
-                    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        // TODO Auto-generated method stub
-                        String msg = String.format("%d / %d / %d", year,monthOfYear+1, dayOfMonth);
-                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
-        */
-
-        buttonSave = (Button) findViewById(R.id.buttonSave);
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ScanBarcode == null) {
-
-                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-                    alertDialog.setTitle("Error");
-                    alertDialog.setMessage("Barcode Scan No");
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    alertDialog.show();
-                    return;
-                }
-
-                String id = "Test";
-                Log.v("Save", "ScanBarcode : " + ScanBarcode);
-                Log.v("Save", "WarrantyType : " + spinnerWarrantyType.getSelectedItem());
-                Log.v("Save", "WarrantyDate : " + String.format("%d%02d%02d", datePicker.getYear(),datePicker.getMonth()+1, datePicker.getDayOfMonth()));
-
-                try {
-                    BaseUrl baseUrl = new BaseUrl();
-                    AndroidNetworking.put(baseUrl.getBarcodeUrl())
-                            .addBodyParameter("id",id)
-                            .addBodyParameter("barcode",ScanBarcode)
-                            .addBodyParameter("warrantyType",spinnerWarrantyType.getSelectedItem().toString())
-                            .addBodyParameter("warrantyDate",String.format("%d%02d%02d", datePicker.getYear(),datePicker.getMonth()+1, datePicker.getDayOfMonth()))
-                            .setPriority(Priority.LOW)
-                            .build()
-                            .getAsJSONObject(new JSONObjectRequestListener() {
-                                @Override
-                                public void onResponse(JSONObject jsonObject) {
-                                    // do anything with responseUserLoginTask
-                                    Log.v("Save", "======================================");
-                                    Log.v("Save", "onResponse");
-
-                                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-                                    alertDialog.setTitle("OK");
-                                    alertDialog.setMessage("Save Ok");
-                                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    dialog.dismiss();
-                                                }
-                                            });
-                                    alertDialog.show();
-                                    return;
-
-                                }
-                                @Override
-                                public void onError(ANError error) {
-                                    // handle error
-                                    Log.v("Save", "======================================");
-                                    Log.v("Save", "onError");
-                                    Log.v("Save", String.valueOf(error));
-                                }
-                            });
-
-                    //TODO: 응답 시간을 강제적으로 기다린다... 추후 문제 발생 할수 있다.
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    Log.v("Barcode", "======================================");
-                    Log.v("Barcode", "InterruptedException");
-                    Log.v("Barcode", String.valueOf(e));
-                }
-            }
-        });
-
+    private void onBarcodeEventInit() {
+        new BarcodeEventViewInit(this);
+        buttonBarcode.setOnClickListener(new BarcodeEventButtonBarcode(this));
+        buttonSave.setOnClickListener(new BarcodeEventButtonSave(this));
     }
 
     //TODO :: Barcode Event Scan 처리
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result.getContents() == null) return;
-
-        textViewBarcode.setText("Barocde : " + result.getContents());
-        ScanBarcode = null;
-        try {
-            BaseUrl baseUrl = new BaseUrl();
-            AndroidNetworking.post(baseUrl.getBarcodeUrl())
-                    .addBodyParameter("barcode",result.getContents())
-                    .setPriority(Priority.LOW)
-                    .build()
-                    .getAsJSONArray(new JSONArrayRequestListener() {
-                        @Override
-                        public void onResponse(JSONArray jsonArray) {
-                            // do anything with responseUserLoginTask
-                            Log.v("Barcode", "======================================");
-                            Log.v("Barcode", "onResponse");
-                            try{
-                                for (int i = 0; i < jsonArray.length(); i++){
-                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                    //Log.v("Barcode", "LastName : " + jsonObject.getString("LastName"));
-                                    //Log.v("Barcode", "Email : " + jsonObject.getString("Email"));
-                                    ScanBarcode = jsonObject.getString("FirstName");
-                                    textViewProductName.setText("ProductName : " + jsonObject.getString("LastName"));
-                                    textViewEmail.setText("E-Mail : " + jsonObject.getString("Email"));
+        if (result == null) return;
+        //Log.v("requestCode", "requestCode : " + requestCode);
+        //Log.v("resultCode", "resultCode : " + resultCode);
+        switch (requestCode) {
+            // TODO :: IntentIntegrator : REQUEST_CODE = 0x0000c0de;
+            case 49374: {
+                new BarcodeEventOnActivityResult(this, result.getContents());
+                /*
+                textViewBarcode.setText("Barocde : " + result.getContents());
+                scanBarcode = null;
+                try {
+                    BaseUrl baseUrl = new BaseUrl();
+                    AndroidNetworking.post(baseUrl.getBarcodeUrl())
+                            .addBodyParameter("barcode",result.getContents())
+                            .setPriority(Priority.LOW)
+                            .build()
+                            .getAsJSONArray(new JSONArrayRequestListener() {
+                                @Override
+                                public void onResponse(JSONArray jsonArray) {
+                                    // do anything with responseUserLoginTask
+                                    Log.v("Barcode", "======================================");
+                                    Log.v("Barcode", "onResponse");
+                                    try{
+                                        for (int i = 0; i < jsonArray.length(); i++){
+                                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                            //Log.v("Barcode", "LastName : " + jsonObject.getString("LastName"));
+                                            //Log.v("Barcode", "Email : " + jsonObject.getString("Email"));
+                                            scanBarcode = jsonObject.getString("FirstName");
+                                            textViewProductName.setText("ProductName : " + jsonObject.getString("LastName"));
+                                            textViewEmail.setText("E-Mail : " + jsonObject.getString("Email"));
+                                        }
+                                    }
+                                    catch (JSONException e){
+                                        Log.v("Barcode", "======================================");
+                                        Log.v("Barcode", "JSONException");
+                                        Log.v("Barcode", String.valueOf(e));
+                                        alertMessage.AlertShow("Error","Communication Error(JSONException)").show();
+                                    }
                                 }
-                            }
-                            catch (JSONException e){
-                                Log.v("Barcode", "======================================");
-                                Log.v("Barcode", "JSONException");
-                                Log.v("Barcode", String.valueOf(e));
-                            }
-                        }
-                        @Override
-                        public void onError(ANError error) {
-                            // handle error
-                            Log.v("Barcode", "======================================");
-                            Log.v("Barcode", "onError");
-                            Log.v("Barcode", String.valueOf(error));
-                        }
-                    });
-
-            //TODO: 응답 시간을 강제적으로 기다린다... 추후 문제 발생 할수 있다.
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            Log.v("Barcode", "======================================");
-            Log.v("Barcode", "InterruptedException");
-            Log.v("Barcode", String.valueOf(e));
+                                @Override
+                                public void onError(ANError error) {
+                                    // handle error
+                                    Log.v("Barcode", "======================================");
+                                    Log.v("Barcode", "ANError");
+                                    Log.v("Barcode", String.valueOf(error));
+                                    alertMessage.AlertShow("Error","Communication Error(ANError)").show();
+                                }
+                            });
+                    //TODO: 응답 시간을 강제적으로 기다린다... 추후 문제 발생 할수 있다.
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    Log.v("Barcode", "======================================");
+                    Log.v("Barcode", "InterruptedException");
+                    Log.v("Barcode", String.valueOf(e));
+                    alertMessage.AlertShow("Error","Communication Error(InterruptedException)").show();
+                }
+                */
+            }
         }
     }
-
-    /*
-    //TODO :: DatePicker Event 처리
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-    */
-
 
 }

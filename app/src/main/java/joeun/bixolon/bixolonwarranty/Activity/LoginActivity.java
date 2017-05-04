@@ -341,7 +341,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 Log.v("Login", "======================================");
                                 Log.v("Login", "OK");
                                 mlogin = true;
-
                             }
                             @Override
                             public void onError(ANError error) {
