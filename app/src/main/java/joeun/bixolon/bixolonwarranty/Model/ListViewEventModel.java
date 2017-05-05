@@ -1,4 +1,4 @@
-package joeun.bixolon.bixolonwarranty.ListView;
+package joeun.bixolon.bixolonwarranty.Model;
 
 import android.graphics.drawable.Drawable;
 

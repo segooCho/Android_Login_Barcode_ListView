@@ -7,6 +7,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import java.util.Calendar;
 
 import joeun.bixolon.bixolonwarranty.Activity.MainActivity;
+import joeun.bixolon.bixolonwarranty.Model.BarcodeEventModel;
 
 /**
  * Created by admin on 2017. 5. 4..
@@ -17,7 +18,9 @@ public class BarcodeEventViewInit {
 
     public BarcodeEventViewInit(MainActivity _context) {
         context = _context;
-        context.scanBarcode = null;
+
+        context.barcodeEventModel.setBarcode(null);
+
         context.textViewBarcode.setText("Barocde");
         context.textViewProductName.setText("ProductName");
         context.textViewEmail.setText("E-Mail");

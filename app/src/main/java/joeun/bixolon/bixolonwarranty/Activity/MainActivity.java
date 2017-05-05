@@ -1,11 +1,7 @@
 package joeun.bixolon.bixolonwarranty.Activity;
 
-import android.app.ListActivity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -15,30 +11,24 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import joeun.bixolon.bixolonwarranty.AlertMessage.AlertMessage;
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventButtonBarcode;
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventButtonSave;
+import joeun.bixolon.bixolonwarranty.Model.BarcodeEventModel;
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventOnActivityResult;
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventViewInit;
 import joeun.bixolon.bixolonwarranty.ListView.ListViewEvent;
+import joeun.bixolon.bixolonwarranty.Model.LoginEventModel;
 import joeun.bixolon.bixolonwarranty.R;
 
 public class MainActivity extends AppCompatActivity
@@ -51,20 +41,29 @@ public class MainActivity extends AppCompatActivity
     int navigationItemSelectedId;
     public AlertMessage alertMessage;
 
-    //Barcode
-    public String scanBarcode;
+    //Barcode UI
+    //public String scanBarcode;
     Button buttonBarcode, buttonSave;
     public TextView textViewBarcode,textViewProductName, textViewEmail;
     public Spinner spinnerWarrantyType;
     public DatePicker datePicker;
 
-    //ListView
+    //ListView UI
     public ListView listView ;
+
+    //Model
+    public LoginEventModel loginEventModel = new LoginEventModel();
+    public BarcodeEventModel barcodeEventModel = new BarcodeEventModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Login ID
+        Bundle bundle = getIntent().getExtras();
+        loginEventModel.setId(bundle.getString("LoginID"));
+        Log.v("LoginID", bundle.getString("LoginID"));
 
         //TODO :: 기본 구성 화면
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -80,7 +79,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //TODO :: content_main_barcode를 기본 화면으로 처리
-        scanBarcode = null;
+        //scanBarcode = null;
         navigationItemSelectedId = R.id.nav_barcode;
         dynamicContent = (LinearLayout) findViewById(R.id.dynamicContent);
         wizard = getLayoutInflater().inflate(R.layout.content_main_barcode, null);
@@ -91,7 +90,9 @@ public class MainActivity extends AppCompatActivity
         //Message
         alertMessage = new AlertMessage(this);
 
+
         //TODO :: Barcode Event 기본 설정
+        barcodeEventModel.setBarcode(null);
         findViewByIdBarcodeView();
         onBarcodeEventInit();
     }

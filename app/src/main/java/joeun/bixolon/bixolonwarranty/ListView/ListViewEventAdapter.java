@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import joeun.bixolon.bixolonwarranty.Model.ListViewEventModel;
 import joeun.bixolon.bixolonwarranty.R;
 
 /**

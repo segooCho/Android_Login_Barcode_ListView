@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import joeun.bixolon.bixolonwarranty.Activity.MainActivity;
+import joeun.bixolon.bixolonwarranty.Model.BarcodeEventModel;
 import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 
 /**
@@ -26,7 +27,7 @@ public class BarcodeEventOnActivityResult {
     public BarcodeEventOnActivityResult(MainActivity _context, String barcode) {
         context = _context;
         context.textViewBarcode.setText("Barocde : " + barcode);
-        context.scanBarcode = null;
+        context.barcodeEventModel.setBarcode(null);
 
         try {
             BaseUrl baseUrl = new BaseUrl();
@@ -45,7 +46,7 @@ public class BarcodeEventOnActivityResult {
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                                     //Log.v("Barcode", "LastName : " + jsonObject.getString("LastName"));
                                     //Log.v("Barcode", "Email : " + jsonObject.getString("Email"));
-                                    context.scanBarcode = jsonObject.getString("FirstName");
+                                    context.barcodeEventModel.setBarcode(jsonObject.getString("FirstName"));
                                     context.textViewProductName.setText("ProductName : " + jsonObject.getString("LastName"));
                                     context.textViewEmail.setText("E-Mail : " + jsonObject.getString("Email"));
                                 }

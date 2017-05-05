@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         //TODO: 임시 시작 처리
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.putExtra("LoginID","LoginTest");
         startActivity(intent);
         finish();
 

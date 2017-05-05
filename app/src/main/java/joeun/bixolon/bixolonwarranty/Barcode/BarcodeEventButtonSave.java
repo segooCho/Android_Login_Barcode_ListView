@@ -1,7 +1,5 @@
 package joeun.bixolon.bixolonwarranty.Barcode;
 
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 
@@ -9,13 +7,12 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.google.zxing.integration.android.IntentIntegrator;
 
 import org.json.JSONObject;
 
-import java.util.Calendar;
-
 import joeun.bixolon.bixolonwarranty.Activity.MainActivity;
+import joeun.bixolon.bixolonwarranty.Model.BarcodeEventModel;
+import joeun.bixolon.bixolonwarranty.Model.LoginEventModel;
 import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 
 /**
@@ -34,24 +31,20 @@ public class BarcodeEventButtonSave implements View.OnClickListener {
         context.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (context.scanBarcode == null) {
+                if (context.barcodeEventModel.getBarcode() == null) {
                     context.alertMessage.AlertShow("Error","Barcode Scan No").show();
                     return;
                 }
 
-                //TODO :: Login ID 적용이 필요
-                String id = "Test";
-                Log.v("Save", "ScanBarcode : " + context.scanBarcode);
-                Log.v("Save", "WarrantyType : " + context.spinnerWarrantyType.getSelectedItem());
-                Log.v("Save", "WarrantyDate : " + String.format("%d%02d%02d", context.datePicker.getYear(),context.datePicker.getMonth()+1, context.datePicker.getDayOfMonth()));
-
                 try {
                     BaseUrl baseUrl = new BaseUrl();
                     AndroidNetworking.put(baseUrl.getBarcodeUrl())
-                            .addBodyParameter("id",id)
-                            .addBodyParameter("barcode",context.scanBarcode)
-                            .addBodyParameter("warrantyType",context.spinnerWarrantyType.getSelectedItem().toString())
-                            .addBodyParameter("warrantyDate",String.format("%d%02d%02d", context.datePicker.getYear(),context.datePicker.getMonth()+1, context.datePicker.getDayOfMonth()))
+                            .addBodyParameter("id",context.loginEventModel.getId())
+                            .addBodyParameter("barcode", context.barcodeEventModel.getBarcode())
+                            .addBodyParameter("warrantyType", context.spinnerWarrantyType.getSelectedItem().toString())
+                            .addBodyParameter("warrantyDate", String.format("%d%02d%02d",   context.datePicker.getYear(),
+                                                                                            context.datePicker.getMonth()+1,
+                                                                                            context.datePicker.getDayOfMonth()))
                             .setPriority(Priority.LOW)
                             .build()
                             .getAsJSONObject(new JSONObjectRequestListener() {
