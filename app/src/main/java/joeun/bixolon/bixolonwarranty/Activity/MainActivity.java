@@ -1,8 +1,10 @@
 package joeun.bixolon.bixolonwarranty.Activity;
 
+import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
@@ -13,11 +15,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -27,16 +33,12 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import joeun.bixolon.bixolonwarranty.AlertMessage.AlertMessage;
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventButtonBarcode;
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventButtonSave;
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventOnActivityResult;
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventViewInit;
-import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
+import joeun.bixolon.bixolonwarranty.ListView.ListViewEvent;
 import joeun.bixolon.bixolonwarranty.R;
 
 public class MainActivity extends AppCompatActivity
@@ -47,16 +49,17 @@ public class MainActivity extends AppCompatActivity
 
     //MainActivity 설정
     int navigationItemSelectedId;
-    public String scanBarcode;
     public AlertMessage alertMessage;
-    //Barcode UI
-    //public final Activity activity = this;
+
+    //Barcode
+    public String scanBarcode;
     Button buttonBarcode, buttonSave;
     public TextView textViewBarcode,textViewProductName, textViewEmail;
     public Spinner spinnerWarrantyType;
     public DatePicker datePicker;
 
-    //ListView UI
+    //ListView
+    public ListView listView ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +88,7 @@ public class MainActivity extends AppCompatActivity
         dynamicContent.removeAllViews();
         dynamicContent.addView(wizard);
 
+        //Message
         alertMessage = new AlertMessage(this);
 
         //TODO :: Barcode Event 기본 설정
@@ -120,11 +124,13 @@ public class MainActivity extends AppCompatActivity
             findViewByIdBarcodeView();
             onBarcodeEventInit();
         } else if (id == R.id.nav_list) {
+            navigationItemSelectedId = R.id.nav_list;
             wizard = getLayoutInflater().inflate(R.layout.content_main_listview, null);
             setTitle(R.string.title_activity_main_list);
             dynamicContent.removeAllViews();
             dynamicContent.addView(wizard);
-            navigationItemSelectedId = R.id.nav_list;
+            findViewByIdListView();
+            onListViewEventInit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -152,7 +158,17 @@ public class MainActivity extends AppCompatActivity
         buttonSave.setOnClickListener(new BarcodeEventButtonSave(this));
     }
 
-    //TODO :: Barcode Event Scan 처리
+    //TODO :: ListView Event View ID 찾기
+    private void findViewByIdListView() {
+        listView = (ListView) findViewById(R.id.listView);
+    }
+
+    //TODO :: ListView Event 정의
+    private void onListViewEventInit() {
+        new ListViewEvent(this);
+    }
+
+    //TODO :: onActivityResult(Barcode Event Scan 처리)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
