@@ -7,7 +7,7 @@ import android.graphics.drawable.Drawable;
  */
 
 
-public class ListViewItem {
+public class ListViewEventModel {
 
     private Drawable iconDrawable ;
     private String barcode ;

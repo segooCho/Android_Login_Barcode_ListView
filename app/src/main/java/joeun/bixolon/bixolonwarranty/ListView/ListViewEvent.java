@@ -13,28 +13,28 @@ import joeun.bixolon.bixolonwarranty.R;
 
 public class ListViewEvent extends ListActivity {
     protected MainActivity context;
-    ListViewAdapter adapter;
+    ListViewEventAdapter listViewEventAdapter;
 
     public ListViewEvent(MainActivity _context) {
         context = _context;
 
-        adapter = new ListViewAdapter() ;
-        context.listView.setAdapter(adapter);
-        adapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Box", "Account Box Black 36dp","aaaaaaaaa");
-        adapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Circle", "Account Circle Black 36dp","aaaaaaaaa");
-        adapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Box", "Account Box Black 36dp","aaaaaaaaa");
-        adapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Circle", "Account Circle Black 36dp","aaaaaaaaa");
-        adapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Box", "Account Box Black 36dp","aaaaaaaaa");
-        adapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Circle", "Account Circle Black 36dp","aaaaaaaaa");
-        adapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Box", "Account Box Black 36dp","aaaaaaaaa");
-        adapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Circle", "Account Circle Black 36dp","aaaaaaaaa");
-        adapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Box", "Account Box Black 36dp","aaaaaaaaa");
-        adapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Circle", "Account Circle Black 36dp","aaaaaaaaa");
-        adapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Box", "Account Box Black 36dp","aaaaaaaaa");
-        adapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Circle", "Account Circle Black 36dp","aaaaaaaaa");
-        adapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Box", "Account Box Black 36dp","aaaaaaaaa");
-        adapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Circle", "Account Circle Black 36dp","aaaaaaaaa");
-        adapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Box", "Account Box Black 36dp","aaaaaaaaa");
-        adapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Circle", "Account Circle Black 36dp","aaaaaaaaa");
+        listViewEventAdapter = new ListViewEventAdapter();
+        context.listView.setAdapter(listViewEventAdapter);
+        listViewEventAdapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Box", "Account Box Black 36dp","aaaaaaaaa");
+        listViewEventAdapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Circle", "Account Circle Black 36dp","aaaaaaaaa");
+        listViewEventAdapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Box", "Account Box Black 36dp","aaaaaaaaa");
+        listViewEventAdapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Circle", "Account Circle Black 36dp","aaaaaaaaa");
+        listViewEventAdapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Box", "Account Box Black 36dp","aaaaaaaaa");
+        listViewEventAdapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Circle", "Account Circle Black 36dp","aaaaaaaaa");
+        listViewEventAdapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Box", "Account Box Black 36dp","aaaaaaaaa");
+        listViewEventAdapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Circle", "Account Circle Black 36dp","aaaaaaaaa");
+        listViewEventAdapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Box", "Account Box Black 36dp","aaaaaaaaa");
+        listViewEventAdapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Circle", "Account Circle Black 36dp","aaaaaaaaa");
+        listViewEventAdapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Box", "Account Box Black 36dp","aaaaaaaaa");
+        listViewEventAdapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Circle", "Account Circle Black 36dp","aaaaaaaaa");
+        listViewEventAdapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Box", "Account Box Black 36dp","aaaaaaaaa");
+        listViewEventAdapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Circle", "Account Circle Black 36dp","aaaaaaaaa");
+        listViewEventAdapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Box", "Account Box Black 36dp","aaaaaaaaa");
+        listViewEventAdapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), "Circle", "Account Circle Black 36dp","aaaaaaaaa");
     }
 }
