@@ -39,8 +39,8 @@ public class BarcodeEventButtonSave implements View.OnClickListener {
                 try {
                     BaseUrl baseUrl = new BaseUrl();
                     AndroidNetworking.put(baseUrl.getBarcodeUrl())
-                            .addBodyParameter("id",context.loginEventModel.getId())
                             .addBodyParameter("barcode", context.barcodeEventModel.getBarcode())
+                            .addBodyParameter("id",context.loginEventModel.getId())
                             .addBodyParameter("warrantyType", context.spinnerWarrantyType.getSelectedItem().toString())
                             .addBodyParameter("warrantyDate", String.format("%d%02d%02d",   context.datePicker.getYear(),
                                                                                             context.datePicker.getMonth()+1,
@@ -69,9 +69,9 @@ public class BarcodeEventButtonSave implements View.OnClickListener {
                     //TODO: 응답 시간을 강제적으로 기다린다... 추후 문제 발생 할수 있다.
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
-                    Log.v("Barcode", "======================================");
-                    Log.v("Barcode", "InterruptedException");
-                    Log.v("Barcode", String.valueOf(e));
+                    Log.v("Save", "======================================");
+                    Log.v("Save", "InterruptedException");
+                    Log.v("Save", String.valueOf(e));
                     context.alertMessage.AlertShow("Error","Communication Error(InterruptedException)").show();
                 }
             }

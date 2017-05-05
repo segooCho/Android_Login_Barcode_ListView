@@ -2,6 +2,7 @@ package joeun.bixolon.bixolonwarranty.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -24,10 +25,11 @@ import com.google.zxing.integration.android.IntentResult;
 import joeun.bixolon.bixolonwarranty.AlertMessage.AlertMessage;
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventButtonBarcode;
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventButtonSave;
+import joeun.bixolon.bixolonwarranty.ListView.ListViewEventAdapter;
+import joeun.bixolon.bixolonwarranty.ListView.ListViewEventButtonFind;
 import joeun.bixolon.bixolonwarranty.Model.BarcodeEventModel;
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventOnActivityResult;
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventViewInit;
-import joeun.bixolon.bixolonwarranty.ListView.ListViewEvent;
 import joeun.bixolon.bixolonwarranty.Model.LoginEventModel;
 import joeun.bixolon.bixolonwarranty.R;
 
@@ -49,7 +51,10 @@ public class MainActivity extends AppCompatActivity
     public DatePicker datePicker;
 
     //ListView UI
-    public ListView listView ;
+    Button buttonFind;
+
+    public ListView listView;
+    public ListViewEventAdapter listViewEventAdapter = new ListViewEventAdapter();
 
     //Model
     public LoginEventModel loginEventModel = new LoginEventModel();
@@ -63,7 +68,7 @@ public class MainActivity extends AppCompatActivity
         //Login ID
         Bundle bundle = getIntent().getExtras();
         loginEventModel.setId(bundle.getString("LoginID"));
-        Log.v("LoginID", bundle.getString("LoginID"));
+        //Log.v("LoginID", bundle.getString("LoginID"));
 
         //TODO :: 기본 구성 화면
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -89,7 +94,6 @@ public class MainActivity extends AppCompatActivity
 
         //Message
         alertMessage = new AlertMessage(this);
-
 
         //TODO :: Barcode Event 기본 설정
         barcodeEventModel.setBarcode(null);
@@ -161,12 +165,13 @@ public class MainActivity extends AppCompatActivity
 
     //TODO :: ListView Event View ID 찾기
     private void findViewByIdListView() {
+        buttonFind = (Button) findViewById(R.id.buttonFind);
         listView = (ListView) findViewById(R.id.listView);
     }
 
     //TODO :: ListView Event 정의
     private void onListViewEventInit() {
-        new ListViewEvent(this);
+        buttonFind.setOnClickListener(new ListViewEventButtonFind(this));
     }
 
     //TODO :: onActivityResult(Barcode Event Scan 처리)
