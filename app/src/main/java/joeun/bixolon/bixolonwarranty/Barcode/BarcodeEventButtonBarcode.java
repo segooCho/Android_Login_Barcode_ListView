@@ -1,8 +1,10 @@
 package joeun.bixolon.bixolonwarranty.Barcode;
 
+import android.content.Intent;
 import android.view.View;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.util.Calendar;
 
@@ -32,5 +34,4 @@ public class BarcodeEventButtonBarcode implements View.OnClickListener {
             }
         });
     }
-
 }

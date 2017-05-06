@@ -21,14 +21,14 @@ public class BarcodeEventViewInit {
 
         context.barcodeEventModel.setBarcode(null);
 
-        context.textViewBarcode.setText("Barocde");
-        context.textViewProductName.setText("ProductName");
-        context.textViewEmail.setText("E-Mail");
-        context.spinnerWarrantyType.setSelection(0);
+        context.barcodeTextViewBarcode.setText("Barocde");
+        context.barcodeTextViewProductName.setText("ProductName");
+        context.barcodeTextViewEmail.setText("E-Mail");
+        context.barcodeSpinnerWarrantyType.setSelection(0);
         Calendar calendar = Calendar.getInstance(); // date 초기화
-        context.datePicker.init(calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH),
-                null);
+        context.barcodeTextViewDatePicker.setText( String.format("%d-%02d-%02d",
+                                            calendar.get(Calendar.YEAR),
+                                            calendar.get(Calendar.MONTH)+1,
+                                            calendar.get(Calendar.DAY_OF_MONTH)));
     }
 }

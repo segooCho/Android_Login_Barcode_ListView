@@ -9,10 +9,11 @@ import android.graphics.drawable.Drawable;
 
 public class ListViewEventModel {
 
-    private Drawable iconDrawable ;
-    private String barcode ;
-    private String productName ;
-    private String desc ;
+    private Drawable iconDrawable;
+    private String barcode;
+    private String productName;
+    private String warrantyType;
+    private String warrantyDate;
 
     public void setIcon(Drawable icon) {
         iconDrawable = icon ;
@@ -23,8 +24,11 @@ public class ListViewEventModel {
     public void setProductName(String _productName) {
         productName = _productName ;
     }
-    public void setDesc(String _desc) {
-        desc = _desc ;
+    public void setWarrantyType(String _warrantyType) {
+        warrantyType = _warrantyType ;
+    }
+    public void setWarrantyDate(String _warrantyDate) {
+        warrantyDate = _warrantyDate ;
     }
 
     public Drawable getIcon() {
@@ -36,7 +40,10 @@ public class ListViewEventModel {
     public String getProductName() {
         return this.productName ;
     }
-    public String getDesc() {
-        return this.desc ;
+    public String getWarrantyType() {
+        return this.warrantyType ;
+    }
+    public String getWarrantyDate() {
+        return this.warrantyDate ;
     }
 }

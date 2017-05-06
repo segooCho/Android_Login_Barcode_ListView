@@ -22,7 +22,7 @@ public class ListViewEventAdapter extends BaseAdapter {
 
     private ArrayList<ListViewEventModel> listViewEventModelArrayList = new ArrayList<ListViewEventModel>() ;
 
-    // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
+    //list 의 개수를 리턴. : 필수 구현
     @Override
     public int getCount() {
         return listViewEventModelArrayList.size() ;
@@ -31,28 +31,28 @@ public class ListViewEventAdapter extends BaseAdapter {
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴. : 필수 구현
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        //final int pos = position;
         final Context context = parent.getContext();
 
-        // "listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.content_main_listview_viewpager, parent, false);
         }
 
-        ImageView iconImageView = (ImageView) convertView.findViewById(R.id.iconImageView) ;
-        TextView textViewBarcode = (TextView) convertView.findViewById(R.id.textViewBarcode) ;
-        TextView textViewProducntName = (TextView) convertView.findViewById(R.id.textViewProducntName) ;
-        TextView textViewDesc = (TextView) convertView.findViewById(R.id.textViewDesc) ;
+        ImageView lvIconImageView = (ImageView) convertView.findViewById(R.id.lvIconImageView) ;
+        TextView lvTextViewBarcode = (TextView) convertView.findViewById(R.id.lvTextViewBarcode) ;
+        TextView lvTextViewProductName = (TextView) convertView.findViewById(R.id.lvTextViewProductName) ;
+        TextView lvTextViewWarrantyType = (TextView) convertView.findViewById(R.id.lvTextViewWarrantyType) ;
+        TextView lvTextViewWarrantyDate = (TextView) convertView.findViewById(R.id.lvTextViewWarrantyDate) ;
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         ListViewEventModel listViewEventModel = listViewEventModelArrayList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-        iconImageView.setImageDrawable(listViewEventModel.getIcon());
-        textViewBarcode.setText(listViewEventModel.getBarcode());
-        textViewProducntName.setText(listViewEventModel.getProductName());
-        textViewDesc.setText(listViewEventModel.getDesc());
+        lvIconImageView.setImageDrawable(listViewEventModel.getIcon());
+        lvTextViewBarcode.setText(listViewEventModel.getBarcode());
+        lvTextViewProductName.setText(listViewEventModel.getProductName());
+        lvTextViewWarrantyType.setText(listViewEventModel.getWarrantyType());
+        lvTextViewWarrantyDate.setText(listViewEventModel.getWarrantyDate());
 
         return convertView;
     }
@@ -70,13 +70,14 @@ public class ListViewEventAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Drawable icon, String barcode, String productName, String Desc) {
+    public void addItem(Drawable icon, String barcode, String productName, String warrantyType, String warrantyDate) {
         ListViewEventModel listViewEventModel = new ListViewEventModel();
 
         listViewEventModel.setIcon(icon);
         listViewEventModel.setBarcode(barcode);
         listViewEventModel.setProductName(productName);
-        listViewEventModel.setDesc(Desc);
+        listViewEventModel.setWarrantyType(warrantyType);
+        listViewEventModel.setWarrantyDate(warrantyDate);
 
         listViewEventModelArrayList.add(listViewEventModel);
     }

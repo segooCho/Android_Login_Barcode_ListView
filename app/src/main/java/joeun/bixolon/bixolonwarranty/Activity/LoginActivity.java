@@ -73,14 +73,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         //TODO: 임시 시작 처리
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        intent.putExtra("LoginID","LoginTest");
+        intent.putExtra("LoginID","1001");
         startActivity(intent);
         finish();
-
-
-
-
-
 
 
         setContentView(R.layout.activity_login);
@@ -411,8 +406,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
                 //TODO: MainActivity 시작
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("LoginID",mEmailView.getText().toString());
                 startActivity(intent);
-
                 //TODO: LoginActivity 죽이는건데.. 이 위치는 뒤로가기시 종료?? 위쪽은 로그인으로 이동 뭐지??
                 finish();
             } else {

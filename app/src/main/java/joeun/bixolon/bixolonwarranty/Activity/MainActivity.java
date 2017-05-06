@@ -2,8 +2,6 @@ package joeun.bixolon.bixolonwarranty.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -25,8 +22,10 @@ import com.google.zxing.integration.android.IntentResult;
 import joeun.bixolon.bixolonwarranty.AlertMessage.AlertMessage;
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventButtonBarcode;
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventButtonSave;
+import joeun.bixolon.bixolonwarranty.Common.ButtonDatePicker;
 import joeun.bixolon.bixolonwarranty.ListView.ListViewEventAdapter;
 import joeun.bixolon.bixolonwarranty.ListView.ListViewEventButtonFind;
+import joeun.bixolon.bixolonwarranty.ListView.ListViewEventViewInit;
 import joeun.bixolon.bixolonwarranty.Model.BarcodeEventModel;
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventOnActivityResult;
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventViewInit;
@@ -45,13 +44,13 @@ public class MainActivity extends AppCompatActivity
 
     //Barcode UI
     //public String scanBarcode;
-    Button buttonBarcode, buttonSave;
-    public TextView textViewBarcode,textViewProductName, textViewEmail;
-    public Spinner spinnerWarrantyType;
-    public DatePicker datePicker;
+    Button barcodeButtonBarcode, barcodeButtonDatePicker, barcodeButtonSave;
+    public TextView barcodeTextViewBarcode, barcodeTextViewProductName, barcodeTextViewEmail, barcodeTextViewDatePicker;
+    public Spinner barcodeSpinnerWarrantyType;
 
     //ListView UI
-    Button buttonFind;
+    public TextView lvTextViewDatePicker;
+    Button lvButtonDatePicker, lvButtonFind;
 
     public ListView listView;
     public ListViewEventAdapter listViewEventAdapter = new ListViewEventAdapter();
@@ -146,39 +145,45 @@ public class MainActivity extends AppCompatActivity
 
     //TODO :: Barcode Event View ID 찾기
     private void findViewByIdBarcodeView() {
-        textViewBarcode = (TextView) findViewById(R.id.textViewBarcode);
-        buttonBarcode = (Button) findViewById(R.id.buttonBarcode);
-        textViewBarcode = (TextView) findViewById(R.id.textViewBarcode);
-        textViewProductName = (TextView) findViewById(R.id.textViewProductName);
-        textViewEmail = (TextView) findViewById(R.id.textViewEmail);
-        spinnerWarrantyType = (Spinner)findViewById(R.id.spinnerWarrantyType);
-        datePicker = (DatePicker) findViewById(R.id.datePicker);
-        buttonSave = (Button) findViewById(R.id.buttonSave);
+        barcodeButtonBarcode = (Button) findViewById(R.id.barcodeButtonBarcode);
+        barcodeTextViewBarcode = (TextView) findViewById(R.id.barcodeTextViewBarcode);
+        barcodeTextViewProductName = (TextView) findViewById(R.id.barcodeTextViewProductName);
+        barcodeTextViewEmail = (TextView) findViewById(R.id.barcodeTextViewEmail);
+        barcodeSpinnerWarrantyType = (Spinner)findViewById(R.id.bSpinnerWarrantyType);
+        barcodeButtonDatePicker = (Button) findViewById(R.id.barcodeButtonDatePicker);
+        barcodeTextViewDatePicker = (TextView) findViewById(R.id.barcodeTextViewDatePicker);
+        barcodeButtonSave = (Button) findViewById(R.id.barcodeButtonSave);
     }
 
     //TODO :: Barcode Event 정의
     private void onBarcodeEventInit() {
         new BarcodeEventViewInit(this);
-        buttonBarcode.setOnClickListener(new BarcodeEventButtonBarcode(this));
-        buttonSave.setOnClickListener(new BarcodeEventButtonSave(this));
+        barcodeButtonBarcode.setOnClickListener(new BarcodeEventButtonBarcode(this));
+        barcodeButtonDatePicker.setOnClickListener(new ButtonDatePicker(this, barcodeTextViewDatePicker));
+        barcodeButtonSave.setOnClickListener(new BarcodeEventButtonSave(this));
     }
 
     //TODO :: ListView Event View ID 찾기
     private void findViewByIdListView() {
-        buttonFind = (Button) findViewById(R.id.buttonFind);
-        listView = (ListView) findViewById(R.id.listView);
+        lvButtonDatePicker = (Button) findViewById(R.id.lvButtonDatePicker);
+        lvTextViewDatePicker = (TextView) findViewById(R.id.lvTextViewDatePicker);
+        lvButtonFind = (Button) findViewById(R.id.lvButtonFind);
+        listView = (ListView) findViewById(R.id.lvListView);
     }
 
     //TODO :: ListView Event 정의
     private void onListViewEventInit() {
-        buttonFind.setOnClickListener(new ListViewEventButtonFind(this));
+        new ListViewEventViewInit(this);
+        lvButtonDatePicker.setOnClickListener(new ButtonDatePicker(this, lvTextViewDatePicker));
+        lvButtonFind.setOnClickListener(new ListViewEventButtonFind(this));
     }
+
 
     //TODO :: onActivityResult(Barcode Event Scan 처리)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result == null) return;
+        if (result.getContents() == null) return;
         //Log.v("requestCode", "requestCode : " + requestCode);
         //Log.v("resultCode", "resultCode : " + resultCode);
         switch (requestCode) {

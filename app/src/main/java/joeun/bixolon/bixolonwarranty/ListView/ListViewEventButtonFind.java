@@ -40,8 +40,8 @@ public class ListViewEventButtonFind implements View.OnClickListener {
                 try {
                     BaseUrl baseUrl = new BaseUrl();
                     AndroidNetworking.post(baseUrl.getListViewUrl())
-                            .addBodyParameter("id", "LONDON")
-                            .addBodyParameter("date", "20170504")
+                            .addBodyParameter("id", context.loginEventModel.getId())
+                            .addBodyParameter("date", context.lvTextViewDatePicker.getText().toString().replace("-",""))
                             .setPriority(Priority.LOW)
                             .build()
                             .getAsJSONArray(new JSONArrayRequestListener() {
@@ -56,7 +56,11 @@ public class ListViewEventButtonFind implements View.OnClickListener {
                                             //Log.v("Find", "Barcode : " + jsonObject.getString("Barcode"));
                                             //Log.v("Find", "Id : " + jsonObject.getString("Id"));
                                             //Log.v("Find", "WarrantyType : " + jsonObject.getString("WarrantyType"));
-                                            new ListViewEventView(context, jsonObject.getString("Barcode"), jsonObject.getString("Id"), jsonObject.getString("WarrantyType"));
+                                            new ListViewEventView(  context,
+                                                                    jsonObject.getString("Barcode"),
+                                                                    jsonObject.getString("Id"),
+                                                                    jsonObject.getString("WarrantyType"),
+                                                                    jsonObject.getString("WarrantyDate"));
                                         }
                                     }
                                     catch (JSONException e){

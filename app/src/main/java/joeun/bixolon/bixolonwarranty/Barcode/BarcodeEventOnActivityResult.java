@@ -26,7 +26,7 @@ public class BarcodeEventOnActivityResult {
 
     public BarcodeEventOnActivityResult(MainActivity _context, String barcode) {
         context = _context;
-        context.textViewBarcode.setText("Barocde : " + barcode);
+        context.barcodeTextViewBarcode.setText("Barocde : " + barcode);
         context.barcodeEventModel.setBarcode(null);
 
         try {
@@ -47,8 +47,8 @@ public class BarcodeEventOnActivityResult {
                                     //Log.v("Barcode", "LastName : " + jsonObject.getString("LastName"));
                                     //Log.v("Barcode", "Email : " + jsonObject.getString("Email"));
                                     context.barcodeEventModel.setBarcode(jsonObject.getString("FirstName"));
-                                    context.textViewProductName.setText("ProductName : " + jsonObject.getString("LastName"));
-                                    context.textViewEmail.setText("E-Mail : " + jsonObject.getString("Email"));
+                                    context.barcodeTextViewProductName.setText("ProductName : " + jsonObject.getString("LastName"));
+                                    context.barcodeTextViewEmail.setText("E-Mail : " + jsonObject.getString("Email"));
                                 }
                             }
                             catch (JSONException e){

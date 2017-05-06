@@ -14,10 +14,14 @@ import joeun.bixolon.bixolonwarranty.R;
 public class ListViewEventView extends ListActivity {
     protected MainActivity context;
 
-    public ListViewEventView(MainActivity _context, String barcode, String id, String warrantyType) {
+    public ListViewEventView(MainActivity _context, String barcode, String id, String warrantyType, String warrantyDate) {
         context = _context;
 
         context.listView.setAdapter(context.listViewEventAdapter);
-        context.listViewEventAdapter.addItem(ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp), barcode, id, warrantyType);
+        context.listViewEventAdapter.addItem(   ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp),
+                                                barcode,
+                                                id,
+                                                warrantyType,
+                                                warrantyDate);
     }
 }

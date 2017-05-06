@@ -41,10 +41,8 @@ public class BarcodeEventButtonSave implements View.OnClickListener {
                     AndroidNetworking.put(baseUrl.getBarcodeUrl())
                             .addBodyParameter("barcode", context.barcodeEventModel.getBarcode())
                             .addBodyParameter("id",context.loginEventModel.getId())
-                            .addBodyParameter("warrantyType", context.spinnerWarrantyType.getSelectedItem().toString())
-                            .addBodyParameter("warrantyDate", String.format("%d%02d%02d",   context.datePicker.getYear(),
-                                                                                            context.datePicker.getMonth()+1,
-                                                                                            context.datePicker.getDayOfMonth()))
+                            .addBodyParameter("warrantyType", context.barcodeSpinnerWarrantyType.getSelectedItem().toString())
+                            .addBodyParameter("warrantyDate", context.barcodeTextViewDatePicker.getText().toString().replace("-",""))
                             .setPriority(Priority.LOW)
                             .build()
                             .getAsJSONObject(new JSONObjectRequestListener() {
