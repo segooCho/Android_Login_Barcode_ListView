@@ -10,14 +10,14 @@ import joeun.bixolon.bixolonwarranty.R;
  * Created by admin on 2017. 5. 10..
  */
 
-public class LoginEventButtionSignIn {
+public class LoginEventButtonSignIn {
     private LoginActivity context;
 
     /**
      *
      * @param _context
      */
-    public LoginEventButtionSignIn(LoginActivity _context) {
+    public LoginEventButtonSignIn(LoginActivity _context) {
         context = _context;
     }
 

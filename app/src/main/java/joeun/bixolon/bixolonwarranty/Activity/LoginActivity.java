@@ -20,7 +20,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import joeun.bixolon.bixolonwarranty.Login.LoaderCallback;
-import joeun.bixolon.bixolonwarranty.Login.LoginEventButtionSignIn;
+import joeun.bixolon.bixolonwarranty.Login.LoginEventButtonSignIn;
 import joeun.bixolon.bixolonwarranty.Login.LoginTask;
 import joeun.bixolon.bixolonwarranty.R;
 import joeun.bixolon.bixolonwarranty.Common.Progress;
@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     private View formView, progressView;
 
     LoaderCallback loaderCallback;
-    LoginEventButtionSignIn loginEventButtionSignIn;
+    LoginEventButtonSignIn loginEventButtonSignIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +67,12 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         findViewByIdView();
 
-        loginEventButtionSignIn = new LoginEventButtionSignIn(this);
+        loginEventButtonSignIn = new LoginEventButtonSignIn(this);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    loginEventButtionSignIn.Login();
+                    loginEventButtonSignIn.Login();
                     return true;
                 }
                 return false;
@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginEventButtionSignIn.Login();
+                loginEventButtonSignIn.Login();
             }
         });
 
