@@ -10,6 +10,8 @@ import com.androidnetworking.interfaces.JSONArrayRequestListener;
 
 import org.json.JSONArray;
 
+import java.security.MessageDigest;
+
 import joeun.bixolon.bixolonwarranty.Activity.LoginActivity;
 import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 
@@ -19,20 +21,23 @@ import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 
 public class LoginTask extends AsyncTask<Void, Void, Boolean> {
     private LoginActivity context;
-    private final String mEmail;
-    private final String mPassword;
+    private final String id;
+    private final String password;
     private boolean mlogin = false;
 
-    /***
+        /***
      * LoginTask
      * @param _context
-     * @param _email
+     * @param _id
      * @param _password
      */
-    public LoginTask(LoginActivity _context, String _email, String _password) {
+    public LoginTask(LoginActivity _context, String _id, String _password) {
         context = _context;
-        mEmail = _email;
-        mPassword = _password;
+        id = _id;
+        //TODO :: Hash 처리
+        //Hash hash = new Hash();
+        //password = hash.SHA256(_password);
+        password = _password;
     }
 
     /**
@@ -47,8 +52,8 @@ public class LoginTask extends AsyncTask<Void, Void, Boolean> {
             // TODO: 로그인 처리 : State Code = 200 로 처리 하고 싶지만 못하고 있음
             BaseUrl baseUrl = new BaseUrl();
             AndroidNetworking.post(baseUrl.getLoginUrl())
-                    .addBodyParameter("id",mEmail)
-                    .addBodyParameter("password",mPassword)
+                    .addBodyParameter("id",id)
+                    .addBodyParameter("password",password)
                     .setPriority(Priority.LOW)
                     .build()
                     .getAsJSONArray(new JSONArrayRequestListener() {

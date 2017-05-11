@@ -34,7 +34,7 @@ public class LoginEventButtonSignIn {
         context.loginTextViewPassword.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = context.loginTextViewId.getText().toString();
+        String id = context.loginTextViewId.getText().toString();
         String password = context.loginTextViewPassword.getText().toString();
 
         boolean cancel = false;
@@ -48,7 +48,7 @@ public class LoginEventButtonSignIn {
         }
 
         // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(id)) {
             context.loginTextViewId.setError(context.getString(R.string.error_field_required));
             focusView = context.loginTextViewId;
             cancel = true;
@@ -59,7 +59,7 @@ public class LoginEventButtonSignIn {
         } else {
             context.progress.ShowProgress(true);
 
-            context.loginTask = new LoginTask(context, email, password);
+            context.loginTask = new LoginTask(context, id, password);
             context.loginTask.execute((Void) null);
         }
 
