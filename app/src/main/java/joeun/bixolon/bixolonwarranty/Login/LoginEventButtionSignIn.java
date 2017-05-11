@@ -10,14 +10,14 @@ import joeun.bixolon.bixolonwarranty.R;
  * Created by admin on 2017. 5. 10..
  */
 
-public class AttemptLogin {
+public class LoginEventButtionSignIn {
     private LoginActivity context;
 
     /**
      *
      * @param _context
      */
-    public AttemptLogin(LoginActivity _context) {
+    public LoginEventButtionSignIn(LoginActivity _context) {
         context = _context;
     }
 
@@ -25,7 +25,7 @@ public class AttemptLogin {
      *
      */
     public void Login() {
-        if (context.mAuthTask != null) {
+        if (context.loginTask != null) {
             return;
         }
 
@@ -59,8 +59,8 @@ public class AttemptLogin {
         } else {
             context.progress.ShowProgress(true);
 
-            context.mAuthTask = new UserLoginTask(context, email, password);
-            context.mAuthTask.execute((Void) null);
+            context.loginTask = new LoginTask(context, email, password);
+            context.loginTask.execute((Void) null);
         }
 
     }

@@ -1,8 +1,6 @@
 package joeun.bixolon.bixolonwarranty.Login;
 
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.androidnetworking.AndroidNetworking;
@@ -13,30 +11,25 @@ import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import org.json.JSONArray;
 
 import joeun.bixolon.bixolonwarranty.Activity.LoginActivity;
-import joeun.bixolon.bixolonwarranty.Activity.MainActivity;
-import joeun.bixolon.bixolonwarranty.Common.Progress;
 import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
-import joeun.bixolon.bixolonwarranty.R;
-
-import static android.R.id.progress;
 
 /**
  * Created by admin on 2017. 5. 10..
  */
 
-public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+public class LoginTask extends AsyncTask<Void, Void, Boolean> {
     private LoginActivity context;
     private final String mEmail;
     private final String mPassword;
     private boolean mlogin = false;
 
     /***
-     * UserLoginTask
+     * LoginTask
      * @param _context
      * @param _email
      * @param _password
      */
-    public UserLoginTask(LoginActivity _context, String _email, String _password) {
+    public LoginTask(LoginActivity _context, String _email, String _password) {
         context = _context;
         mEmail = _email;
         mPassword = _password;
@@ -95,7 +88,7 @@ public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
      */
     @Override
     protected void onPostExecute(final Boolean success) {
-        context.onUserLoginTaskPostExecuteResult(success);
+        context.onLoginTaskPostExecuteResult(success);
     }
 
     /**
@@ -103,6 +96,6 @@ public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
      */
     @Override
     protected void onCancelled() {
-        context.onUserLoginTaskCancelledResult();
+        context.onLoginTaskCancelledResult();
     }
 }
