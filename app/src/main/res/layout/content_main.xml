@@ -8,11 +8,20 @@
     tools:context="joeun.bixolon.bixolonwarranty.Activity.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+    <ProgressBar
+        android:id="@+id/dynamicProgress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+
+
     <LinearLayout
         android:id="@+id/dynamicContent"
         android:orientation="vertical"
         android:layout_width="368dp"
-        android:layout_height="495dp"
+        android:layout_height="wrap_content"
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp" />
 

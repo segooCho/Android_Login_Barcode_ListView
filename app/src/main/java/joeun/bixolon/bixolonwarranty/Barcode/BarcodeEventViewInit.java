@@ -1,21 +1,20 @@
 package joeun.bixolon.bixolonwarranty.Barcode;
 
-import android.view.View;
-
-import com.google.zxing.integration.android.IntentIntegrator;
-
 import java.util.Calendar;
 
 import joeun.bixolon.bixolonwarranty.Activity.MainActivity;
-import joeun.bixolon.bixolonwarranty.Model.BarcodeEventModel;
 
 /**
  * Created by admin on 2017. 5. 4..
  */
 
 public class BarcodeEventViewInit {
-    protected MainActivity context;
+    private MainActivity context;
 
+    /**
+     * Barcode View 초기화
+     * @param _context
+     */
     public BarcodeEventViewInit(MainActivity _context) {
         context = _context;
 

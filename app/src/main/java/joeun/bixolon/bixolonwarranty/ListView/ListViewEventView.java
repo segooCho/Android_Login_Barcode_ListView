@@ -12,8 +12,16 @@ import joeun.bixolon.bixolonwarranty.R;
  */
 
 public class ListViewEventView extends ListActivity {
-    protected MainActivity context;
+    private MainActivity context;
 
+    /**
+     * ListView Adapter에 데이터 추가
+     * @param _context
+     * @param barcode
+     * @param id
+     * @param warrantyType
+     * @param warrantyDate
+     */
     public ListViewEventView(MainActivity _context, String barcode, String id, String warrantyType, String warrantyDate) {
         context = _context;
 

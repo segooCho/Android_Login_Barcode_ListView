@@ -13,14 +13,18 @@ import joeun.bixolon.bixolonwarranty.Activity.MainActivity;
  */
 
 public class ButtonDatePicker implements View.OnClickListener {
-    protected MainActivity context;
-    protected TextView textView;
+    private MainActivity context;
+    private TextView textView;
 
     public ButtonDatePicker(MainActivity _context, TextView _textView) {
         context = _context;
         textView = _textView;
     }
 
+    /**
+     * DatePickerDialog 보기
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         context.runOnUiThread(new Runnable() {
@@ -42,9 +46,13 @@ public class ButtonDatePicker implements View.OnClickListener {
         });
     }
 
+    /**
+     * 적용 처리
+     */
     private DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            //listener 이벤트는 모든 포인트에서 발생하여 view.isShown() 롤 화면 상태를 Check
             if (view.isShown()) {
                 //Log.v("DatePickerDialog", "DatePickerDialog : "  + year + "-" + monthOfYear+1 + "- + dayOfMonth +"일");
                 textView.setText(String.format("%d-%02d-%02d", year, monthOfYear+1 , dayOfMonth));

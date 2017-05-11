@@ -1,12 +1,8 @@
 package joeun.bixolon.bixolonwarranty.Barcode;
 
-import android.content.Intent;
 import android.view.View;
 
 import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-
-import java.util.Calendar;
 
 import joeun.bixolon.bixolonwarranty.Activity.MainActivity;
 
@@ -15,12 +11,16 @@ import joeun.bixolon.bixolonwarranty.Activity.MainActivity;
  */
 
 public class BarcodeEventButtonBarcode implements View.OnClickListener {
-    protected MainActivity context;
+    private MainActivity context;
 
     public BarcodeEventButtonBarcode(MainActivity _context) {
         context = _context;
     }
 
+    /**
+     * Barcode Scan 버튼 이벤트
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         context.runOnUiThread(new Runnable() {

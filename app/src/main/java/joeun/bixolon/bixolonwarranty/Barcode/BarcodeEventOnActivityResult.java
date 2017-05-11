@@ -1,20 +1,17 @@
 package joeun.bixolon.bixolonwarranty.Barcode;
 
 import android.util.Log;
-import android.view.View;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
-import com.google.zxing.integration.android.IntentIntegrator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import joeun.bixolon.bixolonwarranty.Activity.MainActivity;
-import joeun.bixolon.bixolonwarranty.Model.BarcodeEventModel;
 import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 
 /**
@@ -22,7 +19,7 @@ import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
  */
 
 public class BarcodeEventOnActivityResult {
-    protected MainActivity context;
+    private MainActivity context;
 
     public BarcodeEventOnActivityResult(MainActivity _context, String barcode) {
         context = _context;

@@ -1,4 +1,4 @@
-package joeun.bixolon.bixolonwarranty.AlertMessage;
+package joeun.bixolon.bixolonwarranty.Common;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -10,13 +10,19 @@ import joeun.bixolon.bixolonwarranty.Activity.MainActivity;
  */
 
 public class AlertMessage extends AlertDialog.Builder {
-    protected MainActivity context;
+    private MainActivity context;
 
     public AlertMessage(MainActivity _context) {
         super(_context);
         context = _context;
     }
 
+    /**
+     * 알림 창
+     * @param setTitle
+     * @param setMessage
+     * @return
+     */
     public AlertDialog AlertShow(String setTitle, String setMessage) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setTitle(setTitle);

@@ -9,8 +9,12 @@ import joeun.bixolon.bixolonwarranty.Activity.MainActivity;
  */
 
 public class ListViewEventViewInit {
-    protected MainActivity context;
+    private MainActivity context;
 
+    /**
+     * 조회 화면 초기화
+     * @param _context
+     */
     public ListViewEventViewInit(MainActivity _context) {
         context = _context;
 
