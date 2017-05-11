@@ -30,27 +30,27 @@ public class LoginEventButtonSignIn {
         }
 
         // Reset errors.
-        context.mEmailView.setError(null);
-        context.mPasswordView.setError(null);
+        context.loginTextViewId.setError(null);
+        context.loginTextViewPassword.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = context.mEmailView.getText().toString();
-        String password = context.mPasswordView.getText().toString();
+        String email = context.loginTextViewId.getText().toString();
+        String password = context.loginTextViewPassword.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password.
         if (TextUtils.isEmpty(password)) {
-            context.mPasswordView.setError(context.getString(R.string.error_field_required));
-            focusView = context.mPasswordView;
+            context.loginTextViewPassword.setError(context.getString(R.string.error_field_required));
+            focusView = context.loginTextViewPassword;
             cancel = true;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            context.mEmailView.setError(context.getString(R.string.error_field_required));
-            focusView = context.mEmailView;
+            context.loginTextViewId.setError(context.getString(R.string.error_field_required));
+            focusView = context.loginTextViewId;
             cancel = true;
         }
 

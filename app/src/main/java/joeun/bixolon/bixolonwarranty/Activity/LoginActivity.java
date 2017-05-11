@@ -44,8 +44,8 @@ public class LoginActivity extends AppCompatActivity {
     public LoginTask loginTask = null;
 
     // UI references.
-    public AutoCompleteTextView mEmailView;
-    public EditText mPasswordView;
+    public AutoCompleteTextView loginTextViewId;
+    public EditText loginTextViewPassword;
 
     //Progress
     public Progress progress;
@@ -58,17 +58,19 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /*
         //TODO: 임시 시작 처리
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra("LoginID","1001");
         startActivity(intent);
         finish();
+        */
 
         setContentView(R.layout.activity_login);
         findViewByIdView();
 
         loginEventButtonSignIn = new LoginEventButtonSignIn(this);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        loginTextViewPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
@@ -94,13 +96,13 @@ public class LoginActivity extends AppCompatActivity {
      * View ID 찾기
      */
     private void findViewByIdView() {
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        loginTextViewId = (AutoCompleteTextView) findViewById(R.id.loginTextViewId);
         // Set up the login form.
         populateAutoComplete();
-        mPasswordView = (EditText) findViewById(R.id.password);
+        loginTextViewPassword = (EditText) findViewById(R.id.loginTextViewPassword);
         //Progress
-        formView = findViewById(R.id.login_form);
-        progressView = findViewById(R.id.login_progress);
+        formView = findViewById(R.id.loginformScrollView);
+        progressView = findViewById(R.id.loginProgress);
     }
 
     private void populateAutoComplete() {
@@ -119,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(loginTextViewId, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
                     .setAction(android.R.string.ok, new View.OnClickListener() {
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
@@ -157,13 +159,13 @@ public class LoginActivity extends AppCompatActivity {
         if (success) {
             //TODO: MainActivity 시작
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("LoginID",mEmailView.getText().toString());
+            intent.putExtra("LoginID",loginTextViewId.getText().toString());
             startActivity(intent);
             //TODO: LoginActivity 죽이는건데.. 이 위치는 뒤로가기시 종료?? 위쪽은 로그인으로 이동 뭐지??
             finish();
         } else {
-            mPasswordView.setError(getString(R.string.error_incorrect_password));
-            mPasswordView.requestFocus();
+            loginTextViewPassword.setError(getString(R.string.error_incorrect_password));
+            loginTextViewPassword.requestFocus();
         }
     }
 
