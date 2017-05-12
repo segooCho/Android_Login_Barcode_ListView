@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import joeun.bixolon.bixolonwarranty.Activity.MainActivity;
+import joeun.bixolon.bixolonwarranty.Model.LoginEventModel;
 import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 
 /**
@@ -21,18 +22,20 @@ import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 
 public class ListViewEventButtonFindTask extends AsyncTask<Void, Void, Boolean> {
     private MainActivity context;
+    private String date;
     private boolean mlogin = false;
 
     /***
      * ListViewEventButtonFindTask
      * @param _context
      */
-    public ListViewEventButtonFindTask(MainActivity _context) {
+    public ListViewEventButtonFindTask(MainActivity _context, String _date) {
         context = _context;
+        date = _date;
     }
 
     /**
-     *
+     * doInBackground
      * @param params
      * @return
      */
@@ -43,7 +46,7 @@ public class ListViewEventButtonFindTask extends AsyncTask<Void, Void, Boolean> 
             BaseUrl baseUrl = new BaseUrl();
             AndroidNetworking.post(baseUrl.getListViewUrl())
                     .addBodyParameter("id", context.loginEventModel.getId())
-                    .addBodyParameter("date", context.lvTextViewDatePicker.getText().toString().replace("-",""))
+                    .addBodyParameter("date", date)
                     .setPriority(Priority.LOW)
                     .build()
                     .getAsJSONArray(new JSONArrayRequestListener() {
@@ -105,16 +108,16 @@ public class ListViewEventButtonFindTask extends AsyncTask<Void, Void, Boolean> 
     }
 
     /**
-     *
+     * onPostExecute
      * @param success
      */
     @Override
     protected void onPostExecute(final Boolean success) {
-        if (!success)
+        if (!success) {
             context.listView.setAdapter(context.listViewEventAdapter);
+        }
 
         context.onTaskInit();
-
     }
 
     /**

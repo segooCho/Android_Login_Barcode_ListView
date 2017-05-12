@@ -14,8 +14,9 @@
 
     <string name="barcode_scan">Barcode Scan</string>
     <string name="barcode_save">Save</string>
-    <string name="listView_Find">Find</string>
+    <string name="listView_find">Find</string>
     <string name="date_setting">Date Setting</string>
+    <string name="date_check">Check the date range</string>
 
 
 

@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import joeun.bixolon.bixolonwarranty.Activity.MainActivity;
 import joeun.bixolon.bixolonwarranty.ListView.ListViewEventAdapter;
 import joeun.bixolon.bixolonwarranty.ListView.ListViewEventView;
+import joeun.bixolon.bixolonwarranty.Model.LoginEventModel;
 import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 
 /**
@@ -25,6 +26,7 @@ import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 public class BarcodeEventButtonSaveTask extends AsyncTask<Void, Void, Boolean> {
     private MainActivity context;
     private boolean mlogin = false;
+    //Model
 
     /***
      * ListViewEventButtonFindTask
@@ -46,7 +48,7 @@ public class BarcodeEventButtonSaveTask extends AsyncTask<Void, Void, Boolean> {
             AndroidNetworking.put(baseUrl.getBarcodeUrl())
                     .addBodyParameter("barcode", context.barcodeEventModel.getBarcode())
                     .addBodyParameter("id",context.loginEventModel.getId())
-                    .addBodyParameter("warrantyType", context.barcodeSpinnerWarrantyType.getSelectedItem().toString())
+                    .addBodyParameter("warrantyCode", context.barcodeSpinnerWarrantyCode.getSelectedItem().toString())
                     .addBodyParameter("warrantyDate", context.barcodeTextViewDatePicker.getText().toString().replace("-",""))
                     .setPriority(Priority.LOW)
                     .build()

@@ -6,19 +6,22 @@ package joeun.bixolon.bixolonwarranty.Properties;
 
 public class BaseUrl {
 
-    protected static final String BaseUrl = "http://192.168.2.27:3000/";
-    protected static final String LoginUrl = BaseUrl + "employees";
-    protected static final String BarcodeUrl = BaseUrl + "product";
-    protected static final String ListViewUrl = BaseUrl + "warranty";
+    protected static final String baseUrl = "http://192.168.2.27:3000/";
+    protected static final String loginUrl = baseUrl + "employees";
+    protected static final String barcodeUrl = baseUrl + "product";
+    protected static final String listViewUrl = baseUrl + "warranty";
 
+    public String getBaseUrl(){
+        return this.baseUrl;
+    }
     public String getLoginUrl(){
-        return this.LoginUrl;
+        return this.loginUrl;
     }
     public String getBarcodeUrl(){
-        return this.BarcodeUrl;
+        return this.barcodeUrl;
     }
     public String getListViewUrl(){
-        return this.ListViewUrl;
+        return this.listViewUrl;
     }
 
 }

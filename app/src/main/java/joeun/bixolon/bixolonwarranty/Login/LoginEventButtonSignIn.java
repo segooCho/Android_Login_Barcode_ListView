@@ -25,7 +25,7 @@ public class LoginEventButtonSignIn {
      *
      */
     public void Login() {
-        if (context.loginTask != null) {
+        if (context.loginEventButtonSignInTask != null) {
             return;
         }
 
@@ -59,8 +59,8 @@ public class LoginEventButtonSignIn {
         } else {
             context.progress.ShowProgress(true);
 
-            context.loginTask = new LoginTask(context, id, password);
-            context.loginTask.execute((Void) null);
+            context.loginEventButtonSignInTask = new LoginEventButtonSignInTask(context, id, password);
+            context.loginEventButtonSignInTask.execute((Void) null);
         }
 
     }

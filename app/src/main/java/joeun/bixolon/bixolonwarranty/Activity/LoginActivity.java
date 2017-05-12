@@ -21,12 +21,14 @@ import android.widget.TextView;
 
 import joeun.bixolon.bixolonwarranty.Login.LoaderCallback;
 import joeun.bixolon.bixolonwarranty.Login.LoginEventButtonSignIn;
-import joeun.bixolon.bixolonwarranty.Login.LoginTask;
+import joeun.bixolon.bixolonwarranty.Login.LoginEventButtonSignInTask;
+import joeun.bixolon.bixolonwarranty.Model.LoginEventModel;
 import joeun.bixolon.bixolonwarranty.R;
 import joeun.bixolon.bixolonwarranty.Common.Progress;
 
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static android.R.attr.id;
 
 /**
  * A login screen that offers login via email/password.
@@ -41,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    public LoginTask loginTask = null;
+    public LoginEventButtonSignInTask loginEventButtonSignInTask = null;
 
     // UI references.
     public AutoCompleteTextView loginTextViewId;
@@ -49,10 +51,14 @@ public class LoginActivity extends AppCompatActivity {
 
     //Progress
     public Progress progress;
-    private View formView, progressView;
+    View formView, progressView;
 
     LoaderCallback loaderCallback;
     LoginEventButtonSignIn loginEventButtonSignIn;
+
+    //Model
+    public LoginEventModel loginEventModel = new LoginEventModel();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +66,9 @@ public class LoginActivity extends AppCompatActivity {
 
         //TODO: 임시 시작 처리
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        intent.putExtra("LoginID","1001");
+        intent.putExtra("LoginID", "1001");
+        intent.putExtra("CorporationInfo", "0003:CorporationInfo0003");
+        intent.putExtra("ServiceCenter", "0002:ServiceCenter0002");
         startActivity(intent);
         finish();
 
@@ -147,17 +155,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * LoginTask PostExecute의 결과를 받아서 처리 한다
+     * LoginEventButtonSignInTask PostExecute의 결과를 받아서 처리 한다
      * @param success
      */
     public void onLoginTaskPostExecuteResult(final Boolean success) {
-        loginTask = null;
+        loginEventButtonSignInTask = null;
         progress.ShowProgress(false);
 
         if (success) {
             //TODO: MainActivity 시작
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("LoginID",loginTextViewId.getText().toString());
+            intent.putExtra("LoginID", loginEventModel.getId());
+            intent.putExtra("CorporationInfo", loginEventModel.getCorporationInfo());
+            intent.putExtra("ServiceCenter", loginEventModel.getServiceCenter());
             startActivity(intent);
             //TODO: LoginActivity 죽이는건데.. 이 위치는 뒤로가기시 종료?? 위쪽은 로그인으로 이동 뭐지??
             finish();
@@ -168,10 +178,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * LoginTask Cancelled 처리
+     * LoginEventButtonSignInTask Cancelled 처리
      */
     public void onLoginTaskCancelledResult() {
-        loginTask = null;
+        loginEventButtonSignInTask = null;
         progress.ShowProgress(false);
     }
 

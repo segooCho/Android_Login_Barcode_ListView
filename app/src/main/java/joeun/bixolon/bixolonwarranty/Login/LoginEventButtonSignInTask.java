@@ -9,29 +9,30 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
 
 import org.json.JSONArray;
-
-import java.security.MessageDigest;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import joeun.bixolon.bixolonwarranty.Activity.LoginActivity;
+import joeun.bixolon.bixolonwarranty.Model.LoginEventModel;
 import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 
 /**
  * Created by admin on 2017. 5. 10..
  */
 
-public class LoginTask extends AsyncTask<Void, Void, Boolean> {
+public class LoginEventButtonSignInTask extends AsyncTask<Void, Void, Boolean> {
     private LoginActivity context;
     private final String id;
     private final String password;
     private boolean mlogin = false;
 
         /***
-     * LoginTask
+     * LoginEventButtonSignInTask
      * @param _context
      * @param _id
      * @param _password
      */
-    public LoginTask(LoginActivity _context, String _id, String _password) {
+    public LoginEventButtonSignInTask(LoginActivity _context, String _id, String _password) {
         context = _context;
         id = _id;
         //TODO :: Hash 처리
@@ -58,11 +59,24 @@ public class LoginTask extends AsyncTask<Void, Void, Boolean> {
                     .build()
                     .getAsJSONArray(new JSONArrayRequestListener() {
                         @Override
-                        public void onResponse(JSONArray response) {
-                            // do anything with responseUserLoginTask
+                        public void onResponse(JSONArray jsonArray) {
                             Log.v("Login", "======================================");
-                            Log.v("Login", "OK");
-                            mlogin = true;
+                            Log.v("Login", "jsonArray");
+                            try{
+                                for (int i = 0; i < jsonArray.length(); i++){
+                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                    context.loginEventModel.setId(id);
+                                    context.loginEventModel.setCorporationInfo(jsonObject.getString("CorporationInfo"));
+                                    context.loginEventModel.setServiceCenter(jsonObject.getString("ServiceCenter"));
+                                }
+                                mlogin = true;
+                            }
+                            catch (JSONException e){
+                                Log.v("Login", "======================================");
+                                Log.v("Login", "JSONException");
+                                Log.v("Login", String.valueOf(e));
+                                mlogin = false;
+                            }
                         }
                         @Override
                         public void onError(ANError error) {

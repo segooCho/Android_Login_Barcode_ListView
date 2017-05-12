@@ -21,9 +21,11 @@ public class BarcodeEventViewInit {
         context.barcodeEventModel.setBarcode(null);
 
         context.barcodeTextViewBarcode.setText("Barocde");
-        context.barcodeTextViewProductName.setText("ProductName");
-        context.barcodeTextViewEmail.setText("E-Mail");
-        context.barcodeSpinnerWarrantyType.setSelection(0);
+        context.barcodeTextViewUserSpec.setText("User Spec");
+        context.barcodeTextViewUserSpecName.setText("User Spec Name");
+        context.barcodeTextViewModelName.setText("Model Name");
+        context.barcodeTextViewCustomer.setText("Customer");
+
         Calendar calendar = Calendar.getInstance(); // date 초기화
         context.barcodeTextViewDatePicker.setText( String.format("%d-%02d-%02d",
                                             calendar.get(Calendar.YEAR),
