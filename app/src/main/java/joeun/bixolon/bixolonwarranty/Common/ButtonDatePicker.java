@@ -30,16 +30,12 @@ public class ButtonDatePicker implements View.OnClickListener {
         context.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
                 //기본 화면의 날짜를 기본으로 설정
                 String yyyyMMdd = textView.getText().toString();
-
-                Log.v("yyyyMMdd", yyyyMMdd);
-
+                //Log.v("yyyyMMdd", yyyyMMdd);
                 int year = Integer.parseInt(yyyyMMdd.substring(0,4));
                 int moon = Integer.parseInt(yyyyMMdd.substring(5,7))-1;
                 int day = Integer.parseInt(yyyyMMdd.substring(8,10));
-
                 DatePickerDialog dialog = new DatePickerDialog(context, listener, year, moon, day);
                 dialog.show();
             }

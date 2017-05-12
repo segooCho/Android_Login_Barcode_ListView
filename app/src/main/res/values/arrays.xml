@@ -1,9 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="WarrantyType">
-        <item >AA</item>
-        <item >BB</item>
-        <item >CC</item>
-        <item >DD</item>
-    </string-array>
 </resources>

@@ -89,7 +89,6 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:layout_marginTop="10dp"
-        android:entries="@array/WarrantyType"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintLeft_creator="1"

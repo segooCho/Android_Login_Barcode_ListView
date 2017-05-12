@@ -1,4 +1,4 @@
-package joeun.bixolon.bixolonwarranty.ListView;
+package joeun.bixolon.bixolonwarranty.Barcode;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -19,16 +19,18 @@ import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
  * Created by admin on 2017. 5. 10..
  */
 
-public class ListViewEventButtonFindTask extends AsyncTask<Void, Void, Boolean> {
+public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boolean> {
     private MainActivity context;
+    private String barcode;
     private boolean mlogin = false;
 
     /***
      * ListViewEventButtonFindTask
      * @param _context
      */
-    public ListViewEventButtonFindTask(MainActivity _context) {
+    public BarcodeEventButtonBarcodeFindTask(MainActivity _context, String _barcode) {
         context = _context;
+        barcode = _barcode;
     }
 
     /**
@@ -38,38 +40,33 @@ public class ListViewEventButtonFindTask extends AsyncTask<Void, Void, Boolean> 
      */
     @Override
     protected Boolean doInBackground(Void... params) {
-        context.listViewEventAdapter = new ListViewEventAdapter();
         try {
             BaseUrl baseUrl = new BaseUrl();
-            AndroidNetworking.post(baseUrl.getListViewUrl())
-                    .addBodyParameter("id", context.loginEventModel.getId())
-                    .addBodyParameter("date", context.lvTextViewDatePicker.getText().toString().replace("-",""))
+            AndroidNetworking.post(baseUrl.getBarcodeUrl())
+                    .addBodyParameter("barcode", barcode)
                     .setPriority(Priority.LOW)
                     .build()
                     .getAsJSONArray(new JSONArrayRequestListener() {
                         @Override
                         public void onResponse(JSONArray jsonArray) {
                             // do anything with responseUserLoginTask
-                            Log.v("Find", "======================================");
-                            Log.v("Find", "onResponse");
+                            Log.v("Barcode", "======================================");
+                            Log.v("Barcode", "onResponse");
                             try{
                                 for (int i = 0; i < jsonArray.length(); i++){
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                    Log.v("Find", "Barcode : " + jsonObject.getString("Barcode"));
-                                    Log.v("Find", "Id : " + jsonObject.getString("Id"));
-                                    Log.v("Find", "WarrantyType : " + jsonObject.getString("WarrantyType"));
-                                    new ListViewEventView(  context,
-                                            jsonObject.getString("Barcode"),
-                                            jsonObject.getString("Id"),
-                                            jsonObject.getString("WarrantyType"),
-                                            jsonObject.getString("WarrantyDate"));
+                                    //Log.v("Barcode", "LastName : " + jsonObject.getString("LastName"));
+                                    //Log.v("Barcode", "Email : " + jsonObject.getString("Email"));
+                                    context.barcodeEventModel.setBarcode(jsonObject.getString("FirstName"));
+                                    context.barcodeTextViewProductName.setText("ProductName : " + jsonObject.getString("LastName"));
+                                    context.barcodeTextViewEmail.setText("E-Mail : " + jsonObject.getString("Email"));
                                 }
                                 mlogin = true;
                             }
                             catch (JSONException e){
-                                Log.v("Find", "======================================");
-                                Log.v("Find", "JSONException");
-                                Log.v("Find", String.valueOf(e));
+                                Log.v("Barcode", "======================================");
+                                Log.v("Barcode", "JSONException");
+                                Log.v("Barcode", String.valueOf(e));
                                 mlogin = false;
                                 context.alertMessage.AlertShow("Error","Communication Error(JSONException)").show();
                             }
@@ -77,22 +74,19 @@ public class ListViewEventButtonFindTask extends AsyncTask<Void, Void, Boolean> 
                         @Override
                         public void onError(ANError error) {
                             // handle error
-                            Log.v("Find", "======================================");
-                            Log.v("Find", "ANError");
-                            Log.v("Find", String.valueOf(error));
+                            Log.v("Barcode", "======================================");
+                            Log.v("Barcode", "ANError");
+                            Log.v("Barcode", String.valueOf(error));
                             mlogin = false;
-                            context.listViewEventAdapter.notifyDataSetChanged();
-                            //TODO :: 없을때 초기화 작업
-                            context.alertMessage.AlertShow("Error","No such information.").show();
+                            context.alertMessage.AlertShow("Error","It is not a product barcode.").show();
                         }
                     });
-
             //TODO: 응답 시간을 강제적으로 기다린다... 추후 문제 발생 할수 있다.
             Thread.sleep(2000);
         } catch (InterruptedException e) {
-            Log.v("Find", "======================================");
-            Log.v("Find", "InterruptedException");
-            Log.v("Find", String.valueOf(e));
+            Log.v("Barcode", "======================================");
+            Log.v("Barcode", "InterruptedException");
+            Log.v("Barcode", String.valueOf(e));
             mlogin = false;
             context.alertMessage.AlertShow("Error","Communication Error(InterruptedException)").show();
         }
@@ -110,11 +104,7 @@ public class ListViewEventButtonFindTask extends AsyncTask<Void, Void, Boolean> 
      */
     @Override
     protected void onPostExecute(final Boolean success) {
-        if (!success)
-            context.listView.setAdapter(context.listViewEventAdapter);
-
         context.onTaskInit();
-
     }
 
     /**

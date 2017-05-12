@@ -58,13 +58,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*
         //TODO: 임시 시작 처리
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra("LoginID","1001");
         startActivity(intent);
         finish();
-        */
 
         setContentView(R.layout.activity_login);
         findViewByIdView();
