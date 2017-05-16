@@ -22,9 +22,12 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventButtonBarcodeFindTask;
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventButtonSaveTask;
+import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventButtonWarrantyDateFindTask;
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventSpinnersAdapterTask;
 import joeun.bixolon.bixolonwarranty.Common.AlertMessage;
 import joeun.bixolon.bixolonwarranty.Barcode.BarcodeEventButtonBarcode;
@@ -59,22 +62,26 @@ public class MainActivity extends AppCompatActivity
     public BarcodeEventModel barcodeEventModel = new BarcodeEventModel();
 
     //Barcode UI
-    Button barcodeButtonBarcode, barcodeButtonDatePicker, barcodeButtonSave;
+    Button barcodeButtonBarcode, barcodeButtonSalesDatePicker, barcodeButtonWarrantyDate, barcodeButtonSave;
     public TextView barcodeTextViewBarcode, barcodeTextViewUserSpec, barcodeTextViewUserSpecName,
-                    barcodeTextViewModelName, barcodeTextViewCustomer, barcodeTextViewDatePicker;
+                    barcodeTextViewModelName, barcodeTextViewCustomer, barcodeTextViewSalesDatePicker, barcodeTextViewWarrantyDatePicker;
     public Spinner barcodeSpinnerWarrantyCode, barcodeSpinnerCorporationInfo, barcodeSpinnerServiceCenter;
 
     BarcodeEventSpinnersAdapterTask barcodeEventSpinnersAdapterTask = null;
     BarcodeEventButtonBarcodeFindTask barcodeEventButtonBarcodeFindTask = null;
+    BarcodeEventButtonWarrantyDateFindTask barcodeEventButtonWarrantyDateFindTask = null;
     BarcodeEventButtonSaveTask barcodeEventButtonSaveTask = null;
+
 
     //Spinners 처리
     List<String> arrayListWarrantyCode = new ArrayList<>();
     List<String> arrayListCorporationInfo = new ArrayList<>();
     List<String> arrayListServiceCenter = new ArrayList<>();
-    String urlWarrantyCode = "WarrantyCode";
-    String urlCorporationInfo = "CorporationInfo";
-    String urlServiceCenter = "ServiceCenter";
+    List<String> arrayListUserSpec = new ArrayList<>();
+    String modeWarrantyCode = "spinnerWarrantyCode";
+    String modeCorporationInfo = "spinnerCorporationInfo";
+    String modeServiceCenter = "spinnerServiceCenter";
+    String modeUserSpec = "spinnerUserSpec";
 
     //ListView UI
     public TextView lvTextViewDatePicker;
@@ -88,13 +95,18 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Login ID
+        /**
+         * User 별 기본 세팅 정보를 가져온다
+         * LoginID, CorporationInfo(법인 정보), ServiceCenter
+         */
         Bundle bundle = getIntent().getExtras();
         loginEventModel.setId(bundle.getString("LoginID"));
         loginEventModel.setCorporationInfo(bundle.getString("CorporationInfo"));
         loginEventModel.setServiceCenter(bundle.getString("ServiceCenter"));
 
-        //TODO :: 기본 구성 화면
+        /**
+         * 기본 구성 화면
+         */
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -107,7 +119,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(MainActivity.this);
 
-        //TODO :: content_main_barcode를 기본 화면으로 처리
+        /**
+         * Barcode (content_main_barcode)를 기본 화면으로 처리
+         */
         navigationItemSelectedId = R.id.nav_barcode;
         dynamicContent = (LinearLayout) findViewById(R.id.dynamicContent);
         wizard = getLayoutInflater().inflate(R.layout.content_main_barcode, null);
@@ -126,42 +140,59 @@ public class MainActivity extends AppCompatActivity
 
         //1.WarrantyCode 가져오기 -> onSpinnersAdapterTask
         progress.ShowProgress(true);
-        barcodeEventSpinnersAdapterTask = new BarcodeEventSpinnersAdapterTask(MainActivity.this, urlWarrantyCode);
+        barcodeEventSpinnersAdapterTask = new BarcodeEventSpinnersAdapterTask(MainActivity.this, modeWarrantyCode, "");
         barcodeEventSpinnersAdapterTask.execute((Void) null);
 
-        //TODO :: Barcode Event 기본 설정은 Spinner 작업을 완료 후 처리(onSpinnersAdapterTask)
+        /**
+         * 이부분에서 Barcode Event 기본 설정을 하였으나..
+         * Spinner 바인딩 데이터 시작이 필요하여 onSpinnersAdapterTask를 활용하여 처리
+         */
     }
 
     /**
      * onSpinnersAdapterTask
      * @param arrayList
-     * @param url
+     * @param mode
      */
-    public void onSpinnersAdapterTask(List<String> arrayList, String url) {
-        if (url.equals(urlWarrantyCode)) {
+    public void onSpinnersAdapterTask(List<String> arrayList, String mode) {
+        if (mode.equals(modeWarrantyCode)) {
             arrayListWarrantyCode.addAll(arrayList);
             //2.CorporationInfo 가져오기
-            barcodeEventSpinnersAdapterTask = new BarcodeEventSpinnersAdapterTask(MainActivity.this, urlCorporationInfo);
+            barcodeEventSpinnersAdapterTask = new BarcodeEventSpinnersAdapterTask(MainActivity.this, modeCorporationInfo, "");
             barcodeEventSpinnersAdapterTask.execute((Void) null);
-        } else if (url.equals(urlCorporationInfo)) {
+        } else if (mode.equals(modeCorporationInfo)) {
             arrayListCorporationInfo.addAll(arrayList);
             //2.CorporationInfo 가져오기
-            barcodeEventSpinnersAdapterTask = new BarcodeEventSpinnersAdapterTask(MainActivity.this, urlServiceCenter);
+            barcodeEventSpinnersAdapterTask = new BarcodeEventSpinnersAdapterTask(MainActivity.this, modeServiceCenter, "");
             barcodeEventSpinnersAdapterTask.execute((Void) null);
-        } else if (url.equals(urlServiceCenter)) {
+        } else if (mode.equals(modeServiceCenter)) {
             arrayListServiceCenter.addAll(arrayList);
 
             //TODO :: Barcode Event 기본 설정
             barcodeEventModel.setBarcode(null);
             findViewByIdBarcodeView();
             onBarcodeEventInit();
-            progress.ShowProgress(false);
+            onTaskInit();
+        } else if (mode.equals(modeUserSpec)) {
+            arrayListUserSpec.addAll(arrayList);
+
+            //TODO :: arrayListUserSpec UI 변경 필요
+            spinners = new Spinners(MainActivity.this, barcodeSpinnerServiceCenter, arrayListUserSpec);
+            barcodeSpinnerServiceCenter.setSelection(0);
+            onTaskInit();
         }
-        onTaskInit();
     }
 
+    /**
+     * onBarcodeFindTask
+     * @param itemId
+     */
+    public void onBarcodeFindTask(String itemId) {
+        barcodeEventSpinnersAdapterTask = new BarcodeEventSpinnersAdapterTask(MainActivity.this, modeUserSpec, itemId);
+        barcodeEventSpinnersAdapterTask.execute((Void) null);
+    }
 
-    @Override
+        @Override
     public void onBackPressed() {
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -204,7 +235,6 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawer(GravityCompat.START);
-
         return true;
     }
 
@@ -218,11 +248,15 @@ public class MainActivity extends AppCompatActivity
         barcodeTextViewUserSpecName = (TextView) findViewById(R.id.barcodeTextViewUserSpecName);
         barcodeTextViewModelName = (TextView) findViewById(R.id.barcodeTextViewModelName);
         barcodeTextViewCustomer = (TextView) findViewById(R.id.barcodeTextViewCustomer);
+        barcodeButtonSalesDatePicker = (Button) findViewById(R.id.barcodeButtonSalesDatePicker);
+        barcodeTextViewSalesDatePicker = (TextView) findViewById(R.id.barcodeTextViewSalesDatePicker);
         barcodeSpinnerWarrantyCode = (Spinner)findViewById(R.id.barcodeSpinnerWarrantyCode);
+        barcodeButtonWarrantyDate = (Button) findViewById(R.id.barcodeButtonWarrantyDate);
+        barcodeTextViewWarrantyDatePicker = (TextView) findViewById(R.id.barcodeTextViewWarrantyDatePicker);
         barcodeSpinnerCorporationInfo = (Spinner)findViewById(R.id.barcodeSpinnerCorporationInfo);
         barcodeSpinnerServiceCenter = (Spinner)findViewById(R.id.barcodeSpinnerServiceCenter);
-        barcodeButtonDatePicker = (Button) findViewById(R.id.barcodeButtonDatePicker);
-        barcodeTextViewDatePicker = (TextView) findViewById(R.id.barcodeTextViewDatePicker);
+
+
         barcodeButtonSave = (Button) findViewById(R.id.barcodeButtonSave);
     }
 
@@ -232,7 +266,21 @@ public class MainActivity extends AppCompatActivity
     private void onBarcodeEventInit() {
         new BarcodeEventViewInit(MainActivity.this);
         barcodeButtonBarcode.setOnClickListener(new BarcodeEventButtonBarcode(MainActivity.this));
-        barcodeButtonDatePicker.setOnClickListener(new ButtonDatePicker(MainActivity.this, barcodeTextViewDatePicker));
+        barcodeButtonSalesDatePicker.setOnClickListener(new ButtonDatePicker(MainActivity.this, barcodeTextViewSalesDatePicker));
+        barcodeButtonWarrantyDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (barcodeEventModel.getBarcode() == null) {
+                    alertMessage.AlertShow("Error","Barcode Scan No").show();
+                    return;
+                }
+                progress.ShowProgress(true);
+                barcodeEventButtonWarrantyDateFindTask = new BarcodeEventButtonWarrantyDateFindTask(MainActivity.this,
+                        barcodeSpinnerWarrantyCode.getSelectedItem().toString(),
+                        barcodeTextViewSalesDatePicker.getText().toString().replace("-",""));
+                barcodeEventButtonSaveTask.execute((Void) null);
+            }
+        });
         barcodeButtonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -241,20 +289,30 @@ public class MainActivity extends AppCompatActivity
                     return;
                 }
                 progress.ShowProgress(true);
-                barcodeEventButtonSaveTask = new BarcodeEventButtonSaveTask(MainActivity.this);
+                barcodeEventButtonSaveTask = new BarcodeEventButtonSaveTask(MainActivity.this,
+                                                                            barcodeSpinnerWarrantyCode.getSelectedItem().toString(),
+                                                                            barcodeTextViewSalesDatePicker.getText().toString().replace("-",""));
                 barcodeEventButtonSaveTask.execute((Void) null);
             }
         });
 
-        //WarrantyCode를 Spinner애 등록 및 Text 세팅
+        //WarrantyCode
         spinners = new Spinners(MainActivity.this, barcodeSpinnerWarrantyCode, arrayListWarrantyCode);
         barcodeSpinnerWarrantyCode.setSelection(0);
         //Corporation Info(법인 정보)
         spinners = new Spinners(MainActivity.this, barcodeSpinnerCorporationInfo, arrayListCorporationInfo);
-        spinners.setSpinnerText(barcodeSpinnerCorporationInfo,  loginEventModel.getCorporationInfo());
+        if (loginEventModel.getCorporationInfo() != null) {
+            spinners.setSpinnerText(barcodeSpinnerCorporationInfo, loginEventModel.getCorporationInfo());
+        } else {
+            barcodeSpinnerCorporationInfo.setSelection(0);
+        }
         //Service Center
         spinners = new Spinners(MainActivity.this, barcodeSpinnerServiceCenter, arrayListServiceCenter);
-        spinners.setSpinnerText(barcodeSpinnerServiceCenter,  loginEventModel.getServiceCenter());
+        if (loginEventModel.getServiceCenter() != null) {
+            spinners.setSpinnerText(barcodeSpinnerServiceCenter, loginEventModel.getServiceCenter());
+        } else {
+            barcodeSpinnerServiceCenter.setSelection(0);
+        }
     }
 
     /**
@@ -276,7 +334,6 @@ public class MainActivity extends AppCompatActivity
         lvButtonFind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //listViewEventAdapter = new ListViewEventAdapter();
                 progress.ShowProgress(true);
                 listViewEventButtonFindTask = new ListViewEventButtonFindTask(MainActivity.this, lvTextViewDatePicker.getText().toString().replace("-",""));
                 listViewEventButtonFindTask.execute((Void) null);
@@ -290,7 +347,9 @@ public class MainActivity extends AppCompatActivity
     public void onTaskInit() {
         barcodeEventSpinnersAdapterTask = null;
         barcodeEventButtonBarcodeFindTask = null;
+        barcodeEventButtonWarrantyDateFindTask = null;
         barcodeEventButtonSaveTask = null;
+
         listViewEventButtonFindTask = null;
         progress.ShowProgress(false);
     }

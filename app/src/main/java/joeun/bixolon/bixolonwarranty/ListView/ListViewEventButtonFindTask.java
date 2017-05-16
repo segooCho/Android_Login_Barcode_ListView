@@ -13,7 +13,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import joeun.bixolon.bixolonwarranty.Activity.MainActivity;
-import joeun.bixolon.bixolonwarranty.Model.LoginEventModel;
 import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 
 /**
@@ -116,7 +115,6 @@ public class ListViewEventButtonFindTask extends AsyncTask<Void, Void, Boolean> 
         if (!success) {
             context.listView.setAdapter(context.listViewEventAdapter);
         }
-
         context.onTaskInit();
     }
 

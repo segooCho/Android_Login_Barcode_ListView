@@ -27,9 +27,9 @@ public class BarcodeEventViewInit {
         context.barcodeTextViewCustomer.setText("Customer");
 
         Calendar calendar = Calendar.getInstance(); // date 초기화
-        context.barcodeTextViewDatePicker.setText( String.format("%d-%02d-%02d",
-                                            calendar.get(Calendar.YEAR),
-                                            calendar.get(Calendar.MONTH)+1,
-                                            calendar.get(Calendar.DAY_OF_MONTH)));
+        context.barcodeTextViewSalesDatePicker.setText( String.format("%d-%02d-%02d",
+                                                        calendar.get(Calendar.YEAR),
+                                                        calendar.get(Calendar.MONTH)+1,
+                                                        calendar.get(Calendar.DAY_OF_MONTH)));
     }
 }

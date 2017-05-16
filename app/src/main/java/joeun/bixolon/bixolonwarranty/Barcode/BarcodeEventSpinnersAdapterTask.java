@@ -7,7 +7,6 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,7 +24,8 @@ import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 
 public class BarcodeEventSpinnersAdapterTask extends AsyncTask<Void, Void, Boolean> {
     private MainActivity context;
-    private String url;
+    private String mode;
+    private String param1;
     List<String> arrayList = new ArrayList<>();
     private boolean mlogin = false;
 
@@ -33,9 +33,10 @@ public class BarcodeEventSpinnersAdapterTask extends AsyncTask<Void, Void, Boole
      * ListViewEventButtonFindTask
      * @param _context
      */
-    public BarcodeEventSpinnersAdapterTask(MainActivity _context, String _url) {
+    public BarcodeEventSpinnersAdapterTask(MainActivity _context, String _mode, String _param1) {
         context = _context;
-        url = _url;
+        mode = _mode;
+        param1 = _param1;
     }
 
     /**
@@ -47,7 +48,9 @@ public class BarcodeEventSpinnersAdapterTask extends AsyncTask<Void, Void, Boole
     protected Boolean doInBackground(Void... params) {
         try {
             BaseUrl baseUrl = new BaseUrl();
-            AndroidNetworking.get(baseUrl.getBaseUrl() + url)
+            AndroidNetworking.post(baseUrl.getCommonSpinner())
+                    .addBodyParameter("mode",mode)
+                    .addBodyParameter("param1",param1)
                     .setPriority(Priority.LOW)
                     .build()
                     .getAsJSONArray(new JSONArrayRequestListener() {
@@ -106,7 +109,7 @@ public class BarcodeEventSpinnersAdapterTask extends AsyncTask<Void, Void, Boole
     @Override
     protected void onPostExecute(final Boolean success) {
         if (success)
-            context.onSpinnersAdapterTask(arrayList, url);
+            context.onSpinnersAdapterTask(arrayList, mode);
         else
             context.onTaskInit();
     }

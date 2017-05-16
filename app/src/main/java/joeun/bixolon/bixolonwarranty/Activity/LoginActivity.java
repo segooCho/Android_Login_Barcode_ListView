@@ -67,8 +67,8 @@ public class LoginActivity extends AppCompatActivity {
         //TODO: 임시 시작 처리
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra("LoginID", "1001");
-        intent.putExtra("CorporationInfo", "0003:CorporationInfo0003");
-        intent.putExtra("ServiceCenter", "0002:ServiceCenter0002");
+        intent.putExtra("CorporationInfo", "[11455]BIXOLON EUROPE GMBH IG");
+        intent.putExtra("ServiceCenter", "[SVUSA]Service Center Usa");
         startActivity(intent);
         finish();
 
@@ -163,13 +163,18 @@ public class LoginActivity extends AppCompatActivity {
         progress.ShowProgress(false);
 
         if (success) {
-            //TODO: MainActivity 시작
+            /**
+             * MainActivity 시작
+             *
+             */
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("LoginID", loginEventModel.getId());
             intent.putExtra("CorporationInfo", loginEventModel.getCorporationInfo());
             intent.putExtra("ServiceCenter", loginEventModel.getServiceCenter());
             startActivity(intent);
-            //TODO: LoginActivity 죽이는건데.. 이 위치는 뒤로가기시 종료?? 위쪽은 로그인으로 이동 뭐지??
+            /**
+             * finish() 로 LoginActivity 죽이는건데.. 이 위치는 뒤로가기 시 백그라운드로 가면 로그인 창?? 위쪽은 로그인으로 바로 이동??
+             */
             finish();
         } else {
             loginTextViewPassword.setError(getString(R.string.error_incorrect_password));

@@ -65,6 +65,7 @@ public class Spinners implements AdapterView.OnItemSelectedListener {
      */
     public void setSpinnerText(Spinner _spinner, String text) {
         for(int i= 0; i < _spinner.getAdapter().getCount(); i++) {
+            if (_spinner.getAdapter().getItem(i).toString() != null)
             if (_spinner.getAdapter().getItem(i).toString().contains(text))
                 _spinner.setSelection(i);
         }

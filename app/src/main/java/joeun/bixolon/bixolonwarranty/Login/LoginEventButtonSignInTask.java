@@ -35,10 +35,9 @@ public class LoginEventButtonSignInTask extends AsyncTask<Void, Void, Boolean> {
     public LoginEventButtonSignInTask(LoginActivity _context, String _id, String _password) {
         context = _context;
         id = _id;
-        //TODO :: Hash 처리
-        //Hash hash = new Hash();
-        //password = hash.SHA256(_password);
-        password = _password;
+        //Hash 처리
+        Hash hash = new Hash();
+        password = hash.SHA256(_password);
     }
 
     /**
@@ -89,7 +88,7 @@ public class LoginEventButtonSignInTask extends AsyncTask<Void, Void, Boolean> {
                     });
 
             //TODO: 응답 시간을 강제적으로 기다린다... 추후 문제 발생 할수 있다.
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             return false;
         }

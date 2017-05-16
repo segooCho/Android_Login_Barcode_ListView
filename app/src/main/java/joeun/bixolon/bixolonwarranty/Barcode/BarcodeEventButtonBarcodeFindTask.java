@@ -22,6 +22,7 @@ import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boolean> {
     private MainActivity context;
     private String barcode;
+    private String itemId;
     private boolean mlogin = false;
 
     /***
@@ -44,6 +45,7 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
             BaseUrl baseUrl = new BaseUrl();
             AndroidNetworking.post(baseUrl.getBarcodeUrl())
                     .addBodyParameter("barcode", barcode)
+                    .addBodyParameter("id", context.loginEventModel.getId())
                     .setPriority(Priority.LOW)
                     .build()
                     .getAsJSONArray(new JSONArrayRequestListener() {
@@ -56,6 +58,7 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
                                 for (int i = 0; i < jsonArray.length(); i++){
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                                     context.barcodeEventModel.setBarcode(barcode);
+                                    itemId = jsonObject.getString("ItemId");
                                     context.barcodeTextViewUserSpec.setText("User Spec : " + jsonObject.getString("UserSpec"));
                                     context.barcodeTextViewUserSpecName.setText("User Spec Name : " + jsonObject.getString("UserSpecName"));
                                     context.barcodeTextViewModelName.setText("Model Name : " + jsonObject.getString("ModelName"));
@@ -82,7 +85,7 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
                         }
                     });
             //TODO: 응답 시간을 강제적으로 기다린다... 추후 문제 발생 할수 있다.
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             Log.v("Barcode", "======================================");
             Log.v("Barcode", "InterruptedException");
@@ -104,7 +107,11 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
      */
     @Override
     protected void onPostExecute(final Boolean success) {
-        context.onTaskInit();
+        if (success) {
+            context.onBarcodeFindTask(itemId);
+        } else {
+            context.onTaskInit();
+        }
     }
 
     /**

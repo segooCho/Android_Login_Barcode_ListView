@@ -7,8 +7,9 @@ package joeun.bixolon.bixolonwarranty.Properties;
 public class BaseUrl {
 
     protected static final String baseUrl = "http://192.168.2.27:3000/";
-    protected static final String loginUrl = baseUrl + "employees";
-    protected static final String barcodeUrl = baseUrl + "product";
+    protected static final String loginUrl = baseUrl + "login";
+    protected static final String commonSpinnerUrl = baseUrl + "commonSpinner";
+    protected static final String barcodeUrl = baseUrl + "barcode";
     protected static final String listViewUrl = baseUrl + "warranty";
 
     public String getBaseUrl(){
@@ -16,6 +17,9 @@ public class BaseUrl {
     }
     public String getLoginUrl(){
         return this.loginUrl;
+    }
+    public String getCommonSpinner(){
+        return this.commonSpinnerUrl;
     }
     public String getBarcodeUrl(){
         return this.barcodeUrl;

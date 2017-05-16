@@ -17,10 +17,10 @@ import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
  * Created by admin on 2017. 5. 10..
  */
 
-public class BarcodeEventButtonSaveTask extends AsyncTask<Void, Void, Boolean> {
+public class BarcodeEventButtonWarrantyDateFindTask extends AsyncTask<Void, Void, Boolean> {
     private MainActivity context;
     private String warrantyCode;
-    private String warrantyDate;
+    private String salesDate;
 
     private boolean mlogin = false;
     //Model
@@ -29,10 +29,10 @@ public class BarcodeEventButtonSaveTask extends AsyncTask<Void, Void, Boolean> {
      * ListViewEventButtonFindTask
      * @param _context
      */
-    public BarcodeEventButtonSaveTask(MainActivity _context, String _warrantyCode, String _warrantyDate) {
+    public BarcodeEventButtonWarrantyDateFindTask(MainActivity _context, String _warrantyCode, String _salesDate) {
         context = _context;
         warrantyCode = _warrantyCode;
-        warrantyDate = _warrantyDate;
+        salesDate = _salesDate;
     }
 
     /**
@@ -44,11 +44,9 @@ public class BarcodeEventButtonSaveTask extends AsyncTask<Void, Void, Boolean> {
     protected Boolean doInBackground(Void... params) {
         try {
             BaseUrl baseUrl = new BaseUrl();
-            AndroidNetworking.put(baseUrl.getBarcodeUrl())
-                    .addBodyParameter("barcode", context.barcodeEventModel.getBarcode())
-                    .addBodyParameter("id",context.loginEventModel.getId())
+            AndroidNetworking.post(baseUrl.getBarcodeUrl())
                     .addBodyParameter("warrantyCode", warrantyCode)
-                    .addBodyParameter("warrantyDate", warrantyDate)
+                    .addBodyParameter("salesDate", salesDate)
                     .setPriority(Priority.LOW)
                     .build()
                     .getAsJSONObject(new JSONObjectRequestListener() {
