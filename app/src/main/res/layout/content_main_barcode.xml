@@ -7,42 +7,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/barcodeButtonBarcode"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:text="@string/barcode_scan"
-        android:textSize="25sp"
-        android:layout_marginTop="10dp"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        <!-- ============================== Barcode Scan 버튼 ============================== -->
+        <Button
+            android:id="@+id/barcodeButtonBarcode"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="@string/barcode_scan"
+            android:textSize="25sp"
+            android:layout_marginTop="10dp"
+            tools:layout_constraintTop_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintLeft_creator="1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
+
+
+        <!-- ============================== SerialNo ============================== -->
+        <TextView
+            android:id="@+id/barcodeTextViewSerialNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Serial No"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"
+            tools:layout_constraintTop_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintLeft_creator="1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barcodeButtonBarcode"
+            />
+
+    <!-- ============================== Model ============================== -->
 
     <TextView
-        android:id="@+id/barcodeTextViewBarcode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Barocde"
-        android:textSize="18sp"
-        android:layout_marginTop="10dp"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barcodeButtonBarcode"
-        />
+            android:id="@+id/barcodeTextViewModel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Model"
+            android:textSize="18sp"
+            android:layout_marginTop="7dp"
+            tools:layout_constraintTop_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintLeft_creator="1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barcodeTextViewSerialNo"
+            />
+
+    <!-- ============================== UserSpec ============================== -->
 
     <TextView
         android:id="@+id/barcodeTextViewUserSpec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="User Spec"
+        android:text="UserSpec : "
         android:textSize="18sp"
         android:layout_marginTop="7dp"
         tools:layout_constraintTop_creator="1"
@@ -50,96 +72,67 @@
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barcodeTextViewBarcode"
+        app:layout_constraintTop_toBottomOf="@+id/barcodeTextViewModel"
         />
 
-    <TextView
-        android:id="@+id/barcodeTextViewUserSpecName"
+    <Spinner
+        android:id="@+id/barcodeSpinnerUserSpec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="User Spec Name"
         android:textSize="18sp"
-        android:layout_marginTop="7dp"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barcodeTextViewUserSpec"
+        app:layout_constraintLeft_toRightOf="@+id/barcodeTextViewUserSpec"
+        app:layout_constraintTop_toBottomOf="@+id/barcodeTextViewModel"
         />
 
-    <TextView
-        android:id="@+id/barcodeTextViewModelName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Model Name"
-        android:textSize="18sp"
-        android:layout_marginTop="7dp"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barcodeTextViewUserSpecName"
-        />
-
-    <TextView
-        android:id="@+id/barcodeTextViewCustomer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Customer"
-        android:textSize="18sp"
-        android:layout_marginTop="7dp"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barcodeTextViewModelName"
-        />
+    <!-- ============================== 출고 일 ============================== -->
 
     <Button
-        android:id="@+id/barcodeButtonSalesDatePicker"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:text="@string/date_setting"
-        android:textSize="18sp"
-        android:layout_marginTop="7dp"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barcodeTextViewCustomer"
-        />
+            android:id="@+id/barcodeButtonGoingOutDate"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/date_setting"
+            android:textSize="18sp"
+            android:layout_marginTop="7dp"
+            tools:layout_constraintTop_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintLeft_creator="1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barcodeTextViewUserSpec"
+            />
+
+        <TextView
+            android:id="@+id/barcodeTextViewGoingOutDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1999-01-01"
+            android:textSize="18sp"
+            tools:layout_constraintTop_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintLeft_creator="1"
+            app:layout_constraintLeft_toRightOf="@+id/barcodeButtonGoingOutDate"
+            app:layout_constraintTop_toBottomOf="@+id/barcodeTextViewModel"
+            />
+
+    <!-- ============================== Warranty Code ============================== -->
 
     <TextView
-        android:id="@+id/barcodeTextViewSalesDatePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1999-01-01"
-        android:textSize="18sp"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toRightOf="@+id/barcodeButtonSalesDatePicker"
-        app:layout_constraintTop_toBottomOf="@+id/barcodeTextViewCustomer"
-        />
-
-    <TextView
-        android:id="@+id/barcodeTextViewWarrantyCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Warranty Code : "
-        android:textSize="18sp"
-        android:layout_marginTop="7dp"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barcodeButtonSalesDatePicker"
-        />
+            android:id="@+id/barcodeTextViewWarrantyCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Warranty Code : "
+            android:textSize="18sp"
+            android:layout_marginTop="7dp"
+            tools:layout_constraintTop_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:layout_constraintLeft_creator="1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barcodeButtonGoingOutDate"
+            />
 
     <Spinner
         android:id="@+id/barcodeSpinnerWarrantyCode"
@@ -150,11 +143,12 @@
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toRightOf="@+id/barcodeTextViewWarrantyCode"
-        app:layout_constraintTop_toBottomOf="@+id/barcodeButtonSalesDatePicker"
+        app:layout_constraintTop_toBottomOf="@+id/barcodeButtonGoingOutDate"
         />
 
+    <!-- ============================== 만료 일  ============================== -->
     <Button
-        android:id="@+id/barcodeButtonWarrantyDate"
+        android:id="@+id/barcodeButtonExpiryDate"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="@string/date_check"
@@ -169,7 +163,7 @@
         />
 
     <TextView
-        android:id="@+id/barcodeTextViewWarrantyDatePicker"
+        android:id="@+id/barcodeTextViewExpiryDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1999-01-01"
@@ -177,16 +171,17 @@
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toRightOf="@+id/barcodeButtonWarrantyDate"
+        app:layout_constraintLeft_toRightOf="@+id/barcodeButtonExpiryDate"
         app:layout_constraintTop_toBottomOf="@+id/barcodeTextViewWarrantyCode"
         />
 
+    <!-- ============================== Buyer  ============================== -->
 
     <TextView
-        android:id="@+id/barcodeTextViewCorporationInfo"
+        android:id="@+id/barcodeTextViewBuyer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Corporation Info : "
+        android:text="Buyer : "
         android:textSize="18sp"
         android:layout_marginTop="7dp"
         tools:layout_constraintTop_creator="1"
@@ -194,20 +189,22 @@
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barcodeButtonWarrantyDate"
+        app:layout_constraintTop_toBottomOf="@+id/barcodeButtonExpiryDate"
         />
 
     <Spinner
-        android:id="@+id/barcodeSpinnerCorporationInfo"
+        android:id="@+id/barcodeSpinnerBuyer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toRightOf="@+id/barcodeTextViewCorporationInfo"
-        app:layout_constraintTop_toBottomOf="@+id/barcodeButtonWarrantyDate"
+        app:layout_constraintLeft_toRightOf="@+id/barcodeTextViewBuyer"
+        app:layout_constraintTop_toBottomOf="@+id/barcodeButtonExpiryDate"
         />
+
+    <!-- ============================== Service Center  ============================== -->
 
     <TextView
         android:id="@+id/barcodeTextViewServiceCenter"
@@ -221,8 +218,9 @@
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barcodeTextViewCorporationInfo"
+        app:layout_constraintTop_toBottomOf="@+id/barcodeTextViewBuyer"
         />
+
 
     <Spinner
         android:id="@+id/barcodeSpinnerServiceCenter"
@@ -233,8 +231,25 @@
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toRightOf="@+id/barcodeTextViewServiceCenter"
-        app:layout_constraintTop_toBottomOf="@+id/barcodeTextViewCorporationInfo"
+        app:layout_constraintTop_toBottomOf="@+id/barcodeTextViewBuyer"
         />
+
+    <!-- ============================== Description  ============================== -->
+
+    <EditText
+        android:id="@+id/barcodeEditTextDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barcodeTextViewServiceCenter"
+    />
+
+    <!-- ============================== Save  ============================== -->
 
     <Button
         android:id="@+id/barcodeButtonSave"
@@ -248,7 +263,7 @@
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barcodeTextViewServiceCenter"
+        app:layout_constraintTop_toBottomOf="@+id/barcodeEditTextDescription"
         />
 
 </android.support.constraint.ConstraintLayout>

@@ -13,7 +13,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import joeun.bixolon.bixolonwarranty.Activity.MainActivity;
+import joeun.bixolon.bixolonwarranty.Common.Spinners;
 import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
+
+import static joeun.bixolon.bixolonwarranty.R.id.barcodeSpinnerServiceCenter;
 
 /**
  * Created by admin on 2017. 5. 10..
@@ -22,9 +25,9 @@ import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boolean> {
     private MainActivity context;
     private String barcode;
-    private String itemId;
     private boolean mlogin = false;
 
+    Spinners spinners;
     /***
      * ListViewEventButtonFindTask
      * @param _context
@@ -51,20 +54,27 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
                     .getAsJSONArray(new JSONArrayRequestListener() {
                         @Override
                         public void onResponse(JSONArray jsonArray) {
-                            // do anything with responseUserLoginTask
                             Log.v("Barcode", "======================================");
                             Log.v("Barcode", "onResponse");
                             try{
                                 for (int i = 0; i < jsonArray.length(); i++){
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                    context.barcodeEventModel.setBarcode(barcode);
-                                    itemId = jsonObject.getString("ItemId");
-                                    context.barcodeTextViewUserSpec.setText("User Spec : " + jsonObject.getString("UserSpec"));
-                                    context.barcodeTextViewUserSpecName.setText("User Spec Name : " + jsonObject.getString("UserSpecName"));
-                                    context.barcodeTextViewModelName.setText("Model Name : " + jsonObject.getString("ModelName"));
-                                    context.barcodeTextViewCustomer.setText("Customer : " + jsonObject.getString("Customer"));
+                                    if (jsonObject.getString("RTN").equals("-1")) {
+                                        mlogin = false;
+                                        context.alertMessage.AlertShow("Error", jsonObject.getString("MSG")).show();
+                                    } else if (jsonObject.getString("RTN").equals("1")) {
+                                        //TODO :: 이전 처리 불러 오기
+                                        context.barcodeEventModel.setBarcode(barcode);
+                                        context.barcodeTextViewModel.setText("Model : " + jsonObject.getString("Model"));
+                                        spinners.setSpinnerText(context.barcodeSpinnerUserSpec, jsonObject.getString("UserSpec"));
+                                        mlogin = true;
+                                        //context.alertMessage.AlertShow("Error", jsonObject.getString("MSG")).show();
+                                    } else {
+                                        context.barcodeEventModel.setBarcode(barcode);
+                                        context.barcodeTextViewModel.setText("Model : " + jsonObject.getString("Model"));
+                                        mlogin = true;
+                                    }
                                 }
-                                mlogin = true;
                             }
                             catch (JSONException e){
                                 Log.v("Barcode", "======================================");
@@ -108,7 +118,7 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
     @Override
     protected void onPostExecute(final Boolean success) {
         if (success) {
-            context.onBarcodeFindTask(itemId);
+            context.onBarcodeFindTask(barcode);
         } else {
             context.onTaskInit();
         }

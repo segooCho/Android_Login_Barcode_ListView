@@ -78,13 +78,12 @@ public class ListViewEventButtonFindTask extends AsyncTask<Void, Void, Boolean> 
                         }
                         @Override
                         public void onError(ANError error) {
-                            // handle error
                             Log.v("Find", "======================================");
                             Log.v("Find", "ANError");
                             Log.v("Find", String.valueOf(error));
                             mlogin = false;
                             context.listViewEventAdapter.notifyDataSetChanged();
-                            //TODO :: 없을때 초기화 작업
+                            //TODO :: List 없을때 초기화 작업
                             context.alertMessage.AlertShow("Error","No such information.").show();
                         }
                     });

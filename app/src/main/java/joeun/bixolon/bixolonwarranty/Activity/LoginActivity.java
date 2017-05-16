@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         //TODO: 임시 시작 처리
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra("LoginID", "1001");
-        intent.putExtra("CorporationInfo", "[11455]BIXOLON EUROPE GMBH IG");
+        intent.putExtra("Buyer", "[11455]BIXOLON EUROPE GMBH IG");
         intent.putExtra("ServiceCenter", "[SVUSA]Service Center Usa");
         startActivity(intent);
         finish();
@@ -169,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
              */
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("LoginID", loginEventModel.getId());
-            intent.putExtra("CorporationInfo", loginEventModel.getCorporationInfo());
+            intent.putExtra("Buyer", loginEventModel.getBuyer());
             intent.putExtra("ServiceCenter", loginEventModel.getServiceCenter());
             startActivity(intent);
             /**

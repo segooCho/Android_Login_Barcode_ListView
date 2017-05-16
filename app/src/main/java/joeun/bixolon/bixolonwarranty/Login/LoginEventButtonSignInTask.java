@@ -48,8 +48,6 @@ public class LoginEventButtonSignInTask extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected Boolean doInBackground(Void... params) {
         try {
-            // Simulate network access.
-            // TODO: 로그인 처리 : State Code = 200 로 처리 하고 싶지만 못하고 있음
             BaseUrl baseUrl = new BaseUrl();
             AndroidNetworking.post(baseUrl.getLoginUrl())
                     .addBodyParameter("id",id)
@@ -59,13 +57,14 @@ public class LoginEventButtonSignInTask extends AsyncTask<Void, Void, Boolean> {
                     .getAsJSONArray(new JSONArrayRequestListener() {
                         @Override
                         public void onResponse(JSONArray jsonArray) {
+                            // TODO: 로그인 처리 : State Code = 200 로 처리 하고 싶지만 못하고 있음
                             Log.v("Login", "======================================");
                             Log.v("Login", "jsonArray");
                             try{
                                 for (int i = 0; i < jsonArray.length(); i++){
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                                     context.loginEventModel.setId(id);
-                                    context.loginEventModel.setCorporationInfo(jsonObject.getString("CorporationInfo"));
+                                    context.loginEventModel.setBuyer(jsonObject.getString("Buyer"));
                                     context.loginEventModel.setServiceCenter(jsonObject.getString("ServiceCenter"));
                                 }
                                 mlogin = true;

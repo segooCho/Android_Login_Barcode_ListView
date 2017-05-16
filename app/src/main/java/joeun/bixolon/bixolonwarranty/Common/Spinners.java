@@ -32,8 +32,10 @@ public class Spinners implements AdapterView.OnItemSelectedListener {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, arrayList);
         spinner.setAdapter(arrayAdapter);
 
-        //공통으로 사용하기 위해 setOnItemSelectedListener 사용하지 않음
-        //spinner.setOnItemSelectedListener(this);
+        /**
+         * 공통으로 사용하기 위해 setOnItemSelectedListener 사용하지 않음
+         * spinner.setOnItemSelectedListener(this);
+         */
     }
 
     /**
@@ -54,7 +56,6 @@ public class Spinners implements AdapterView.OnItemSelectedListener {
      */
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
 
     }
 
@@ -64,6 +65,9 @@ public class Spinners implements AdapterView.OnItemSelectedListener {
      * @param text
      */
     public void setSpinnerText(Spinner _spinner, String text) {
+        if (text == null)
+            return;
+
         for(int i= 0; i < _spinner.getAdapter().getCount(); i++) {
             if (_spinner.getAdapter().getItem(i).toString() != null)
             if (_spinner.getAdapter().getItem(i).toString().contains(text))

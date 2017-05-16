@@ -62,10 +62,14 @@ public class BarcodeEventSpinnersAdapterTask extends AsyncTask<Void, Void, Boole
                             try{
                                 for (int i = 0; i < jsonArray.length(); i++){
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                    //Log.v("Barcode", "LastName : " + jsonObject.getString("Spinner"));
-                                    arrayList.add(jsonObject.getString("Spinner"));
+                                    if (jsonObject.getString("RTN").equals("-1")) {
+                                        mlogin = false;
+                                        context.alertMessage.AlertShow("Error",mode + " : " + jsonObject.getString("MSG")).show();
+                                    } else {
+                                        arrayList.add(jsonObject.getString("Spinner"));
+                                        mlogin = true;
+                                    }
                                 }
-                                mlogin = true;
                             }
                             catch (JSONException e){
                                 Log.v("SpinnersAdapter", "======================================");
@@ -82,7 +86,7 @@ public class BarcodeEventSpinnersAdapterTask extends AsyncTask<Void, Void, Boole
                             Log.v("SpinnersAdapter", "ANError");
                             Log.v("SpinnersAdapter", String.valueOf(error));
                             mlogin = false;
-                            context.alertMessage.AlertShow("Error","Fail to find common information.(Spinner)").show();
+                            context.alertMessage.AlertShow("Error","Fail to find common information.(ANError)").show();
                         }
                     });
             //TODO: 응답 시간을 강제적으로 기다린다... 추후 문제 발생 할수 있다.
