@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import joeun.bixolon.bixolonwarranty.Login.LoginAlertMessage;
 import joeun.bixolon.bixolonwarranty.Login.LoaderCallback;
 import joeun.bixolon.bixolonwarranty.Login.LoginEventButtonSignIn;
 import joeun.bixolon.bixolonwarranty.Login.LoginEventButtonSignInTask;
@@ -28,7 +29,6 @@ import joeun.bixolon.bixolonwarranty.Common.Progress;
 
 
 import static android.Manifest.permission.READ_CONTACTS;
-import static android.R.attr.id;
 
 /**
  * A login screen that offers login via email/password.
@@ -59,18 +59,21 @@ public class LoginActivity extends AppCompatActivity {
     //Model
     public LoginEventModel loginEventModel = new LoginEventModel();
 
+    public LoginAlertMessage loginAlertMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //TODO: 임시 시작 처리
+        /*
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra("userId", "1001");
         intent.putExtra("buyer", "[11455]BIXOLON EUROPE GMBH IG");
         intent.putExtra("serviceCenter", "[SVUSA]Service Center Usa");
         startActivity(intent);
         finish();
+        */
 
         setContentView(R.layout.activity_login);
         findViewByIdView();
@@ -96,6 +99,10 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         progress = new Progress(formView, progressView, getResources().getInteger(android.R.integer.config_shortAnimTime));
+
+        //Message
+        loginAlertMessage = new LoginAlertMessage(LoginActivity.this);
+
     }
 
     /**
@@ -165,7 +172,6 @@ public class LoginActivity extends AppCompatActivity {
         if (success) {
             /**
              * MainActivity 시작
-             *
              */
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("userId", loginEventModel.getUserId());
@@ -176,9 +182,11 @@ public class LoginActivity extends AppCompatActivity {
              * finish() 로 LoginActivity 죽이는건데.. 이 위치는 뒤로가기 시 백그라운드로 가면 로그인 창?? 위쪽은 로그인으로 바로 이동??
              */
             finish();
+
         } else {
-            loginTextViewPassword.setError(getString(R.string.error_incorrect_password));
+            //loginTextViewPassword.setError(getString(R.string.error_incorrect_password));
             loginTextViewPassword.requestFocus();
+
         }
     }
 

@@ -29,7 +29,7 @@ public class LoginEventButtonSignInTask extends AsyncTask<Void, Void, Boolean> {
         /***
      * LoginEventButtonSignInTask
      * @param _context
-     * @param _id
+     * @param _userId
      * @param _password
      */
     public LoginEventButtonSignInTask(LoginActivity _context, String _userId, String _password) {
@@ -63,17 +63,24 @@ public class LoginEventButtonSignInTask extends AsyncTask<Void, Void, Boolean> {
                             try{
                                 for (int i = 0; i < jsonArray.length(); i++){
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                    context.loginEventModel.setUserId(userId);
-                                    context.loginEventModel.setBuyer(jsonObject.getString("Buyer"));
-                                    context.loginEventModel.setServiceCenter(jsonObject.getString("ServiceCenter"));
+
+                                    if (jsonObject.getString("RTN").equals("-1")) {
+                                        mlogin = false;
+                                        context.loginAlertMessage.AlertShow("Error", jsonObject.getString("MSG")).show();
+                                    } else {
+                                        context.loginEventModel.setUserId(userId);
+                                        context.loginEventModel.setBuyer(jsonObject.getString("Buyer"));
+                                        context.loginEventModel.setServiceCenter(jsonObject.getString("ServiceCenter"));
+                                        mlogin = true;
+                                    }
                                 }
-                                mlogin = true;
                             }
                             catch (JSONException e){
                                 Log.v("Login", "======================================");
                                 Log.v("Login", "JSONException");
                                 Log.v("Login", String.valueOf(e));
                                 mlogin = false;
+                                context.loginAlertMessage.AlertShow("Error","Communication Error(JSONException)").show();
                             }
                         }
                         @Override
@@ -83,13 +90,18 @@ public class LoginEventButtonSignInTask extends AsyncTask<Void, Void, Boolean> {
                             Log.v("Login", "NG");
                             Log.v("Login", String.valueOf(error));
                             mlogin = false;
+                            context.loginAlertMessage.AlertShow("Error","Communication Error(ANError)").show();
                         }
                     });
 
             //TODO: 응답 시간을 강제적으로 기다린다... 추후 문제 발생 할수 있다.
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            return false;
+            Log.v("Barcode", "======================================");
+            Log.v("Barcode", "InterruptedException");
+            Log.v("Barcode", String.valueOf(e));
+            mlogin = false;
+            context.loginAlertMessage.AlertShow("Error","Communication Error(InterruptedException)").show();
         }
 
         if (!mlogin)
