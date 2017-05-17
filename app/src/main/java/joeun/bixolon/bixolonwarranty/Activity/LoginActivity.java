@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     public LoginEventButtonSignInTask loginEventButtonSignInTask = null;
 
     // UI references.
-    public AutoCompleteTextView loginTextViewId;
+    public AutoCompleteTextView loginTextViewUserId;
     public EditText loginTextViewPassword;
 
     //Progress
@@ -66,9 +66,9 @@ public class LoginActivity extends AppCompatActivity {
 
         //TODO: 임시 시작 처리
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        intent.putExtra("LoginID", "1001");
-        intent.putExtra("Buyer", "[11455]BIXOLON EUROPE GMBH IG");
-        intent.putExtra("ServiceCenter", "[SVUSA]Service Center Usa");
+        intent.putExtra("userId", "1001");
+        intent.putExtra("buyer", "[11455]BIXOLON EUROPE GMBH IG");
+        intent.putExtra("serviceCenter", "[SVUSA]Service Center Usa");
         startActivity(intent);
         finish();
 
@@ -87,8 +87,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        Button loginButtonSignIn = (Button) findViewById(R.id.loginButtonSignIn);
+        loginButtonSignIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 loginEventButtonSignIn.Login();
@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
      * View ID 찾기
      */
     private void findViewByIdView() {
-        loginTextViewId = (AutoCompleteTextView) findViewById(R.id.loginTextViewId);
+        loginTextViewUserId = (AutoCompleteTextView) findViewById(R.id.loginTextViewUserId);
         // Set up the login form.
         populateAutoComplete();
         loginTextViewPassword = (EditText) findViewById(R.id.loginTextViewPassword);
@@ -127,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(loginTextViewId, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(loginTextViewUserId, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
                     .setAction(android.R.string.ok, new View.OnClickListener() {
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
@@ -168,9 +168,9 @@ public class LoginActivity extends AppCompatActivity {
              *
              */
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("LoginID", loginEventModel.getId());
-            intent.putExtra("Buyer", loginEventModel.getBuyer());
-            intent.putExtra("ServiceCenter", loginEventModel.getServiceCenter());
+            intent.putExtra("userId", loginEventModel.getUserId());
+            intent.putExtra("buyer", loginEventModel.getBuyer());
+            intent.putExtra("serviceCenter", loginEventModel.getServiceCenter());
             startActivity(intent);
             /**
              * finish() 로 LoginActivity 죽이는건데.. 이 위치는 뒤로가기 시 백그라운드로 가면 로그인 창?? 위쪽은 로그인으로 바로 이동??

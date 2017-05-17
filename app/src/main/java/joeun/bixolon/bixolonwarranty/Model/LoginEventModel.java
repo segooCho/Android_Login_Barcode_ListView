@@ -7,12 +7,12 @@ package joeun.bixolon.bixolonwarranty.Model;
 
 public class LoginEventModel {
 
-    private String id;
+    private String userId;
     private String buyer;
     private String serviceCenter;
 
-    public void setId(String _id) {
-        id = _id ;
+    public void setUserId(String _userId) {
+        userId = _userId ;
     }
     public void setBuyer(String _buyer) {
         buyer = _buyer ;
@@ -21,14 +21,14 @@ public class LoginEventModel {
         serviceCenter = _serviceCenter ;
     }
 
-    public String getId() {
-        return this.id ;
+    public String getUserId() {
+        return this.userId;
     }
     public String getBuyer() {
-        return this.buyer ;
+        return this.buyer;
     }
     public String getServiceCenter() {
-        return this.serviceCenter ;
+        return this.serviceCenter;
     }
 
 }

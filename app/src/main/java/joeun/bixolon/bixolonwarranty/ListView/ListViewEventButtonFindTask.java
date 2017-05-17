@@ -21,16 +21,16 @@ import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 
 public class ListViewEventButtonFindTask extends AsyncTask<Void, Void, Boolean> {
     private MainActivity context;
-    private String date;
+    private String regDate;
     private boolean mlogin = false;
 
     /***
      * ListViewEventButtonFindTask
      * @param _context
      */
-    public ListViewEventButtonFindTask(MainActivity _context, String _date) {
+    public ListViewEventButtonFindTask(MainActivity _context, String _regDate) {
         context = _context;
-        date = _date;
+        regDate = _regDate;
     }
 
     /**
@@ -43,9 +43,9 @@ public class ListViewEventButtonFindTask extends AsyncTask<Void, Void, Boolean> 
         context.listViewEventAdapter = new ListViewEventAdapter();
         try {
             BaseUrl baseUrl = new BaseUrl();
-            AndroidNetworking.post(baseUrl.getListViewUrl())
-                    .addBodyParameter("id", context.loginEventModel.getId())
-                    .addBodyParameter("date", date)
+            AndroidNetworking.post(baseUrl.getWorkListUrl())
+                    .addBodyParameter("regDate", regDate)
+                    .addBodyParameter("userId", context.loginEventModel.getUserId())
                     .setPriority(Priority.LOW)
                     .build()
                     .getAsJSONArray(new JSONArrayRequestListener() {
@@ -57,14 +57,12 @@ public class ListViewEventButtonFindTask extends AsyncTask<Void, Void, Boolean> 
                             try{
                                 for (int i = 0; i < jsonArray.length(); i++){
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                    Log.v("Find", "Barcode : " + jsonObject.getString("Barcode"));
-                                    Log.v("Find", "Id : " + jsonObject.getString("Id"));
-                                    Log.v("Find", "WarrantyType : " + jsonObject.getString("WarrantyType"));
-                                    new ListViewEventView(  context,
-                                            jsonObject.getString("Barcode"),
-                                            jsonObject.getString("Id"),
-                                            jsonObject.getString("WarrantyType"),
-                                            jsonObject.getString("WarrantyDate"));
+                                    Log.v("Find", "SerialNo : " + jsonObject.getString("SerialNo"));
+                                    new ListViewEventView(context,
+                                            jsonObject.getString("SerialNo"),
+                                            jsonObject.getString("Model"),
+                                            jsonObject.getString("UserSpec"),
+                                            jsonObject.getString("GoingOutDate"));
                                 }
                                 mlogin = true;
                             }

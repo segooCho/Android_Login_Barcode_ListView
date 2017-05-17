@@ -16,8 +16,10 @@ public class BaseUrl {
     protected static final String barcodeUrl = baseUrl + "barcode";
     //barcode :: warrantyCode & salesDate 조합 유효기간
     protected static final String expiryDateUrl = baseUrl + "expiryDate";
+    //barcode :: barcode Save
+    protected static final String barcodeSaveUrl = baseUrl + "barcodeSave";
     //listview :: listview 조회
-    protected static final String listViewUrl = baseUrl + "warranty";
+    protected static final String workListUrl = baseUrl + "workList";
 
     /*
     public String getBaseUrl(){
@@ -33,11 +35,14 @@ public class BaseUrl {
     public String getBarcodeUrl(){
         return this.barcodeUrl;
     }
+    public String getBarcodSaveUrl(){
+        return this.barcodeSaveUrl;
+    }
     public String getExpiryDateUrl(){
         return this.expiryDateUrl;
     }
-    public String getListViewUrl(){
-        return this.listViewUrl;
+    public String getWorkListUrl(){
+        return this.workListUrl;
     }
 
 }

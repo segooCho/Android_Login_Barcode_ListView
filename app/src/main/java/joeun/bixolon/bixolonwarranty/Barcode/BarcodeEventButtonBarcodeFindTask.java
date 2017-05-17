@@ -27,10 +27,10 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
     private String barcode;
     private boolean mlogin = false;
 
-    Spinners spinners;
-    /***
-     * ListViewEventButtonFindTask
+    /**
+     * BarcodeEventButtonBarcodeFindTask
      * @param _context
+     * @param _barcode
      */
     public BarcodeEventButtonBarcodeFindTask(MainActivity _context, String _barcode) {
         context = _context;
@@ -38,7 +38,7 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
     }
 
     /**
-     *
+     * doInBackground
      * @param params
      * @return
      */
@@ -48,7 +48,7 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
             BaseUrl baseUrl = new BaseUrl();
             AndroidNetworking.post(baseUrl.getBarcodeUrl())
                     .addBodyParameter("barcode", barcode)
-                    .addBodyParameter("id", context.loginEventModel.getId())
+                    .addBodyParameter("id", context.loginEventModel.getUserId())
                     .setPriority(Priority.LOW)
                     .build()
                     .getAsJSONArray(new JSONArrayRequestListener() {
@@ -63,13 +63,28 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
                                         mlogin = false;
                                         context.alertMessage.AlertShow("Error", jsonObject.getString("MSG")).show();
                                     } else if (jsonObject.getString("RTN").equals("1")) {
-                                        //TODO :: 이전 처리 불러 오기
+                                        /**
+                                         * 이미 등록된 Serial No.
+                                         * UserSpec 은 SP_APP_EXPIRYDATE_SELECT_REV1 에서 처리 후
+                                         */
                                         context.barcodeEventModel.setBarcode(barcode);
                                         context.barcodeTextViewModel.setText("Model : " + jsonObject.getString("Model"));
-                                        spinners.setSpinnerText(context.barcodeSpinnerUserSpec, jsonObject.getString("UserSpec"));
+                                        //spinners.setSpinnerText(context.barcodeSpinnerUserSpec, jsonObject.getString("UserSpec"));
+                                        context.barcodeTextViewGoingOutDate.setText(jsonObject.getString("GoingOutDate"));
+                                        if (!jsonObject.getString("Buyer").isEmpty())
+                                            context.spinners.setSpinnerText(context.barcodeSpinnerWarrantyCode, jsonObject.getString("WarrantyCode"));
+                                        context.barcodeTextViewExpiryDate.setText(jsonObject.getString("ExpiryDate"));
+                                        if (!jsonObject.getString("Buyer").isEmpty())
+                                            context.spinners.setSpinnerText(context.barcodeSpinnerBuyer, jsonObject.getString("Buyer"));
+                                        if (!jsonObject.getString("ServiceCenter").isEmpty())
+                                            context.spinners.setSpinnerText(context.barcodeSpinnerServiceCenter, jsonObject.getString("ServiceCenter"));
+                                        context.barcodeEditTextDescription.setText(jsonObject.getString("Description"));
                                         mlogin = true;
-                                        //context.alertMessage.AlertShow("Error", jsonObject.getString("MSG")).show();
+                                        context.alertMessage.AlertShow("Ok", jsonObject.getString("MSG")).show();
                                     } else {
+                                        /**
+                                         * 정상 Serial No.
+                                         */
                                         context.barcodeEventModel.setBarcode(barcode);
                                         context.barcodeTextViewModel.setText("Model : " + jsonObject.getString("Model"));
                                         mlogin = true;
@@ -91,7 +106,7 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
                             Log.v("Barcode", "ANError");
                             Log.v("Barcode", String.valueOf(error));
                             mlogin = false;
-                            context.alertMessage.AlertShow("Error","It is not a product barcode.").show();
+                            context.alertMessage.AlertShow("Error","Communication Error(ANError).").show();
                         }
                     });
             //TODO: 응답 시간을 강제적으로 기다린다... 추후 문제 발생 할수 있다.

@@ -22,14 +22,15 @@ public class ListViewEventView extends ListActivity {
      * @param warrantyType
      * @param warrantyDate
      */
-    public ListViewEventView(MainActivity _context, String barcode, String id, String warrantyType, String warrantyDate) {
+    public ListViewEventView(MainActivity _context, String _serialNo, String _model, String _userSpec, String _goingOutDate) {
         context = _context;
 
         context.listView.setAdapter(context.listViewEventAdapter);
-        context.listViewEventAdapter.addItem(   ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp),
-                                                barcode,
-                                                id,
-                                                warrantyType,
-                                                warrantyDate);
+        context.listViewEventAdapter.addItem(
+                ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp),
+                _serialNo,
+                _model,
+                _userSpec,
+                _goingOutDate);
     }
 }

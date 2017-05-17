@@ -22,7 +22,7 @@ import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 
 public class LoginEventButtonSignInTask extends AsyncTask<Void, Void, Boolean> {
     private LoginActivity context;
-    private final String id;
+    private final String userId;
     private final String password;
     private boolean mlogin = false;
 
@@ -32,9 +32,9 @@ public class LoginEventButtonSignInTask extends AsyncTask<Void, Void, Boolean> {
      * @param _id
      * @param _password
      */
-    public LoginEventButtonSignInTask(LoginActivity _context, String _id, String _password) {
+    public LoginEventButtonSignInTask(LoginActivity _context, String _userId, String _password) {
         context = _context;
-        id = _id;
+        userId = _userId;
         //Hash 처리
         Hash hash = new Hash();
         password = hash.SHA256(_password);
@@ -50,7 +50,7 @@ public class LoginEventButtonSignInTask extends AsyncTask<Void, Void, Boolean> {
         try {
             BaseUrl baseUrl = new BaseUrl();
             AndroidNetworking.post(baseUrl.getLoginUrl())
-                    .addBodyParameter("id",id)
+                    .addBodyParameter("userId",userId)
                     .addBodyParameter("password",password)
                     .setPriority(Priority.LOW)
                     .build()
@@ -63,7 +63,7 @@ public class LoginEventButtonSignInTask extends AsyncTask<Void, Void, Boolean> {
                             try{
                                 for (int i = 0; i < jsonArray.length(); i++){
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                    context.loginEventModel.setId(id);
+                                    context.loginEventModel.setUserId(userId);
                                     context.loginEventModel.setBuyer(jsonObject.getString("Buyer"));
                                     context.loginEventModel.setServiceCenter(jsonObject.getString("ServiceCenter"));
                                 }

@@ -19,7 +19,7 @@ public class ListViewEventViewInit {
         context = _context;
 
         Calendar calendar = Calendar.getInstance(); // date 초기화
-        context.lvTextViewDatePicker.setText( String.format("%d-%02d-%02d",
+        context.lvTextViewRegDate.setText( String.format("%d-%02d-%02d",
                                             calendar.get(Calendar.YEAR),
                                             calendar.get(Calendar.MONTH)+1,
                                             calendar.get(Calendar.DAY_OF_MONTH)));
