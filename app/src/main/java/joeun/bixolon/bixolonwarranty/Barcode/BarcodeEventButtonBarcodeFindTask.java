@@ -67,9 +67,8 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
                                          * 이미 등록된 Serial No.
                                          * UserSpec 은 SP_APP_EXPIRYDATE_SELECT_REV1 에서 처리 후
                                          */
-
                                         context.barcodeEventModel.setBarcode(barcode);
-                                        context.barcodeTextViewModel.setText("Model : " + jsonObject.getString("Model"));
+                                        context.barcodeTextViewModel.setText(jsonObject.getString("Model"));
                                         //context.barcodeSpinnerUserSpec.setEnabled(true);
                                         context.barcodeButtonGoingOutDate.setEnabled(true);
                                         context.barcodeTextViewGoingOutDate.setText(jsonObject.getString("GoingOutDate"));

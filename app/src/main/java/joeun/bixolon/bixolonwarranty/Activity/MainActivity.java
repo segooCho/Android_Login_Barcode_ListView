@@ -280,22 +280,26 @@ public class MainActivity extends AppCompatActivity
         //화면 초기화
         new BarcodeEventViewInit(MainActivity.this);
         //Barcode Scan 버튼
-        //barcodeButtonBarcode.setOnClickListener(new BarcodeEventButtonBarcode(MainActivity.this));
+        barcodeButtonBarcode.setOnClickListener(new BarcodeEventButtonBarcode(MainActivity.this));
         /**
          * 장원씨 Test
-         */
         barcodeButtonBarcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 progress.ShowProgress(true);
+
+                //TODO :: 임시
                 String barcode = "BEG7DKA15090002";
-                barcodeTextViewSerialNo.setText("Serial No : " + barcode);
+
+                barcodeTextViewSerialNo.setText(barcode);
                 barcodeEventModel.setBarcode(null);
                 barcodeEventButtonBarcodeFindTask = new BarcodeEventButtonBarcodeFindTask(MainActivity.this, barcode);
                 barcodeEventButtonBarcodeFindTask.execute((Void) null);
 
             }
         });
+        */
+
         //GoingOutDate 버튼
         barcodeButtonGoingOutDate.setOnClickListener(new ButtonDatePicker(MainActivity.this, barcodeTextViewGoingOutDate));
         //ExpiryDate 버튼
@@ -436,7 +440,7 @@ public class MainActivity extends AppCompatActivity
              */
             case 49374: {
                 progress.ShowProgress(true);
-                barcodeTextViewSerialNo.setText("Serial No : " + result.getContents());
+                barcodeTextViewSerialNo.setText(result.getContents());
                 barcodeEventModel.setBarcode(null);
                 barcodeEventButtonBarcodeFindTask = new BarcodeEventButtonBarcodeFindTask(MainActivity.this, result.getContents());
                 barcodeEventButtonBarcodeFindTask.execute((Void) null);

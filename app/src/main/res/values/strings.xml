@@ -15,14 +15,14 @@
     <string name="barcode_scan">Barcode Scan</string>
     <string name="barcode_save">Save</string>
     <string name="listView_find">Find</string>
-    <string name="date_setting">Date Setting</string>
-    <string name="date_check">Check the date range</string>
+    <string name="date_change">Change</string>
+    <string name="date_fetch">Fetch</string>
 
 
 
 
-    <string name="title_activity_main_barcode">Find Product Information</string>
-    <string name="title_activity_main_list">Find WorkList</string>
+    <string name="title_activity_main_barcode">Product Information</string>
+    <string name="title_activity_main_list">WorkList</string>
     <string name="nav_header_name">Bixolon</string>
     <string name="nav_header_email">Bixolon@Bixolon.com</string>
 

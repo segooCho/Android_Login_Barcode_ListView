@@ -20,8 +20,8 @@ public class BarcodeEventViewInit {
         context = _context;
 
         context.barcodeEventModel.setBarcode(null);
-        context.barcodeTextViewSerialNo.setText("Serial No");
-        context.barcodeTextViewModel.setText("Model");
+        context.barcodeTextViewSerialNo.setText("");
+        context.barcodeTextViewModel.setText("");
         context.arrayListUserSpec.clear();
         context.spinners = new Spinners(context, context.barcodeSpinnerUserSpec, context.arrayListUserSpec);
         context.barcodeSpinnerUserSpec.setEnabled(false);
