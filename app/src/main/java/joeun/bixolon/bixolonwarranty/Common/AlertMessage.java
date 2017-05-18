@@ -1,5 +1,6 @@
 package joeun.bixolon.bixolonwarranty.Common;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
@@ -10,9 +11,9 @@ import joeun.bixolon.bixolonwarranty.Activity.MainActivity;
  */
 
 public class AlertMessage extends AlertDialog.Builder {
-    private MainActivity context;
+    private Activity context;
 
-    public AlertMessage(MainActivity _context) {
+    public AlertMessage(Activity _context) {
         super(_context);
         context = _context;
     }

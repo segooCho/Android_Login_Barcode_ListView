@@ -36,5 +36,6 @@ public class BarcodeEventViewInit {
 
         context.barcodeTextViewExpiryDate.setText("1901-01-01");
         context.barcodeEditTextDescription.setText("");
+        context.barcodeEditTextDescription.setEnabled(false);
     }
 }

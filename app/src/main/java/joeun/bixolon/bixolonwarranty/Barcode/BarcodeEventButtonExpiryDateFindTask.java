@@ -48,7 +48,7 @@ public class BarcodeEventButtonExpiryDateFindTask extends AsyncTask<Void, Void, 
             AndroidNetworking.post(baseUrl.getExpiryDateUrl())
                     .addBodyParameter("warrantyCode", warrantyCode)
                     .addBodyParameter("goingOutDate", goingOutDate)
-                    .setPriority(Priority.LOW)
+                    .setPriority(Priority.HIGH)
                     .build()
                     .getAsJSONArray(new JSONArrayRequestListener() {
                         @Override

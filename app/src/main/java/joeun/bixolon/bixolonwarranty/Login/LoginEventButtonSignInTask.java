@@ -52,7 +52,7 @@ public class LoginEventButtonSignInTask extends AsyncTask<Void, Void, Boolean> {
             AndroidNetworking.post(baseUrl.getLoginUrl())
                     .addBodyParameter("userId",userId)
                     .addBodyParameter("password",password)
-                    .setPriority(Priority.LOW)
+                    .setPriority(Priority.HIGH)
                     .build()
                     .getAsJSONArray(new JSONArrayRequestListener() {
                         @Override
@@ -66,7 +66,7 @@ public class LoginEventButtonSignInTask extends AsyncTask<Void, Void, Boolean> {
 
                                     if (jsonObject.getString("RTN").equals("-1")) {
                                         mlogin = false;
-                                        context.loginAlertMessage.AlertShow("Error", jsonObject.getString("MSG")).show();
+                                        context.alertMessage.AlertShow("Error", jsonObject.getString("MSG")).show();
                                     } else {
                                         context.loginEventModel.setUserId(userId);
                                         context.loginEventModel.setBuyer(jsonObject.getString("Buyer"));
@@ -80,7 +80,7 @@ public class LoginEventButtonSignInTask extends AsyncTask<Void, Void, Boolean> {
                                 Log.v("Login", "JSONException");
                                 Log.v("Login", String.valueOf(e));
                                 mlogin = false;
-                                context.loginAlertMessage.AlertShow("Error","Communication Error(JSONException)").show();
+                                context.alertMessage.AlertShow("Error","Communication Error(JSONException)").show();
                             }
                         }
                         @Override
@@ -90,7 +90,7 @@ public class LoginEventButtonSignInTask extends AsyncTask<Void, Void, Boolean> {
                             Log.v("Login", "NG");
                             Log.v("Login", String.valueOf(error));
                             mlogin = false;
-                            context.loginAlertMessage.AlertShow("Error","Communication Error(ANError)").show();
+                            context.alertMessage.AlertShow("Error","Communication Error(ANError)").show();
                         }
                     });
 
@@ -101,7 +101,7 @@ public class LoginEventButtonSignInTask extends AsyncTask<Void, Void, Boolean> {
             Log.v("Barcode", "InterruptedException");
             Log.v("Barcode", String.valueOf(e));
             mlogin = false;
-            context.loginAlertMessage.AlertShow("Error","Communication Error(InterruptedException)").show();
+            context.alertMessage.AlertShow("Error","Communication Error(InterruptedException)").show();
         }
 
         if (!mlogin)

@@ -51,7 +51,7 @@ public class BarcodeEventSpinnersAdapterTask extends AsyncTask<Void, Void, Boole
             AndroidNetworking.post(baseUrl.getCommonSpinner())
                     .addBodyParameter("mode",mode)
                     .addBodyParameter("param1",param1)
-                    .setPriority(Priority.LOW)
+                    .setPriority(Priority.HIGH)
                     .build()
                     .getAsJSONArray(new JSONArrayRequestListener() {
                         @Override

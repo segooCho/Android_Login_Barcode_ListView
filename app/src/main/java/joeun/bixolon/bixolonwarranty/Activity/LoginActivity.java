@@ -19,7 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import joeun.bixolon.bixolonwarranty.Login.LoginAlertMessage;
+import joeun.bixolon.bixolonwarranty.Common.AlertMessage;
 import joeun.bixolon.bixolonwarranty.Login.LoaderCallback;
 import joeun.bixolon.bixolonwarranty.Login.LoginEventButtonSignIn;
 import joeun.bixolon.bixolonwarranty.Login.LoginEventButtonSignInTask;
@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
     //Model
     public LoginEventModel loginEventModel = new LoginEventModel();
 
-    public LoginAlertMessage loginAlertMessage;
+    public AlertMessage alertMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
         progress = new Progress(formView, progressView, getResources().getInteger(android.R.integer.config_shortAnimTime));
 
         //Message
-        loginAlertMessage = new LoginAlertMessage(LoginActivity.this);
+        alertMessage = new AlertMessage(LoginActivity.this);
 
     }
 

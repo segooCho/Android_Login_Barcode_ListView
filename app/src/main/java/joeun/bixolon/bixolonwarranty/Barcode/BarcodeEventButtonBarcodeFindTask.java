@@ -49,7 +49,7 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
             AndroidNetworking.post(baseUrl.getBarcodeUrl())
                     .addBodyParameter("barcode", barcode)
                     .addBodyParameter("id", context.loginEventModel.getUserId())
-                    .setPriority(Priority.LOW)
+                    .setPriority(Priority.HIGH)
                     .build()
                     .getAsJSONArray(new JSONArrayRequestListener() {
                         @Override
@@ -79,6 +79,7 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
                                         if (!jsonObject.getString("ServiceCenter").isEmpty())
                                             context.spinners.setSpinnerText(context.barcodeSpinnerServiceCenter, jsonObject.getString("ServiceCenter"));
                                         context.barcodeEditTextDescription.setText(jsonObject.getString("Description"));
+                                        context.barcodeEditTextDescription.setEnabled(true);
                                         mlogin = true;
                                         context.alertMessage.AlertShow("Ok", jsonObject.getString("MSG")).show();
                                     } else {
@@ -87,6 +88,7 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
                                          */
                                         context.barcodeEventModel.setBarcode(barcode);
                                         context.barcodeTextViewModel.setText("Model : " + jsonObject.getString("Model"));
+                                        context.barcodeEditTextDescription.setEnabled(true);
                                         mlogin = true;
                                     }
                                 }

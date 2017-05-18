@@ -1,5 +1,6 @@
 package joeun.bixolon.bixolonwarranty.Common;
 
+import android.app.Activity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,7 +15,7 @@ import joeun.bixolon.bixolonwarranty.Activity.MainActivity;
  */
 
 public class Spinners implements AdapterView.OnItemSelectedListener {
-    private MainActivity context;
+    private Activity context;
     private Spinner spinner;
     private List<String> arrayList;
 
@@ -24,7 +25,7 @@ public class Spinners implements AdapterView.OnItemSelectedListener {
      * @param _spinner
      * @param _arrayList
      */
-    public Spinners(MainActivity _context, Spinner _spinner, List<String> _arrayList) {
+    public Spinners(Activity _context, Spinner _spinner, List<String> _arrayList) {
         context = _context;
         spinner = _spinner;
         arrayList = _arrayList;

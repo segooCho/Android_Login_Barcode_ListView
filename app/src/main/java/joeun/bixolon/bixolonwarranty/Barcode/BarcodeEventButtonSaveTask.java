@@ -74,7 +74,7 @@ public class BarcodeEventButtonSaveTask extends AsyncTask<Void, Void, Boolean> {
                     .addBodyParameter("fileName2", "")
                     .addBodyParameter("filePath2", "")
                     .addBodyParameter("createdBy", context.loginEventModel.getUserId())
-                    .setPriority(Priority.LOW)
+                    .setPriority(Priority.HIGH)
                     .build()
                     .getAsJSONArray(new JSONArrayRequestListener() {
                         @Override

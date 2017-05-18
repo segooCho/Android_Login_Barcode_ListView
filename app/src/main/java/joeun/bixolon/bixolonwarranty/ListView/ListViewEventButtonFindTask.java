@@ -46,7 +46,7 @@ public class ListViewEventButtonFindTask extends AsyncTask<Void, Void, Boolean> 
             AndroidNetworking.post(baseUrl.getWorkListUrl())
                     .addBodyParameter("regDate", regDate)
                     .addBodyParameter("userId", context.loginEventModel.getUserId())
-                    .setPriority(Priority.LOW)
+                    .setPriority(Priority.HIGH)
                     .build()
                     .getAsJSONArray(new JSONArrayRequestListener() {
                         @Override
