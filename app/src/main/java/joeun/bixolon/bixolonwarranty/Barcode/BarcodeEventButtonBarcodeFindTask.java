@@ -67,19 +67,30 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
                                          * 이미 등록된 Serial No.
                                          * UserSpec 은 SP_APP_EXPIRYDATE_SELECT_REV1 에서 처리 후
                                          */
+
                                         context.barcodeEventModel.setBarcode(barcode);
                                         context.barcodeTextViewModel.setText("Model : " + jsonObject.getString("Model"));
-                                        //spinners.setSpinnerText(context.barcodeSpinnerUserSpec, jsonObject.getString("UserSpec"));
+                                        //context.barcodeSpinnerUserSpec.setEnabled(true);
+                                        context.barcodeButtonGoingOutDate.setEnabled(true);
                                         context.barcodeTextViewGoingOutDate.setText(jsonObject.getString("GoingOutDate"));
-                                        if (!jsonObject.getString("Buyer").isEmpty())
+                                        if (!jsonObject.getString("WarrantyCode").isEmpty()) {
+                                            context.barcodeSpinnerWarrantyCode.setEnabled(true);
                                             context.spinners.setSpinnerText(context.barcodeSpinnerWarrantyCode, jsonObject.getString("WarrantyCode"));
+                                        }
+                                        context.barcodeButtonExpiryDate.setEnabled(true);
                                         context.barcodeTextViewExpiryDate.setText(jsonObject.getString("ExpiryDate"));
-                                        if (!jsonObject.getString("Buyer").isEmpty())
+                                        if (!jsonObject.getString("Buyer").isEmpty()) {
+                                            context.barcodeSpinnerBuyer.setEnabled(true);
                                             context.spinners.setSpinnerText(context.barcodeSpinnerBuyer, jsonObject.getString("Buyer"));
-                                        if (!jsonObject.getString("ServiceCenter").isEmpty())
+                                        }
+                                        if (!jsonObject.getString("ServiceCenter").isEmpty()) {
+                                            context.barcodeSpinnerServiceCenter.setEnabled(true);
                                             context.spinners.setSpinnerText(context.barcodeSpinnerServiceCenter, jsonObject.getString("ServiceCenter"));
+                                        }
                                         context.barcodeEditTextDescription.setText(jsonObject.getString("Description"));
                                         context.barcodeEditTextDescription.setEnabled(true);
+                                        context.barcodeButtonSave.setEnabled(true);
+
                                         mlogin = true;
                                         context.alertMessage.AlertShow("Ok", jsonObject.getString("MSG")).show();
                                     } else {
@@ -88,7 +99,15 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
                                          */
                                         context.barcodeEventModel.setBarcode(barcode);
                                         context.barcodeTextViewModel.setText("Model : " + jsonObject.getString("Model"));
+                                        //context.barcodeSpinnerUserSpec.setEnabled(true);
+                                        context.barcodeButtonGoingOutDate.setEnabled(true);
+                                        context.barcodeSpinnerWarrantyCode.setEnabled(true);
+                                        context.barcodeButtonExpiryDate.setEnabled(true);
+                                        context.barcodeSpinnerBuyer.setEnabled(true);
+                                        context.barcodeSpinnerServiceCenter.setEnabled(true);
                                         context.barcodeEditTextDescription.setEnabled(true);
+                                        context.barcodeButtonSave.setEnabled(true);
+
                                         mlogin = true;
                                     }
                                 }

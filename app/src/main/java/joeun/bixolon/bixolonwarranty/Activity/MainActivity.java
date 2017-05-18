@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity
     public BarcodeEventModel barcodeEventModel = new BarcodeEventModel();
 
     //Barcode UI
-    Button barcodeButtonBarcode, barcodeButtonGoingOutDate, barcodeButtonExpiryDate, barcodeButtonSave;
+    Button barcodeButtonBarcode;
+    public Button barcodeButtonGoingOutDate, barcodeButtonExpiryDate, barcodeButtonSave;
     public TextView barcodeTextViewSerialNo, barcodeTextViewModel, barcodeTextViewGoingOutDate, barcodeTextViewExpiryDate;
     public Spinner barcodeSpinnerUserSpec, barcodeSpinnerWarrantyCode, barcodeSpinnerBuyer, barcodeSpinnerServiceCenter;
     public EditText barcodeEditTextDescription;
@@ -191,7 +192,7 @@ public class MainActivity extends AppCompatActivity
              * setSelection 를 이용하며 dbo.SP_APP_COMMON_SPINNER_REV1 애서 순서를 재배정하여 처리 리턴한다
              */
             arrayListUserSpec.addAll(arrayList);
-
+            barcodeSpinnerUserSpec.setEnabled(true);
             spinners = new Spinners(MainActivity.this, barcodeSpinnerUserSpec, arrayListUserSpec);
             barcodeSpinnerServiceCenter.setSelection(0);
             onTaskInit();
@@ -279,7 +280,22 @@ public class MainActivity extends AppCompatActivity
         //화면 초기화
         new BarcodeEventViewInit(MainActivity.this);
         //Barcode Scan 버튼
-        barcodeButtonBarcode.setOnClickListener(new BarcodeEventButtonBarcode(MainActivity.this));
+        //barcodeButtonBarcode.setOnClickListener(new BarcodeEventButtonBarcode(MainActivity.this));
+        /**
+         * 장원씨 Test
+         */
+        barcodeButtonBarcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progress.ShowProgress(true);
+                String barcode = "BEG7DKA15090002";
+                barcodeTextViewSerialNo.setText("Serial No : " + barcode);
+                barcodeEventModel.setBarcode(null);
+                barcodeEventButtonBarcodeFindTask = new BarcodeEventButtonBarcodeFindTask(MainActivity.this, barcode);
+                barcodeEventButtonBarcodeFindTask.execute((Void) null);
+
+            }
+        });
         //GoingOutDate 버튼
         barcodeButtonGoingOutDate.setOnClickListener(new ButtonDatePicker(MainActivity.this, barcodeTextViewGoingOutDate));
         //ExpiryDate 버튼
