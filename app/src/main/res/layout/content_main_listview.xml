@@ -36,32 +36,32 @@
                 android:background="@android:color/holo_green_light"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/textView13"
-                    android:text="Date"
-                    android:layout_width="120dp"
+                <Spinner
+                    android:id="@+id/lvSpinnerDate"
+                    android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:textSize="18sp"
                     android:gravity="left"
+                    android:entries="@array/listViewDate"
                     />
 
                 <TextView
-                    android:id="@+id/lvTextViewRegDate"
+                    android:id="@+id/lvTextViewDate"
                     android:text="1999-01-01"
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="10dp"
                     android:textSize="18sp"
                     android:gravity="left"
                     />
 
                 <Button
-                    android:id="@+id/lvButtonRegDate"
+                    android:id="@+id/lvButtonDate"
                     android:text="@string/date_change"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="5dp"
                     android:textSize="18sp"
                     android:gravity="center"
                     />

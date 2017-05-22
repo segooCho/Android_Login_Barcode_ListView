@@ -66,14 +66,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //TODO: 임시 시작 처리
-        /*
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra("userId", "1001");
+        intent.putExtra("userName", "1002");
         intent.putExtra("buyer", "[11455]BIXOLON EUROPE GMBH IG");
         intent.putExtra("serviceCenter", "[SVUSA]Service Center Usa");
         startActivity(intent);
         finish();
-        */
 
         setContentView(R.layout.activity_login);
         findViewByIdView();
@@ -175,6 +174,7 @@ public class LoginActivity extends AppCompatActivity {
              */
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("userId", loginEventModel.getUserId());
+            intent.putExtra("userName", loginEventModel.getUserName());
             intent.putExtra("buyer", loginEventModel.getBuyer());
             intent.putExtra("serviceCenter", loginEventModel.getServiceCenter());
             startActivity(intent);

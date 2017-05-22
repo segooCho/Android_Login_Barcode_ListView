@@ -89,7 +89,7 @@ public class BarcodeEventButtonSaveTask extends AsyncTask<Void, Void, Boolean> {
                                         context.alertMessage.AlertShow("Error", jsonObject.getString("MSG")).show();
                                     } else {
                                         mlogin = true;
-                                        context.alertMessage.AlertShow("OK", "Saved.").show();
+                                        context.alertMessage.AlertShow("Ok", "Saved.").show();
                                         new BarcodeEventViewInit(context);
                                     }
                                 }

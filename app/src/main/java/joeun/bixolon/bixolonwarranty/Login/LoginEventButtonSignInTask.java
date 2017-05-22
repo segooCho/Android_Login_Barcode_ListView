@@ -69,6 +69,7 @@ public class LoginEventButtonSignInTask extends AsyncTask<Void, Void, Boolean> {
                                         context.alertMessage.AlertShow("Error", jsonObject.getString("MSG")).show();
                                     } else {
                                         context.loginEventModel.setUserId(userId);
+                                        context.loginEventModel.setUserName(jsonObject.getString("UserName"));
                                         context.loginEventModel.setBuyer(jsonObject.getString("Buyer"));
                                         context.loginEventModel.setServiceCenter(jsonObject.getString("ServiceCenter"));
                                         mlogin = true;

@@ -28,7 +28,7 @@ public class AlertMessage extends AlertDialog.Builder {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setTitle(setTitle);
         alertDialog.setMessage(setMessage);
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

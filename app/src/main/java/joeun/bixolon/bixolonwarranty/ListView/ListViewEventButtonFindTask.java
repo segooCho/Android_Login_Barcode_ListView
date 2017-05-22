@@ -21,16 +21,18 @@ import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 
 public class ListViewEventButtonFindTask extends AsyncTask<Void, Void, Boolean> {
     private MainActivity context;
-    private String regDate;
+    private String mode;
+    private String date;
     private boolean mlogin = false;
 
     /***
      * ListViewEventButtonFindTask
      * @param _context
      */
-    public ListViewEventButtonFindTask(MainActivity _context, String _regDate) {
+    public ListViewEventButtonFindTask(MainActivity _context, String _mode, String _date) {
         context = _context;
-        regDate = _regDate;
+        mode = _mode;
+        date = _date;
     }
 
     /**
@@ -44,7 +46,8 @@ public class ListViewEventButtonFindTask extends AsyncTask<Void, Void, Boolean> 
         try {
             BaseUrl baseUrl = new BaseUrl();
             AndroidNetworking.post(baseUrl.getWorkListUrl())
-                    .addBodyParameter("regDate", regDate)
+                    .addBodyParameter("mode", mode)
+                    .addBodyParameter("date", date)
                     .addBodyParameter("userId", context.loginEventModel.getUserId())
                     .setPriority(Priority.HIGH)
                     .build()

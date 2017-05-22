@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity
     View wizard;
     public Spinners spinners;
     public AlertMessage alertMessage;
+    public TextView headerTextViewUserName;
 
     //MainActivity layout ID
     int navigationItemSelectedId;
@@ -88,9 +89,10 @@ public class MainActivity extends AppCompatActivity
     String modeServiceCenter = "spinnerServiceCenter";
 
     //ListView UI
-    public TextView lvTextViewRegDate;
-    Button lvButtonRegDate, lvButtonFind;
+    public TextView lvTextViewDate;
+    Button lvButtonDate, lvButtonFind;
     public ListView listView;
+    public Spinner lvSpinnerDate;
 
     //ListView Adapter
     public ListViewEventAdapter listViewEventAdapter;
@@ -109,6 +111,7 @@ public class MainActivity extends AppCompatActivity
          */
         Bundle bundle = getIntent().getExtras();
         loginEventModel.setUserId(bundle.getString("userId"));
+        loginEventModel.setUserName(bundle.getString("userName"));
         loginEventModel.setBuyer(bundle.getString("buyer"));
         loginEventModel.setServiceCenter(bundle.getString("serviceCenter"));
 
@@ -181,6 +184,7 @@ public class MainActivity extends AppCompatActivity
              *  onSpinnersAdapterTask   에서 3.ServiceCenter 가져오기
              *  onSpinnersAdapterTask   에서 모든 spinner 데이터 생성 완료 후 Barcode Event 기본 설정
              */
+            headerViewInit();
             barcodeEventModel.setBarcode(null);
             findViewByIdBarcodeView();
             onBarcodeEventInit();
@@ -254,9 +258,16 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    /**
-     * Barcode Event View ID 찾기
-     */
+
+    private void headerViewInit() {
+        //header UserName
+        headerTextViewUserName = (TextView) findViewById(R.id.headerTextViewUserName);
+        headerTextViewUserName.setText(loginEventModel.getUserName());
+    }
+
+        /**
+         * Barcode Event View ID 찾기
+         */
     private void findViewByIdBarcodeView() {
         barcodeButtonBarcode = (Button) findViewById(R.id.barcodeButtonBarcode);
         barcodeTextViewSerialNo = (TextView) findViewById(R.id.barcodeTextViewSerialNo);
@@ -384,8 +395,9 @@ public class MainActivity extends AppCompatActivity
      * ListView Event View ID 찾기
      */
     private void findViewByIdListView() {
-        lvButtonRegDate = (Button) findViewById(R.id.lvButtonRegDate);
-        lvTextViewRegDate = (TextView) findViewById(R.id.lvTextViewRegDate);
+        lvSpinnerDate = (Spinner) findViewById(R.id.lvSpinnerDate);
+        lvButtonDate = (Button) findViewById(R.id.lvButtonDate);
+        lvTextViewDate = (TextView) findViewById(R.id.lvTextViewDate);
         lvButtonFind = (Button) findViewById(R.id.lvButtonFind);
         listView = (ListView) findViewById(R.id.lvListView);
     }
@@ -397,7 +409,7 @@ public class MainActivity extends AppCompatActivity
         //화면 초기화
         new ListViewEventViewInit(MainActivity.this);
         //RegDate 버튼
-        lvButtonRegDate.setOnClickListener(new ButtonDatePicker(MainActivity.this, lvTextViewRegDate));
+        lvButtonDate.setOnClickListener(new ButtonDatePicker(MainActivity.this, lvTextViewDate));
         //Find 버튼
         lvButtonFind.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -405,7 +417,7 @@ public class MainActivity extends AppCompatActivity
                 progress.ShowProgress(true);
                 //listViewEventAdapter = new ListViewEventAdapter();
                 listViewEventButtonFindTask = new ListViewEventButtonFindTask(MainActivity.this
-                        ,lvTextViewRegDate.getText().toString());
+                        ,lvSpinnerDate.getSelectedItem().toString(), lvTextViewDate.getText().toString());
                 listViewEventButtonFindTask.execute((Void) null);
             }
         });

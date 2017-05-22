@@ -18,8 +18,9 @@ public class ListViewEventViewInit {
     public ListViewEventViewInit(MainActivity _context) {
         context = _context;
 
+        context.lvSpinnerDate.setSelection(0);
         Calendar calendar = Calendar.getInstance(); // date 초기화
-        context.lvTextViewRegDate.setText( String.format("%d-%02d-%02d",
+        context.lvTextViewDate.setText( String.format("%d-%02d-%02d",
                                             calendar.get(Calendar.YEAR),
                                             calendar.get(Calendar.MONTH)+1,
                                             calendar.get(Calendar.DAY_OF_MONTH)));
