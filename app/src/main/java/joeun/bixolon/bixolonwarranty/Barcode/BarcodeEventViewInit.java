@@ -24,7 +24,7 @@ public class BarcodeEventViewInit {
         context.barcodeEventModel.setBarcode(null);
         context.barcodeTextViewSerialNo.setText("");
         context.barcodeTextViewModel.setText("");
-        context.barcodeTextViewUserSpec.setText("");
+        context.barcodeTextViewBuyerCode.setText("");
         Calendar calendar = Calendar.getInstance(); // date 초기화
         context.barcodeTextViewGoingOutDate.setText( String.format("%d-%02d-%02d",
                                                         calendar.get(Calendar.YEAR),
@@ -34,7 +34,7 @@ public class BarcodeEventViewInit {
         context.barcodeSpinnerWarrantyCode.setEnabled(false);
         context.barcodeTextViewExpiryDate.setText("");
         context.barcodeButtonExpiryDate.setEnabled(false);
-        context.barcodeSpinnerBuyer.setEnabled(false);
+        context.barcodeSpinnerBranchOffice.setEnabled(false);
         context.barcodeSpinnerServiceCenter.setEnabled(false);
         context.barcodeEditTextDescription.setText("");
         context.barcodeEditTextDescription.setEnabled(false);

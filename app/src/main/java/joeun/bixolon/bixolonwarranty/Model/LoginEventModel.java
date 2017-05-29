@@ -9,7 +9,7 @@ public class LoginEventModel {
 
     private String userId;
     private String userName;
-    private String buyer;
+    private String branchOffice;
     private String serviceCenter;
 
     public void setUserId(String _userId) {
@@ -20,8 +20,8 @@ public class LoginEventModel {
         userName = _userName ;
     }
 
-    public void setBuyer(String _buyer) {
-        buyer = _buyer ;
+    public void setBranchOffice(String _branchOffice) {
+        branchOffice = _branchOffice ;
     }
 
     public void setServiceCenter(String _serviceCenter) {
@@ -34,8 +34,8 @@ public class LoginEventModel {
     public String getUserName() {
         return this.userName;
     }
-    public String getBuyer() {
-        return this.buyer;
+    public String getBranchOffice() {
+        return this.branchOffice;
     }
     public String getServiceCenter() {
         return this.serviceCenter;

@@ -52,6 +52,9 @@ public class ButtonDatePicker implements View.OnClickListener {
             if (view.isShown()) {
                 //Log.v("DatePickerDialog", "DatePickerDialog : "  + year + "-" + monthOfYear+1 + "- + dayOfMonth +"일");
                 textView.setText(String.format("%d-%02d-%02d", year, monthOfYear+1 , dayOfMonth));
+
+                if (context.barcodeTextViewGoingOutDate.getId() == textView.getId())
+                    context.barcodeButtonExpiryDate.callOnClick();
             }
         }
     };

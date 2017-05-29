@@ -67,9 +67,9 @@ public class MainActivity extends AppCompatActivity
     Button barcodeButtonBarcode;
     public ScrollView barcodeScrollView;
     public Button barcodeButtonGoingOutDate, barcodeButtonExpiryDate, barcodeButtonSave;
-    public TextView barcodeTextViewSerialNo, barcodeTextViewModel, barcodeTextViewUserSpec,
+    public TextView barcodeTextViewSerialNo, barcodeTextViewModel, barcodeTextViewBuyerCode,
                     barcodeTextViewGoingOutDate, barcodeTextViewExpiryDate, barcodeEditTextQuantity;
-    public Spinner barcodeSpinnerWarrantyCode, barcodeSpinnerBuyer, barcodeSpinnerServiceCenter;
+    public Spinner barcodeSpinnerWarrantyCode, barcodeSpinnerBranchOffice, barcodeSpinnerServiceCenter;
     public EditText barcodeEditTextDescription;
 
     //Barcode Task
@@ -83,10 +83,10 @@ public class MainActivity extends AppCompatActivity
 
     //Spinners 처리
     List<String> arrayListWarrantyCode = new ArrayList<>();
-    List<String> arrayListBuyer = new ArrayList<>();
+    List<String> arrayListBranchOffice = new ArrayList<>();
     List<String> arrayListServiceCenter = new ArrayList<>();
     String modeWarrantyCode = "spinnerWarrantyCode";
-    String modeBuyer = "spinnerBuyer";
+    String modeBranchOffice = "spinnerBranchOffice";
     String modeServiceCenter = "spinnerServiceCenter";
 
     //ListView UI
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity
         Bundle bundle = getIntent().getExtras();
         loginEventModel.setUserId(bundle.getString("userId"));
         loginEventModel.setUserName(bundle.getString("userName"));
-        loginEventModel.setBuyer(bundle.getString("buyer"));
+        loginEventModel.setBranchOffice(bundle.getString("BranchOffice"));
         loginEventModel.setServiceCenter(bundle.getString("serviceCenter"));
 
         /**
@@ -170,10 +170,10 @@ public class MainActivity extends AppCompatActivity
         if (mode.equals(modeWarrantyCode)) {
             arrayListWarrantyCode.addAll(arrayList);
             //2.Buyer 가져오기
-            barcodeEventSpinnersAdapterTask = new BarcodeEventSpinnersAdapterTask(MainActivity.this, modeBuyer, "");
+            barcodeEventSpinnersAdapterTask = new BarcodeEventSpinnersAdapterTask(MainActivity.this, modeBranchOffice, "");
             barcodeEventSpinnersAdapterTask.execute((Void) null);
-        } else if (mode.equals(modeBuyer)) {
-            arrayListBuyer.addAll(arrayList);
+        } else if (mode.equals(modeBranchOffice)) {
+            arrayListBranchOffice.addAll(arrayList);
             //3.ServiceCenter 가져오기
             barcodeEventSpinnersAdapterTask = new BarcodeEventSpinnersAdapterTask(MainActivity.this, modeServiceCenter, "");
             barcodeEventSpinnersAdapterTask.execute((Void) null);
@@ -255,13 +255,13 @@ public class MainActivity extends AppCompatActivity
         barcodeButtonBarcode = (Button) findViewById(R.id.barcodeButtonBarcode);
         barcodeTextViewSerialNo = (TextView) findViewById(R.id.barcodeTextViewSerialNo);
         barcodeTextViewModel = (TextView) findViewById(R.id.barcodeTextViewModel);
-        barcodeTextViewUserSpec = (TextView) findViewById(R.id.barcodeTextViewUserSpec);
+        barcodeTextViewBuyerCode = (TextView) findViewById(R.id.barcodeTextViewBuyerCode);
         barcodeButtonGoingOutDate = (Button) findViewById(R.id.barcodeButtonGoingOutDate);
         barcodeTextViewGoingOutDate = (TextView) findViewById(R.id.barcodeTextViewGoingOutDate);
         barcodeSpinnerWarrantyCode = (Spinner)findViewById(R.id.barcodeSpinnerWarrantyCode);
         barcodeButtonExpiryDate = (Button) findViewById(R.id.barcodeButtonExpiryDate);
         barcodeTextViewExpiryDate = (TextView) findViewById(R.id.barcodeTextViewExpiryDate);
-        barcodeSpinnerBuyer = (Spinner)findViewById(R.id.barcodeSpinnerBuyer);
+        barcodeSpinnerBranchOffice = (Spinner)findViewById(R.id.barcodeSpinnerBranchOffice);
         barcodeSpinnerServiceCenter = (Spinner)findViewById(R.id.barcodeSpinnerServiceCenter);
         barcodeEditTextDescription = (EditText) findViewById(R.id.barcodeEditTextDescription);
         barcodeEditTextQuantity = (EditText) findViewById(R.id.barcodeEditTextQuantity);
@@ -333,7 +333,7 @@ public class MainActivity extends AppCompatActivity
                     alertMessage.AlertShow("Error","Spinner Warranty Code Error(Pattern)").show();
                     return;
                 }
-                String buyer = patternCode.PatternCodeMatcher(barcodeSpinnerBuyer.getSelectedItem().toString());
+                String buyer = patternCode.PatternCodeMatcher(barcodeSpinnerBranchOffice.getSelectedItem().toString());
                 if (buyer == "") {
                     alertMessage.AlertShow("Error","Spinner Buyer Error(Pattern)").show();
                     return;
@@ -366,8 +366,8 @@ public class MainActivity extends AppCompatActivity
         spinners = new Spinners(MainActivity.this, barcodeSpinnerWarrantyCode, arrayListWarrantyCode);
         barcodeSpinnerWarrantyCode.setSelection(0);
         //Corporation Info(법인 정보)
-        spinners = new Spinners(MainActivity.this, barcodeSpinnerBuyer, arrayListBuyer);
-        spinners.setSpinnerText(barcodeSpinnerBuyer, loginEventModel.getBuyer());
+        spinners = new Spinners(MainActivity.this, barcodeSpinnerBranchOffice, arrayListBranchOffice);
+        spinners.setSpinnerText(barcodeSpinnerBranchOffice, loginEventModel.getBranchOffice());
         //Service Center
         spinners = new Spinners(MainActivity.this, barcodeSpinnerServiceCenter, arrayListServiceCenter);
         spinners.setSpinnerText(barcodeSpinnerServiceCenter, loginEventModel.getServiceCenter());

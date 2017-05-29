@@ -70,7 +70,7 @@ public class LoginEventButtonSignInTask extends AsyncTask<Void, Void, Boolean> {
                                     } else {
                                         context.loginEventModel.setUserId(userId);
                                         context.loginEventModel.setUserName(jsonObject.getString("UserName"));
-                                        context.loginEventModel.setBuyer(jsonObject.getString("Buyer"));
+                                        context.loginEventModel.setBranchOffice(jsonObject.getString("BranchOffice"));
                                         context.loginEventModel.setServiceCenter(jsonObject.getString("ServiceCenter"));
                                         mlogin = true;
                                     }

@@ -48,20 +48,22 @@ public class ListViewEventAdapter extends BaseAdapter {
         }
 
         ImageView lvIconImageView = (ImageView) convertView.findViewById(R.id.lvIconImageView) ;
-        TextView lvTextViewBarcode = (TextView) convertView.findViewById(R.id.lvTextViewBarcode) ;
-        TextView lvTextViewProductName = (TextView) convertView.findViewById(R.id.lvTextViewProductName) ;
-        TextView lvTextViewWarrantyType = (TextView) convertView.findViewById(R.id.lvTextViewWarrantyType) ;
-        TextView lvTextViewWarrantyDate = (TextView) convertView.findViewById(R.id.lvTextViewWarrantyDate) ;
+        TextView lvTextViewSerialNo = (TextView) convertView.findViewById(R.id.lvTextViewSerialNo) ;
+        TextView lvTextViewModel = (TextView) convertView.findViewById(R.id.lvTextViewModel) ;
+        TextView lvTextViewBuyerCode = (TextView) convertView.findViewById(R.id.lvTextViewBuyerCode) ;
+        TextView lvTextViewWarrantyCode = (TextView) convertView.findViewById(R.id.lvTextViewWarrantyCode) ;
+        TextView lvTextViewGoingOutDate = (TextView) convertView.findViewById(R.id.lvTextViewGoingOutDate) ;
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         ListViewEventModel listViewEventModel = listViewEventModelArrayList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
         lvIconImageView.setImageDrawable(listViewEventModel.getIcon());
-        lvTextViewBarcode.setText(listViewEventModel.getBarcode());
-        lvTextViewProductName.setText(listViewEventModel.getProductName());
-        lvTextViewWarrantyType.setText(listViewEventModel.getWarrantyType());
-        lvTextViewWarrantyDate.setText(listViewEventModel.getWarrantyDate());
+        lvTextViewSerialNo.setText(listViewEventModel.getSerialNo());
+        lvTextViewModel.setText(listViewEventModel.getModel());
+        lvTextViewBuyerCode.setText(listViewEventModel.getBuyerCode());
+        lvTextViewWarrantyCode.setText(listViewEventModel.getWarrantyCode());
+        lvTextViewGoingOutDate.setText(listViewEventModel.getGoingOutDate());
 
         return convertView;
     }
@@ -89,19 +91,21 @@ public class ListViewEventAdapter extends BaseAdapter {
     /**
      * 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
      * @param icon
-     * @param barcode
-     * @param productName
-     * @param warrantyType
-     * @param warrantyDate
+     * @param serialNo
+     * @param model
+     * @param buyerCode
+     * @param warrantyCode
+     * @param goingOutDate
      */
-    public void addItem(Drawable icon, String barcode, String productName, String warrantyType, String warrantyDate) {
+    public void addItem(Drawable icon, String serialNo, String model, String buyerCode, String warrantyCode, String goingOutDate) {
         ListViewEventModel listViewEventModel = new ListViewEventModel();
 
         listViewEventModel.setIcon(icon);
-        listViewEventModel.setBarcode(barcode);
-        listViewEventModel.setProductName(productName);
-        listViewEventModel.setWarrantyType(warrantyType);
-        listViewEventModel.setWarrantyDate(warrantyDate);
+        listViewEventModel.setSerialNo(serialNo);
+        listViewEventModel.setModel(model);
+        listViewEventModel.setBuyerCode(buyerCode);
+        listViewEventModel.setWarrantyCode(warrantyCode);
+        listViewEventModel.setGoingOutDate(goingOutDate);
 
         listViewEventModelArrayList.add(listViewEventModel);
     }

@@ -68,7 +68,7 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
                                          */
                                         context.barcodeEventModel.setBarcode(barcode);
                                         context.barcodeTextViewModel.setText(jsonObject.getString("Model"));
-                                        context.barcodeTextViewUserSpec.setText(jsonObject.getString("UserSpec"));
+                                        context.barcodeTextViewBuyerCode.setText(jsonObject.getString("BuyerCode"));
                                         context.barcodeButtonGoingOutDate.setEnabled(true);
                                         context.barcodeTextViewGoingOutDate.setText(jsonObject.getString("GoingOutDate"));
                                         if (!jsonObject.getString("WarrantyCode").isEmpty()) {
@@ -77,9 +77,9 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
                                         }
                                         context.barcodeButtonExpiryDate.setEnabled(true);
                                         context.barcodeTextViewExpiryDate.setText(jsonObject.getString("ExpiryDate"));
-                                        if (!jsonObject.getString("Buyer").isEmpty()) {
-                                            context.barcodeSpinnerBuyer.setEnabled(true);
-                                            context.spinners.setSpinnerText(context.barcodeSpinnerBuyer, jsonObject.getString("Buyer"));
+                                        if (!jsonObject.getString("BranchOffice").isEmpty()) {
+                                            context.barcodeSpinnerBranchOffice.setEnabled(true);
+                                            context.spinners.setSpinnerText(context.barcodeSpinnerBranchOffice, jsonObject.getString("BranchOffice"));
                                         }
                                         if (!jsonObject.getString("ServiceCenter").isEmpty()) {
                                             context.barcodeSpinnerServiceCenter.setEnabled(true);
@@ -97,11 +97,11 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
                                          */
                                         context.barcodeEventModel.setBarcode(barcode);
                                         context.barcodeTextViewModel.setText(jsonObject.getString("Model"));
-                                        context.barcodeTextViewUserSpec.setText(jsonObject.getString("UserSpec"));
+                                        context.barcodeTextViewBuyerCode.setText(jsonObject.getString("BuyerCode"));
                                         context.barcodeButtonGoingOutDate.setEnabled(true);
                                         context.barcodeSpinnerWarrantyCode.setEnabled(true);
                                         context.barcodeButtonExpiryDate.setEnabled(true);
-                                        context.barcodeSpinnerBuyer.setEnabled(true);
+                                        context.barcodeSpinnerBranchOffice.setEnabled(true);
                                         context.barcodeSpinnerServiceCenter.setEnabled(true);
                                         context.barcodeEditTextDescription.setEnabled(true);
                                         context.barcodeEditTextQuantity.setEnabled(true);

@@ -10,40 +10,47 @@ import android.graphics.drawable.Drawable;
 public class ListViewEventModel {
 
     private Drawable iconDrawable;
-    private String barcode;
-    private String productName;
-    private String warrantyType;
-    private String warrantyDate;
+    private String serialNo;
+    private String model;
+    private String buyerCode;
+    private String warrantyCode;
+    private String goingOutDate;
 
     public void setIcon(Drawable icon) {
         iconDrawable = icon ;
     }
-    public void setBarcode(String _barcode) {
-        barcode = _barcode ;
+    public void setSerialNo(String _serialNo) {
+        serialNo = _serialNo ;
     }
-    public void setProductName(String _productName) {
-        productName = _productName ;
+    public void setModel(String _model) {
+        model = _model ;
     }
-    public void setWarrantyType(String _warrantyType) {
-        warrantyType = _warrantyType ;
+    public void setBuyerCode(String _buyerCode) {
+        buyerCode = _buyerCode ;
     }
-    public void setWarrantyDate(String _warrantyDate) {
-        warrantyDate = _warrantyDate ;
+    public void setWarrantyCode(String _warrantyCode) {
+        warrantyCode = _warrantyCode ;
+    }
+    public void setGoingOutDate(String _goingOutDate) {
+        goingOutDate = _goingOutDate ;
     }
 
     public Drawable getIcon() {
         return this.iconDrawable ;
     }
-    public String getBarcode() {
-        return this.barcode ;
+    public String getSerialNo() {
+        return this.serialNo ;
     }
-    public String getProductName() {
-        return this.productName ;
+    public String getModel() {
+        return this.model ;
     }
-    public String getWarrantyType() {
-        return this.warrantyType ;
+    public String getBuyerCode() {
+        return this.buyerCode ;
     }
-    public String getWarrantyDate() {
-        return this.warrantyDate ;
+    public String getWarrantyCode() {
+        return this.warrantyCode ;
+    }
+    public String getGoingOutDate() {
+        return this.goingOutDate ;
     }
 }

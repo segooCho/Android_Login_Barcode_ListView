@@ -7,8 +7,8 @@ package joeun.bixolon.bixolonwarranty.Properties;
 public class BaseUrl {
 
     //Server
-    protected static final String baseUrl = "http://106.245.251.59:3000/";    //조은 서버
-    //protected static final String baseUrl = "http://192.168.2.27:3000/";        //개발 서버
+    //protected static final String baseUrl = "http://106.245.251.59:3000/";    //조은 서버
+    protected static final String baseUrl = "http://192.168.2.33:3000/";        //개발 서버
     //로그인
     protected static final String loginUrl = baseUrl + "login";
     //공통 spinner 처리

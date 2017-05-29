@@ -17,12 +17,14 @@ public class ListViewEventView extends ListActivity {
     /**
      * ListView Adapter에 데이터 추가
      * @param _context
-     * @param barcode
-     * @param id
-     * @param warrantyType
-     * @param warrantyDate
+     * @param _serialNo
+     * @param _model
+     * @param _buyerCode
+     * @param _warrantyCode
+     * @param _goingOutDate
      */
-    public ListViewEventView(MainActivity _context, String _serialNo, String _model, String _userSpec, String _goingOutDate) {
+    public ListViewEventView(MainActivity _context, String _serialNo, String _model, String _buyerCode, String _warrantyCode,
+                             String _goingOutDate) {
         context = _context;
 
         context.listView.setAdapter(context.listViewEventAdapter);
@@ -30,7 +32,8 @@ public class ListViewEventView extends ListActivity {
                 ContextCompat.getDrawable(context, R.mipmap.ic_assignment_black_36dp),
                 _serialNo,
                 _model,
-                _userSpec,
+                _buyerCode,
+                _warrantyCode,
                 _goingOutDate);
     }
 }

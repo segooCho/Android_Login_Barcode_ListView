@@ -64,7 +64,8 @@ public class ListViewEventButtonFindTask extends AsyncTask<Void, Void, Boolean> 
                                     new ListViewEventView(context,
                                             jsonObject.getString("SerialNo"),
                                             jsonObject.getString("Model"),
-                                            jsonObject.getString("UserSpec"),
+                                            jsonObject.getString("BuyerCode"),
+                                            jsonObject.getString("WarrantyCode"),
                                             jsonObject.getString("GoingOutDate"));
                                 }
                                 mlogin = true;
