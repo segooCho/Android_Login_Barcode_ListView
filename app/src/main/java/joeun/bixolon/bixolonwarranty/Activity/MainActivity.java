@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -64,9 +65,11 @@ public class MainActivity extends AppCompatActivity
 
     //Barcode UI
     Button barcodeButtonBarcode;
+    public ScrollView barcodeScrollView;
     public Button barcodeButtonGoingOutDate, barcodeButtonExpiryDate, barcodeButtonSave;
-    public TextView barcodeTextViewSerialNo, barcodeTextViewModel, barcodeTextViewGoingOutDate, barcodeTextViewExpiryDate;
-    public Spinner barcodeSpinnerUserSpec, barcodeSpinnerWarrantyCode, barcodeSpinnerBuyer, barcodeSpinnerServiceCenter;
+    public TextView barcodeTextViewSerialNo, barcodeTextViewModel, barcodeTextViewUserSpec,
+                    barcodeTextViewGoingOutDate, barcodeTextViewExpiryDate, barcodeEditTextQuantity;
+    public Spinner barcodeSpinnerWarrantyCode, barcodeSpinnerBuyer, barcodeSpinnerServiceCenter;
     public EditText barcodeEditTextDescription;
 
     //Barcode Task
@@ -79,11 +82,9 @@ public class MainActivity extends AppCompatActivity
     PatternCode patternCode = new PatternCode();
 
     //Spinners 처리
-    public List<String> arrayListUserSpec = new ArrayList<>();
     List<String> arrayListWarrantyCode = new ArrayList<>();
     List<String> arrayListBuyer = new ArrayList<>();
     List<String> arrayListServiceCenter = new ArrayList<>();
-    String modeUserSpec = "spinnerUserSpec";
     String modeWarrantyCode = "spinnerWarrantyCode";
     String modeBuyer = "spinnerBuyer";
     String modeServiceCenter = "spinnerServiceCenter";
@@ -189,30 +190,11 @@ public class MainActivity extends AppCompatActivity
             findViewByIdBarcodeView();
             onBarcodeEventInit();
             onTaskInit();
-        } else if (mode.equals(modeUserSpec)) {
-            /**
-             * UserSpec spinner 는 Barcode Scan 후 데이터를 생성한다.
-             * 기본 Code 선택 작업을 해야하나 화면 처리 절차상
-             * setSelection 를 이용하며 dbo.SP_APP_COMMON_SPINNER_REV1 애서 순서를 재배정하여 처리 리턴한다
-             */
-            arrayListUserSpec.addAll(arrayList);
-            barcodeSpinnerUserSpec.setEnabled(true);
-            spinners = new Spinners(MainActivity.this, barcodeSpinnerUserSpec, arrayListUserSpec);
-            barcodeSpinnerServiceCenter.setSelection(0);
-            onTaskInit();
         }
     }
 
-    /**
-     * onBarcodeFindTask
-     * @param itemId
-     */
-    public void onBarcodeFindTask(String itemId) {
-        barcodeEventSpinnersAdapterTask = new BarcodeEventSpinnersAdapterTask(MainActivity.this, modeUserSpec, itemId);
-        barcodeEventSpinnersAdapterTask.execute((Void) null);
-    }
 
-        @Override
+    @Override
     public void onBackPressed() {
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -269,10 +251,11 @@ public class MainActivity extends AppCompatActivity
          * Barcode Event View ID 찾기
          */
     private void findViewByIdBarcodeView() {
+        barcodeScrollView = (ScrollView) findViewById(R.id.barcodeScrollView);
         barcodeButtonBarcode = (Button) findViewById(R.id.barcodeButtonBarcode);
         barcodeTextViewSerialNo = (TextView) findViewById(R.id.barcodeTextViewSerialNo);
         barcodeTextViewModel = (TextView) findViewById(R.id.barcodeTextViewModel);
-        barcodeSpinnerUserSpec = (Spinner)findViewById(R.id.barcodeSpinnerUserSpec);
+        barcodeTextViewUserSpec = (TextView) findViewById(R.id.barcodeTextViewUserSpec);
         barcodeButtonGoingOutDate = (Button) findViewById(R.id.barcodeButtonGoingOutDate);
         barcodeTextViewGoingOutDate = (TextView) findViewById(R.id.barcodeTextViewGoingOutDate);
         barcodeSpinnerWarrantyCode = (Spinner)findViewById(R.id.barcodeSpinnerWarrantyCode);
@@ -281,6 +264,7 @@ public class MainActivity extends AppCompatActivity
         barcodeSpinnerBuyer = (Spinner)findViewById(R.id.barcodeSpinnerBuyer);
         barcodeSpinnerServiceCenter = (Spinner)findViewById(R.id.barcodeSpinnerServiceCenter);
         barcodeEditTextDescription = (EditText) findViewById(R.id.barcodeEditTextDescription);
+        barcodeEditTextQuantity = (EditText) findViewById(R.id.barcodeEditTextQuantity);
         barcodeButtonSave = (Button) findViewById(R.id.barcodeButtonSave);
     }
 
@@ -344,11 +328,6 @@ public class MainActivity extends AppCompatActivity
                     return;
                 }
 
-                String userSpec= patternCode.PatternCodeMatcher(barcodeSpinnerUserSpec.getSelectedItem().toString());
-                if (userSpec == "") {
-                    alertMessage.AlertShow("Error","Spinner UserSpec Error(UserSpec)").show();
-                    return;
-                }
                 String warrantyCode = patternCode.PatternCodeMatcher(barcodeSpinnerWarrantyCode.getSelectedItem().toString());
                 if (warrantyCode == "") {
                     alertMessage.AlertShow("Error","Spinner Warranty Code Error(Pattern)").show();
@@ -365,14 +344,17 @@ public class MainActivity extends AppCompatActivity
                     return;
                 }
 
+                if (barcodeEditTextQuantity.getText().toString() == "")
+                    barcodeEditTextQuantity.setText("1");
+
                 progress.ShowProgress(true);
                 barcodeEventButtonSaveTask = new BarcodeEventButtonSaveTask(MainActivity.this,
-                                                                            userSpec,
                                                                             barcodeTextViewGoingOutDate.getText().toString(),
                                                                             warrantyCode,
                                                                             buyer,
                                                                             serviceCenter,
-                                                                            barcodeEditTextDescription.getText().toString());
+                                                                            barcodeEditTextDescription.getText().toString(),
+                                                                            barcodeEditTextQuantity.getText().toString());
                 barcodeEventButtonSaveTask.execute((Void) null);
             }
         });

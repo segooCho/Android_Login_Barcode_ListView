@@ -65,11 +65,10 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
                                     } else if (jsonObject.getString("RTN").equals("1")) {
                                         /**
                                          * 이미 등록된 Serial No.
-                                         * UserSpec 은 SP_APP_EXPIRYDATE_SELECT_REV1 에서 처리 후
                                          */
                                         context.barcodeEventModel.setBarcode(barcode);
                                         context.barcodeTextViewModel.setText(jsonObject.getString("Model"));
-                                        //context.barcodeSpinnerUserSpec.setEnabled(true);
+                                        context.barcodeTextViewUserSpec.setText(jsonObject.getString("UserSpec"));
                                         context.barcodeButtonGoingOutDate.setEnabled(true);
                                         context.barcodeTextViewGoingOutDate.setText(jsonObject.getString("GoingOutDate"));
                                         if (!jsonObject.getString("WarrantyCode").isEmpty()) {
@@ -97,14 +96,15 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
                                          * 정상 Serial No.
                                          */
                                         context.barcodeEventModel.setBarcode(barcode);
-                                        context.barcodeTextViewModel.setText("Model : " + jsonObject.getString("Model"));
-                                        //context.barcodeSpinnerUserSpec.setEnabled(true);
+                                        context.barcodeTextViewModel.setText(jsonObject.getString("Model"));
+                                        context.barcodeTextViewUserSpec.setText(jsonObject.getString("UserSpec"));
                                         context.barcodeButtonGoingOutDate.setEnabled(true);
                                         context.barcodeSpinnerWarrantyCode.setEnabled(true);
                                         context.barcodeButtonExpiryDate.setEnabled(true);
                                         context.barcodeSpinnerBuyer.setEnabled(true);
                                         context.barcodeSpinnerServiceCenter.setEnabled(true);
                                         context.barcodeEditTextDescription.setEnabled(true);
+                                        context.barcodeEditTextQuantity.setEnabled(true);
                                         context.barcodeButtonSave.setEnabled(true);
 
                                         mlogin = true;
@@ -152,11 +152,7 @@ public class BarcodeEventButtonBarcodeFindTask extends AsyncTask<Void, Void, Boo
      */
     @Override
     protected void onPostExecute(final Boolean success) {
-        if (success) {
-            context.onBarcodeFindTask(barcode);
-        } else {
-            context.onTaskInit();
-        }
+        context.onTaskInit();
     }
 
     /**

@@ -1,5 +1,7 @@
 package joeun.bixolon.bixolonwarranty.Barcode;
 
+import android.widget.ScrollView;
+
 import java.util.Calendar;
 
 import joeun.bixolon.bixolonwarranty.Activity.MainActivity;
@@ -22,9 +24,7 @@ public class BarcodeEventViewInit {
         context.barcodeEventModel.setBarcode(null);
         context.barcodeTextViewSerialNo.setText("");
         context.barcodeTextViewModel.setText("");
-        context.arrayListUserSpec.clear();
-        context.spinners = new Spinners(context, context.barcodeSpinnerUserSpec, context.arrayListUserSpec);
-        context.barcodeSpinnerUserSpec.setEnabled(false);
+        context.barcodeTextViewUserSpec.setText("");
         Calendar calendar = Calendar.getInstance(); // date 초기화
         context.barcodeTextViewGoingOutDate.setText( String.format("%d-%02d-%02d",
                                                         calendar.get(Calendar.YEAR),
@@ -38,7 +38,9 @@ public class BarcodeEventViewInit {
         context.barcodeSpinnerServiceCenter.setEnabled(false);
         context.barcodeEditTextDescription.setText("");
         context.barcodeEditTextDescription.setEnabled(false);
+        context.barcodeEditTextQuantity.setText("1");
+        context.barcodeEditTextQuantity.setEnabled(false);
         context.barcodeButtonSave.setEnabled(false);
-
+        context.barcodeScrollView.fullScroll(ScrollView.FOCUS_UP);
     }
 }

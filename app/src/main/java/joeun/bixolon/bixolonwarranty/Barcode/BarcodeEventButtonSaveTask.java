@@ -22,12 +22,12 @@ import joeun.bixolon.bixolonwarranty.Properties.BaseUrl;
 
 public class BarcodeEventButtonSaveTask extends AsyncTask<Void, Void, Boolean> {
     private MainActivity context;
-    private String userSpec;
     private String goingOutDate;
     private String warrantyCode;
     private String buyer;
     private String serviceCenter;
     private String description;
+    private String quantity;
 
     private boolean mlogin = false;
 
@@ -36,20 +36,21 @@ public class BarcodeEventButtonSaveTask extends AsyncTask<Void, Void, Boolean> {
      * @param _context
      */
     public BarcodeEventButtonSaveTask(MainActivity _context
-                                    ,String _userSpec
                                     ,String _goingOutDate
                                     ,String _warrantyCode
                                     ,String _buyer
                                     ,String _serviceCenter
-                                    ,String _description) {
+                                    ,String _description
+                                    ,String _quantity
+    ) {
 
         context = _context;
-        userSpec = _userSpec;
         goingOutDate = _goingOutDate;
         warrantyCode = _warrantyCode;
         buyer = _buyer;
         serviceCenter = _serviceCenter;
         description = _description;
+        quantity = _quantity;
     }
 
     /**
@@ -63,12 +64,12 @@ public class BarcodeEventButtonSaveTask extends AsyncTask<Void, Void, Boolean> {
             BaseUrl baseUrl = new BaseUrl();
             AndroidNetworking.put(baseUrl.getBarcodSaveUrl())
                     .addBodyParameter("serialNo", context.barcodeEventModel.getBarcode())
-                    .addBodyParameter("userSpec", userSpec)
                     .addBodyParameter("goingOutDate", goingOutDate)
                     .addBodyParameter("warrantyCode", warrantyCode)
                     .addBodyParameter("buyer", buyer)
                     .addBodyParameter("serviceCenter", serviceCenter)
                     .addBodyParameter("description", description)
+                    .addBodyParameter("quantity", quantity)
                     .addBodyParameter("fileName1", "")
                     .addBodyParameter("filePath1", "")
                     .addBodyParameter("fileName2", "")
