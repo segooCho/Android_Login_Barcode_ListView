@@ -13,6 +13,7 @@
     </string>
 
     <string name="barcode_scan">Barcode Scan</string>
+    <string name="barcode_input">S/N Input</string>
     <string name="barcode_save">Save</string>
     <string name="listView_find">Find</string>
     <string name="date_change">Change</string>

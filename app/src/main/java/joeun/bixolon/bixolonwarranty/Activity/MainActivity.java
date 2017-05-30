@@ -64,13 +64,13 @@ public class MainActivity extends AppCompatActivity
     public BarcodeEventModel barcodeEventModel = new BarcodeEventModel();
 
     //Barcode UI
-    Button barcodeButtonBarcode;
+    Button barcodeButtonBarcode, barcodeButtonSerialNoInput;
     public ScrollView barcodeScrollView;
     public Button barcodeButtonGoingOutDate, barcodeButtonExpiryDate, barcodeButtonSave;
     public TextView barcodeTextViewSerialNo, barcodeTextViewModel, barcodeTextViewBuyerCode,
-                    barcodeTextViewGoingOutDate, barcodeTextViewExpiryDate, barcodeEditTextQuantity;
+                    barcodeTextViewGoingOutDate, barcodeTextViewExpiryDate;
     public Spinner barcodeSpinnerWarrantyCode, barcodeSpinnerBranchOffice, barcodeSpinnerServiceCenter;
-    public EditText barcodeEditTextDescription;
+    public EditText barcodeEditTextSerialNo, barcodeEditTextDescription, barcodeEditTextQuantity;
 
     //Barcode Task
     BarcodeEventSpinnersAdapterTask barcodeEventSpinnersAdapterTask = null;
@@ -253,6 +253,8 @@ public class MainActivity extends AppCompatActivity
     private void findViewByIdBarcodeView() {
         barcodeScrollView = (ScrollView) findViewById(R.id.barcodeScrollView);
         barcodeButtonBarcode = (Button) findViewById(R.id.barcodeButtonBarcode);
+        barcodeEditTextSerialNo = (EditText) findViewById(R.id.barcodeEditTextSerialNo);
+        barcodeButtonSerialNoInput = (Button) findViewById(R.id.barcodeButtonSerialNoInput);
         barcodeTextViewSerialNo = (TextView) findViewById(R.id.barcodeTextViewSerialNo);
         barcodeTextViewModel = (TextView) findViewById(R.id.barcodeTextViewModel);
         barcodeTextViewBuyerCode = (TextView) findViewById(R.id.barcodeTextViewBuyerCode);
@@ -294,6 +296,24 @@ public class MainActivity extends AppCompatActivity
             }
         });
         */
+
+        //Serial No Input 버튼
+        barcodeButtonSerialNoInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (barcodeEditTextSerialNo.getText().toString() == null) {
+                    alertMessage.AlertShow("Error","Input Serial No.").show();
+                    return;
+                }
+
+                String serialNo = barcodeEditTextSerialNo.getText().toString();
+                progress.ShowProgress(true);
+                barcodeTextViewSerialNo.setText(serialNo);
+                barcodeEventModel.setBarcode(null);
+                barcodeEventButtonBarcodeFindTask = new BarcodeEventButtonBarcodeFindTask(MainActivity.this, serialNo);
+                barcodeEventButtonBarcodeFindTask.execute((Void) null);
+            }
+        });
 
         //GoingOutDate 버튼
         barcodeButtonGoingOutDate.setOnClickListener(new ButtonDatePicker(MainActivity.this, barcodeTextViewGoingOutDate));
