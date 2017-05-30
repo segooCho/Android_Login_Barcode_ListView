@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     //Common
+    InputMethodManager inputMethodManager;
     LinearLayout dynamicContent;
     View wizard;
     public Spinners spinners;
@@ -143,6 +145,9 @@ public class MainActivity extends AppCompatActivity
 
         //Message
         alertMessage = new AlertMessage(MainActivity.this);
+
+        //InputMethodManager
+        inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
         //Progress
         progressView = findViewById(R.id.dynamicProgress);
@@ -301,12 +306,18 @@ public class MainActivity extends AppCompatActivity
         barcodeButtonSerialNoInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (barcodeEditTextSerialNo.getText().toString() == null) {
+
+                if (barcodeEditTextSerialNo.getText().toString().equals("")) {
+                    View focusView = null;
+                    focusView = barcodeEditTextSerialNo;
+                    focusView.requestFocus();
                     alertMessage.AlertShow("Error","Input Serial No.").show();
                     return;
                 }
 
                 String serialNo = barcodeEditTextSerialNo.getText().toString();
+                inputMethodManager.hideSoftInputFromWindow(barcodeEditTextSerialNo.getWindowToken(), 0);
+                new BarcodeEventViewInit(MainActivity.this);
                 progress.ShowProgress(true);
                 barcodeTextViewSerialNo.setText(serialNo);
                 barcodeEventModel.setBarcode(null);

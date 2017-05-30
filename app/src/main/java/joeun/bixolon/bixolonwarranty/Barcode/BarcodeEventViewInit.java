@@ -22,6 +22,7 @@ public class BarcodeEventViewInit {
         context = _context;
 
         context.barcodeEventModel.setBarcode(null);
+        context.barcodeEditTextSerialNo.setText("");
         context.barcodeTextViewSerialNo.setText("");
         context.barcodeTextViewModel.setText("");
         context.barcodeTextViewBuyerCode.setText("");
