@@ -9,10 +9,8 @@
 
     <ScrollView
         android:id="@+id/barcodeScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="13dp"
+        android:layout_width="368dp"
+        android:layout_height="495dp"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
@@ -215,33 +213,37 @@
 
                             <TextView
                                 android:id="@+id/barcodeFixTextView6"
-                                android:text="Going Out Date"
                                 android:layout_width="120dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="50dp"
                                 android:layout_marginLeft="5dp"
-                                android:textSize="18sp"
-                                android:gravity="left"
-                                />
+                                android:gravity="left|center_vertical"
+                                android:text="Going Out Date"
+                                android:textSize="18sp" />
 
-                            <TextView
-                                android:id="@+id/barcodeTextViewGoingOutDate"
-                                android:text="1901-01-01"
-                                android:layout_width="90dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
-                                android:textSize="18sp"
-                                android:gravity="left"
-                                />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="right"
+                                android:orientation="horizontal">
 
-                            <Button
-                                android:id="@+id/barcodeButtonGoingOutDate"
-                                android:text="@string/date_change"
-                                android:layout_width="100dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:textSize="18sp"
-                                android:gravity="center"
-                                />
+                                <TextView
+                                    android:id="@+id/barcodeTextViewGoingOutDate"
+                                    android:layout_width="90dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="right"
+                                    android:text="1901-01-01"
+                                    android:textSize="18sp" />
+
+                                <Button
+                                    android:id="@+id/barcodeButtonGoingOutDate"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:gravity="center"
+                                    android:text="@string/date_change"
+                                    android:textSize="18sp" />
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
@@ -255,7 +257,7 @@
                             <TextView
                                 android:id="@+id/barcodeFixTextView7"
                                 android:text="Warranty Code"
-                                android:layout_width="120dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:textSize="18sp"
@@ -284,34 +286,38 @@
 
                             <TextView
                                 android:id="@+id/barcodeFixTextView8"
-                                android:text="Expiry Date"
                                 android:layout_width="120dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="50dp"
                                 android:layout_marginLeft="5dp"
-                                android:textSize="18sp"
-                                android:gravity="left"
-                                />
+                                android:gravity="left|center_vertical"
+                                android:text="Expiry Date"
+                                android:textSize="18sp" />
 
 
-                            <TextView
-                                android:id="@+id/barcodeTextViewExpiryDate"
-                                android:text="1901-01-01"
-                                android:layout_width="90dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
-                                android:textSize="18sp"
-                                android:gravity="left"
-                                />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="right"
+                                android:orientation="horizontal">
 
-                            <Button
-                                android:id="@+id/barcodeButtonExpiryDate"
-                                android:text="@string/date_fetch"
-                                android:layout_width="100dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:textSize="18sp"
-                                android:gravity="center"
-                                />
+                                <TextView
+                                    android:id="@+id/barcodeTextViewExpiryDate"
+                                    android:layout_width="90dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="15dp"
+                                    android:gravity="right"
+                                    android:text="1901-01-01"
+                                    android:textSize="18sp" />
+
+                                <Button
+                                    android:id="@+id/barcodeButtonExpiryDate"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:gravity="center"
+                                    android:text="@string/date_fetch"
+                                    android:textSize="18sp" />
+                            </LinearLayout>
 
                         </LinearLayout>
 
